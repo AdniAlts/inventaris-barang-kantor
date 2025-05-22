@@ -85,6 +85,11 @@ switch ($comp) {
         require_once "../pages/dashboard.php";
         break;
 
+
+    case 'GET:peminjaman':
+        require_once "../pages/peminjaman.php";
+        break;
+
     default:
         http_response_code(404);
         require "../pages/error/404.php";
