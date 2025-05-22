@@ -4,7 +4,7 @@ Tugas Proyek Akhir Semester Praktikum Pemrograman Web yang tercinta 🥰🥰
 
 ## Untuk mulai ngerjain
 1. Install git dulu [disini](https://git-scm.com/downloads)
-2. Cari tempat ngerjain kalian maunya di folder apa
+2. Buka folder XAMPP `htdocs`
 3. Buka terminal di folder itu
 4. Clone repositori ini pake command ini
 ```
@@ -24,7 +24,10 @@ git config user.email "{ID}+{username}@users.noreply.github.com"
 ```
 git checkout -b fitur-[isi nama fitur tanpa kurung ini]
 ```
-10. Selamat mengerjakan
+10. Install CSS library (Tailwind) dengan `npm install`
+11. Start XAMPP Apache server di control panel atau entah gimana cara kalian biasanya
+12. Buka link `localhost/inventaris-barang-kantor/src/dashboard.html` atau entah dimana kalian nyimpen folder nya
+13. Selamat mengerjakan
 
 ## Selama ngerjain (jangan lupa ini)
 1. Kalo kamu nambah file baru, jalanin `git add [nama filenya]`
