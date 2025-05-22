@@ -18,6 +18,19 @@
  * Untuk metode GET, disarankan/harus memakai require_once. Jika metodenya POST maka memakai return
  * @example require_once "../pages/login.php"; //GET
  * @example return $data; //POST
+ * 
+ * Satu route bisa untuk dua method, Semisal GET:login untuk menampilkan halaman login dan POST:login untuk proses login
+ * @example 
+ * case 'GET:login':
+ *      require_once "src/pages/login.php";
+ *      break;
+ * case 'POST:login':
+ *      $emailUser = $_POST['email'];
+ *      $passwordUser = $_POST['password'];
+ *      $login = cekKredensial($emailUser, $passwordUser);     
+ * 
+ *      return $login ? true : false; #kalau true berhasil login, false gagl
+ *      break;
  *  
  * Jika ada logic yang harus digeluti, bisa ditaruh diantara keyword case dan (require_once/return) (penjelasan di step selanjutnya)
  * @example 

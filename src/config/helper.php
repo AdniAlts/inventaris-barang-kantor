@@ -14,6 +14,9 @@ use Dotenv\Dotenv;
  * panggil fungsi ->
  * helper::<nama fungsi>(); 
  * 
+ * @example $url = helper::getEnv('APP_URL'); mengambil env APP_URL di file .env
+ * @example helper::route('login'); mengalihkan browser user ke route GET login
+ * 
  * Jika ada fungsi helper yang ingin ditambahkan monggo, jangan lupa dokumentasi
  * 
  * @author rehan 

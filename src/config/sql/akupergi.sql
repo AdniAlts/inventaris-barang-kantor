@@ -1,4 +1,12 @@
--- MATIKAN "ENABLE FOREIGN KEY CHECK DI MYSQL, ADA DI BAGIAN "SQL", REKOMENDASI COPY AJA INI SEMUA TRS PASTE TRS GO DI BAGIAN SQL
+-- TUTOR
+-- 1. Masuk ke PHPMyAdmin
+-- 2. Buat database baru nama terserah
+-- 3. Klik Database baru yang ada di panel sebelah kiri
+-- 4. Klik tab SQL yang ada di panel tengah atas 
+-- 5. Copy semua isi sql lalu paste di text kotak putih besar
+-- 6. Pastikan "Enable foreign key checks" dibagian bawah (sebelah Go) nonaktif
+-- 7. Klik Go
+-- 8. Query selesai
 
 SET GLOBAL FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS 

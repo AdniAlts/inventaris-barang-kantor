@@ -4,12 +4,25 @@ require_once "helper.php";
 /**
  * Class untuk interaksi ke database
  * 
+ * PANDUAN MENGGUNAKAN DATABASE
+ * 
+ * 1. Deklarasikan objek db                             --> $db = new db;
+ * 2. (optional) cek jika gagal koneksi                 --> if ($db->conn->connect_error) echo "gagal koneksi";
+ * 3. Gunakan fungsi db normal seperti biasanya 
+ *    memakai property conn                             --> $db->conn->query("INSERT ...");
+ * 4. Jika sudah selesai, jangan lupa tutup koneksi
+ *    pakai fungsi close()                              --> $db->conn->close();
+ * 
+ * Untuk skrip sql bisa langsung 
+ * @see sql/akupergi.sql
+ * 
  * @author reyhan 
  */
 class db
 {
     /**
      * Properti untuk mengakses database
+     * @example $db->conn->query();
      */
     public $conn;
 
@@ -42,6 +55,7 @@ class db
 
     /**
      * Fungsi untuk menutup koneksi database
+     * JANGAN LUPA TUTUP
      * 
      * @return void 
      */
