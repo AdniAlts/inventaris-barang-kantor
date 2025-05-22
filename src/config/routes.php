@@ -82,7 +82,7 @@ $comp = "$method:$request";
 switch ($comp) {
 
     case 'GET:home':
-        require_once "../dashboard.html";
+        require_once "../pages/dashboard.php";
         break;
 
     default:
