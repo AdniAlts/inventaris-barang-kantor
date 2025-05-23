@@ -90,6 +90,7 @@ $request = str_replace($loc, "", $request);
 
 $comp = "$method:$request";
 
+$comp = preg_replace('/\?.*$/', '', $comp);
 // echo $comp;
 
 switch ($comp) {
@@ -98,7 +99,12 @@ switch ($comp) {
         require_once "../pages/dashboard.php";
         break;
 
+    case 'GET:peminjaman':
+        echo "peminjaman";
+        break;
+
     default:
+        echo "$comp";
         http_response_code(404);
         require "../pages/error/404.php";
         // echo $request;
