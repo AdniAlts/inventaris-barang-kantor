@@ -1,8 +1,9 @@
 <?php
 require_once "../config/db.php";
 $db = new db();
-
+// setcookie('peminjaman', 'y', time() + (-3600 * 24));
 if (isset($_GET['barang']) && isset($_GET['jumlah'])) {
+    $id = $_GET['id_kategori'];
     $barang = $_GET['barang'];
     $jumlah = $_GET['jumlah'];
 
@@ -11,12 +12,17 @@ if (isset($_GET['barang']) && isset($_GET['jumlah'])) {
 
     // Tambahkan data baru
     $dataPeminjaman[] = [
+        'id' => $id,
         'barang' => $barang,
         'jumlah' => $jumlah
     ];
 
     // Simpan kembali ke cookie (serialize array ke JSON)
     setcookie('peminjaman', json_encode($dataPeminjaman), time() + (3600 * 24)); // berlaku 1 hari
+
+    // Redirect
+    header("Location: " . strtok($_SERVER["REQUEST_URI"], '?'));
+    exit;
 }
 ?>
 
@@ -43,7 +49,7 @@ terus ntar saat di submit akan otomatis membuat enrty untuk peminjaman dan detai
             <?php
             $querys = $db->conn->query("SELECT k.id_kategori, k.nama, k.stok FROM kategori k JOIN barang b ON k.id_kategori = b.kategori_id WHERE b.status = 'tersedia' AND b.state_id = 1 AND k.stok > 0");
             foreach ($querys as $query) {
-                echo "<option value='{$query['id_kategori']}'>{$query['nama']} | {$query['stok']}</option>";
+                echo "<option value='{$query['nama']}'>{$query['nama']} | {$query['stok']}</option>";
             }
             ?>
         </select><br>

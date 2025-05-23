@@ -76,6 +76,7 @@ $request = str_replace($loc, "", $request);
 // echo $request . "<br>";
 
 $comp = "$method:$request";
+$comp = preg_replace('/\?.*$/', '',$comp);
 
 // echo $comp;
 
@@ -85,9 +86,8 @@ switch ($comp) {
         require_once "../pages/dashboard.php";
         break;
 
-
     case 'GET:peminjaman':
-        require_once "../pages/peminjaman.php";
+        require "../pages/peminjaman.php";
         break;
 
     default:
