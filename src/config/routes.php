@@ -161,6 +161,22 @@ switch ($comp) {
             Helper::route("login", ['error' => urlencode($error_message)]); // Arahkan kembali ke login dengan error
         }
         break; // Penting: Jangan lupa break!
+    case 'GET:logout':
+         $_SESSION = array();
+
+        // Hancurkan sesi
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        session_destroy();
+
+        // Arahin ke halaman login
+        Helper::route("home");
+        break; 
 
     default:
         // Coba arahkan ke halaman utama atau login jika rute tidak ditemukan secara default
