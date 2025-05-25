@@ -1,6 +1,5 @@
 <?php
 require_once "../config/db.php";
-require_once "helper.php";
 $db = new db();
 
 // setcookie('peminjaman', 'y', time() + (-3600 * 24));
@@ -80,6 +79,7 @@ terus ntar saat di submit akan otomatis membuat enrty untuk peminjaman dan detai
             echo "<input type='hidden' name='barang[$index][nama]' value='{$item['barang']}'>";
             echo "<input type='hidden' name='barang[$index][jumlah]' value='{$item['jumlah']}'>";
         }
+        echo "<input type='hidden' name='total' value='{$total}'>";
     }
     ?>
     <button type="submit">Submit Peminjaman</button>
