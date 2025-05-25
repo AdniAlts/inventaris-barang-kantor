@@ -1,9 +1,9 @@
 <?php
 include "../koneksi.php";
 
-$kode = $_GET['kode'];
+$id = $_GET['id'];
 
-$query = mysqli_query($conn, "DELETE FROM barang WHERE kode_barang='$kode'");
+$query = mysqli_query($conn, "DELETE FROM jenis WHERE id_jenis='$id'");
 
 if ($query) {
     header("Location: index.php");
