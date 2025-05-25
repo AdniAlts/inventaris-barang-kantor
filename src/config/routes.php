@@ -103,6 +103,11 @@ switch ($comp) {
         echo "peminjaman";
         break;
 
+    case 'POST:search':
+    case 'GET:search':
+        require_once "../pages/search_barang.php";
+        break;
+
     default:
         echo "$comp";
         http_response_code(404);
