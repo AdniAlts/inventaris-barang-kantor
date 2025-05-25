@@ -1,5 +1,6 @@
 <?php
 require_once "../config/db.php";
+require_once "../config/helper.php";
 $db = new db();
 
 $id_peminjaman = generateIdPeminjaman($db->conn);
@@ -8,8 +9,7 @@ $total = $_POST['total'];
 $status = 'dipinjam';
 
 // Insert ke tabel peminjaman
-$db->conn->query("INSERT INTO peminjaman (id_peminjaman, tgl_peminjaman, total_pinjam, status) 
-              VALUES ('$id_peminjaman', '$tgl_peminjaman', $total, '$status')");
+$db->conn->query("INSERT INTO peminjaman (id_peminjaman, tgl_peminjaman, total_pinjam, status) VALUES ('$id_peminjaman', '$tgl_peminjaman', $total, '$status')");
 
 $barangs = $_POST['barang'];
 foreach ($barangs as $item) {
@@ -56,7 +56,13 @@ foreach ($barangs as $item) {
     }
 }
 
-function generateIdPeminjaman($conn) {
+setcookie('peminjaman', 'y', time() + (-3600 * 24));
+Helper::route("/peminjaman", [
+    "success" => "Data berhasil ditampilkan"
+]);
+
+function generateIdPeminjaman($conn)
+{
     require_once "../config/db.php";
     $db = new db();
     $tanggal = date('dmY'); // Contoh: 25052025

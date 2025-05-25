@@ -22,9 +22,13 @@ terus ntar saat di submit akan otomatis membuat enrty untuk peminjaman dan detai
 <body>
     <h1>Peminjaman</h1>
     <?php
-        if (isset($err)) {
-            echo "<h3>$err</h3>";
-        }
+    if (isset($_GET['error'])) {
+        echo "<h3>{$_GET['error']}</h3>";
+    }
+
+    if (isset($_GET['success'])) {
+        echo "<h3>{$_GET['success']}</h3>";
+    }
     ?>
     <form action="" method="get">
         <label for="barang">Barang :</label><br>
@@ -72,18 +76,18 @@ terus ntar saat di submit akan otomatis membuat enrty untuk peminjaman dan detai
     </table>
 
     <form action="/inventaris-barang-kantor/loan" method="post">
-    <?php
-    if (isset($_COOKIE['peminjaman'])) {
-        $data = json_decode($_COOKIE['peminjaman'], true);
-        foreach ($data as $index => $item) {
-            echo "<input type='hidden' name='barang[$index][nama]' value='{$item['barang']}'>";
-            echo "<input type='hidden' name='barang[$index][jumlah]' value='{$item['jumlah']}'>";
+        <?php
+        if (isset($_COOKIE['peminjaman'])) {
+            $data = json_decode($_COOKIE['peminjaman'], true);
+            foreach ($data as $index => $item) {
+                echo "<input type='hidden' name='barang[$index][nama]' value='{$item['barang']}'>";
+                echo "<input type='hidden' name='barang[$index][jumlah]' value='{$item['jumlah']}'>";
+            }
+            echo "<input type='hidden' name='total' value='{$total}'>";
         }
-        echo "<input type='hidden' name='total' value='{$total}'>";
-    }
-    ?>
-    <button type="submit">Submit Peminjaman</button>
-</form>
+        ?>
+        <button type="submit">Submit Peminjaman</button>
+    </form>
 </body>
 
 </html>
