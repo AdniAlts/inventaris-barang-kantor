@@ -136,6 +136,14 @@ switch ($comp) {
         require_once "../pages/loan.php";
         break;
 
+    case 'GET:pengembalian':
+        require_once "../pages/pengembalian.php";
+        break;
+        
+    case 'POST:return':
+        require_once "../pages/return.php";
+        break;
+
     default:
         http_response_code(404);
         require "../pages/error/404.php";
