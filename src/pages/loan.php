@@ -58,7 +58,7 @@ foreach ($barangs as $item) {
 
 setcookie('peminjaman', 'y', time() + (-3600 * 24));
 Helper::route("/peminjaman", [
-    "success" => "Data berhasil ditampilkan"
+    "success" => "Barang berhasil dipinjam"
 ]);
 
 function generateIdPeminjaman($conn)

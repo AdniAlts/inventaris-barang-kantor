@@ -137,9 +137,24 @@ switch ($comp) {
         break;
 
     case 'GET:pengembalian':
+        $db = new db();
+
+        $querys = $db->conn->query("SELECT id_peminjaman FROM peminjaman WHERE status = 'dipinjam'");
+
+        if (isset($_GET['id_peminjaman'])) {
+            $id = $_GET['id_peminjaman'];
+
+            $query = $db->conn->query("SELECT total_pinjam FROM peminjaman WHERE id_peminjaman = '$id'");
+            $row = $query->fetch_assoc();
+            $total_pinjam = $row['total_pinjam'];
+
+            $querys2 = $db->conn->query("SELECT b.nama, d.barang_kode FROM peminjaman p JOIN peminjaman_detail d ON p.id_peminjaman = d.peminjaman_id JOIN barang b ON d.barang_kode = b.kode_barang WHERE p.id_peminjaman = '$id'");
+
+        }
+
         require_once "../pages/pengembalian.php";
         break;
-        
+
     case 'POST:return':
         require_once "../pages/return.php";
         break;
