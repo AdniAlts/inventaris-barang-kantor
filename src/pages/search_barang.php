@@ -7,8 +7,8 @@ $result = null;
 $search_display_term = null;
 $search_query_term = null;
 
-$categories = getCategoryNames();
-$states = getStateNames();
+$categories = GetNames::category();
+$states = GetNames::state();
 $statuses = [ 'Tersedia' => 'Tersedia',
               'Dipinjam' => 'Dipinjam' ];
 
@@ -85,7 +85,7 @@ $search_display_term = null;
 unset($_SESSION['last_search_query']);
 
 if ($search_query_term !== null || !empty($selected_categories) || !empty($selected_states) || !empty($selected_status))
-  $result = search($search_query_term, 'all', $selected_categories, $selected_states, $selected_status);
+  $result = Search::search($search_query_term, 'all', $selected_categories, $selected_states, $selected_status);
 
 foreach ($filter_keys as $key)
   $$key = in_array($key, $active_filter_keys);
