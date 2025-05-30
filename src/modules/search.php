@@ -4,7 +4,6 @@
  * Deskripsi: Modul ini bertanggung jawab untuk menangani logika pencarian data dari database.
  * Saat ini, mendukung pencarian berdasarkan 'barang' atau 'all'.
  */
-require_once "../config/db.php";
 require_once "../utils/get_names.php";
 
 class Search {
@@ -21,6 +20,7 @@ class Search {
    * @param array $active_categories Array berisi nama kategori yang aktif (misal ['Alat Tulis', 'Elektronik']).
    * @param array $active_states Array berisi nama kondisi (state) yang aktif.
    * @param array $active_statuses Array berisi nilai status yang aktif.
+   * @param mysqli $connDB Obyek koneksi database yang sudah ada.
    * @return mysqli_result|null Mengembalikan objek mysqli_result yang berisi hasil query jika berhasil dan ada data,
    *                            atau null jika kata kunci tidak valid, query gagal dipersiapkan, atau tidak ada hasil.
    *                            Fungsi akan menghentikan eksekusi (die) jika eksekusi query atau pengambilan hasil gagal.
@@ -38,13 +38,10 @@ class Search {
    *          => Akan mencari semua barang dengan kondisi 'Rusak'.
    *          => Mengembalikan hasil pencarian (kode_barang, nama, status, state, kategori) sebagai `mysqli_result`.
    */
-  public static function search($keyword, string $type, array $active_categories = [], array $active_states = [], array $active_statuses = []) {
+  public static function search($keyword, string $type, array $active_categories = [], array $active_states = [], array $active_statuses = [], mysqli $connDB) {
     // Validasi input
     if (!$keyword && empty($active_categories) && empty($active_states) && empty($active_statuses))
       return null;
-
-    // Koneksi dari modul db.php
-    $db = new db(); 
     
     // Query utama
     $base_query = "SELECT b.kode_barang, b.nama, b.status, s.nama AS state, k.nama AS kategori
@@ -58,38 +55,31 @@ class Search {
     $query = $base_query;
     if (!empty($where_clauses)) {
       $query .= " WHERE " . implode(" AND ", $where_clauses);
-    } else {
-      $db->conn->close();
+    } else
       return null;
-    }
 
-    $sql = $db->conn->prepare($query);
+    $sql = $connDB->prepare($query);
     if (!$sql) {
-      error_log("Persiapan query gagal. Error: " . $db->conn->error . ". Query: " . $query);
-      $db->conn->close();
+      error_log("Persiapan query gagal. Error: " . $connDB->error . ". Query: " . $query);
       return null;
     }
 
-    if (!empty($param_types) && !empty($params)) {
+    if (!empty($param_types) && !empty($params))
       $sql->bind_param($param_types, ...$params);
-    }
 
     // Eksekusi query
     if ($sql->execute()) 
       if ($result = $sql->get_result()) {
         $sql->close();
-        $db->conn->close();
         return $result;
       } else {
         error_log("Gagal mengambil data. Error: " . $sql->error);
         $sql->close();
-        $db->conn->close();
         return null;
       }
     else {
       error_log("Pelaksanaan query gagal. Error: " . $sql->error);
       $sql->close();
-      $db->conn->close();
       return null;
     }
   }
