@@ -16,7 +16,7 @@ $result = null;
 $search_display_term = null;
 $search_query_term = null;
 
-$categories = GetNames::category($connDb);
+$categories = GetNames::category($connDB);
 $states = GetNames::state($connDB);
 $statuses = [ 'Tersedia' => 'Tersedia',
               'Dipinjam' => 'Dipinjam' ];
