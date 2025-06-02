@@ -31,8 +31,10 @@ class Helper
      */
     public static function getEnv($name)
     {
-        $dotenv = Dotenv::createImmutable("../../");
+        $dotenv = Dotenv::createImmutable(__DIR__ . '/../..');
         $dotenv->load();
+        // var_dump($_ENV);
+
 
         if ($_ENV[$name])
             return trim($_ENV[$name]);
@@ -49,6 +51,7 @@ class Helper
      */
     public static function basePath(): string
     {
+        // echo self::getEnv("APP_URL");
         return self::getEnv("APP_URL");
     }
 
@@ -117,3 +120,5 @@ class Helper
         return $response;
     }
 }
+
+Helper::basePath();
