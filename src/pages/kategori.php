@@ -15,17 +15,14 @@ $message = $_SESSION['message'] ?? '';
 $message_type = $_SESSION['message_type'] ?? '';
 unset($_SESSION['message'], $_SESSION['message_type']);
 
-// Gunakan koneksi dari $db
-$pdo = $db->conn;
-
 // CREATE
 if ($action === 'add_kategori' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama_kategori = trim($_POST['nama_kategori'] ?? '');
 
     if (!empty($nama_kategori)) {
         try {
-            $sql_check = "SELECT COUNT(*) as count FROM `kategori` WHERE `nama` = ?";
-            $stmt_check = $pdo->prepare($sql_check);
+            $sql_check = "SELECT COUNT(*) as count FROM kategori WHERE nama = ?";
+            $stmt_check = $conn->prepare($sql_check);
             $stmt_check->bind_param('s', $nama_kategori);
             $stmt_check->execute();
             $result_check = $stmt_check->get_result();
@@ -35,12 +32,13 @@ if ($action === 'add_kategori' && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['message'] = 'Gagal! Nama kategori sudah ada.';
                 $_SESSION['message_type'] = 'error';
             } else {
-                $sql = "INSERT INTO `kategori` (`nama`) VALUES (?)";
-                $stmt = $pdo->prepare($sql);
+                $sql = "INSERT INTO kategori (nama) VALUES (?)";
+                $stmt = $conn->prepare($sql);
                 $stmt->bind_param('s', $nama_kategori);
                 $stmt->execute();
                 $_SESSION['message'] = 'Kategori berhasil ditambahkan!';
                 $_SESSION['message_type'] = 'success';
+                $stmt->close();
             }
             $stmt_check->close();
         } catch (\Exception $e) {
@@ -51,7 +49,7 @@ if ($action === 'add_kategori' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['message'] = 'Nama kategori wajib diisi.';
         $_SESSION['message_type'] = 'error';
     }
-    header("Location: " . $_SERVER['PHP_SELF']);
+   header("Location: /inventaris-barang-kantor/kategori");
     exit;
 }
 
@@ -63,8 +61,8 @@ if ($action === 'update_kategori' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($id_kategori) && !empty($nama_kategori_edit)) {
         try {
             // Cek apakah nama kategori sudah ada (kecuali untuk kategori yang sedang diedit)
-            $sql_check = "SELECT COUNT(*) as count FROM `kategori` WHERE `nama` = ? AND `id_kategori` != ?";
-            $stmt_check = $pdo->prepare($sql_check);
+            $sql_check = "SELECT COUNT(*) as count FROM kategori WHERE nama = ? AND id_kategori != ?";
+            $stmt_check = $conn->prepare($sql_check);
             $stmt_check->bind_param('si', $nama_kategori_edit, $id_kategori);
             $stmt_check->execute();
             $result_check = $stmt_check->get_result();
@@ -74,12 +72,13 @@ if ($action === 'update_kategori' && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['message'] = 'Gagal! Nama kategori sudah ada.';
                 $_SESSION['message_type'] = 'error';
             } else {
-                $sql = "UPDATE `kategori` SET `nama` = ? WHERE `id_kategori` = ?";
-                $stmt = $pdo->prepare($sql);
+                $sql = "UPDATE kategori SET nama = ? WHERE id_kategori = ?";
+                $stmt = $conn->prepare($sql);
                 $stmt->bind_param('si', $nama_kategori_edit, $id_kategori);
                 $stmt->execute();
                 $_SESSION['message'] = 'Kategori berhasil diperbarui!';
                 $_SESSION['message_type'] = 'success';
+                $stmt->close();
             }
             $stmt_check->close();
         } catch (\Exception $e) {
@@ -90,20 +89,25 @@ if ($action === 'update_kategori' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['message'] = 'Semua field wajib diisi untuk update.';
         $_SESSION['message_type'] = 'error';
     }
-    header("Location: " . $_SERVER['PHP_SELF']);
+    header("Location: /inventaris-barang-kantor/kategori");
     exit;
 }
 
 // DELETE
-if ($action === 'delete_kategori' && isset($_GET['id'])) {
-    $id_to_delete = $_GET['id'];
+if ($action === 'delete_kategori' && isset($_POST['id'])) {
+    $id_to_delete = $_POST['id'];
     try {
-        $sql = "DELETE FROM `kategori` WHERE `id_kategori` = ?";
-        $stmt = $pdo->prepare($sql);
+        $sql = "DELETE FROM kategori WHERE id_kategori = ?";
+        $stmt = $conn->prepare($sql);
         $stmt->bind_param('i', $id_to_delete);
         $stmt->execute();
-        $_SESSION['message'] = 'Kategori berhasil dihapus!';
-        $_SESSION['message_type'] = 'success';
+        if ($stmt->affected_rows > 0) {
+            $_SESSION['message'] = 'Kategori berhasil dihapus!';
+            $_SESSION['message_type'] = 'success';
+        } else {
+            $_SESSION['message'] = 'Kategori tidak ditemukan atau gagal dihapus.';
+            $_SESSION['message_type'] = 'error';
+        }
         $stmt->close();
     } catch (\Exception $e) {
         if (strpos($e->getMessage(), '1451') !== false || strpos($e->getMessage(), 'foreign key constraint') !== false) {
@@ -113,16 +117,15 @@ if ($action === 'delete_kategori' && isset($_GET['id'])) {
         }
         $_SESSION['message_type'] = 'error';
     }
-    header("Location: " . $_SERVER['PHP_SELF']);
+    header("Location: /inventaris-barang-kantor/kategori");
     exit;
 }
 
 // READ (Fetch categories for display)
+$categories = [];
 try {
-    $sql_read = "SELECT `id_kategori`, `nama` FROM `kategori` ORDER BY `nama` ASC";
-    error_log("Executing SQL for READ kategori: " . $sql_read);
-    $result = $pdo->query($sql_read);
-    $categories = [];
+    $sql_read = "SELECT id_kategori, nama FROM kategori ORDER BY nama ASC";
+    $result = $conn->query($sql_read);
 
     if ($result) {
         while ($row = $result->fetch_assoc()) {
@@ -130,14 +133,12 @@ try {
         }
         $result->free_result();
     } else {
-        $_SESSION['message'] = 'Gagal mengambil data kategori: ' . $pdo->error;
+        $_SESSION['message'] = 'Gagal mengambil data kategori: ' . $conn->error;
         $_SESSION['message_type'] = 'error';
-        error_log('MySQLi Error READ: ' . $pdo->error . ' Query: ' . $sql_read);
     }
 } finally {
     $db->close();
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -306,9 +307,11 @@ try {
                                                 data-id_kategori="<?php echo htmlspecialchars($category['id_kategori']); ?>"
                                                 data-nama="<?php echo htmlspecialchars($category['nama']); ?>"
                                                 class="font-medium text-blue-600 hover:underline mr-3 edit-button">Edit</button>
-                                            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?action=delete_kategori&id=<?php echo htmlspecialchars($category['id_kategori']); ?>"
-                                                onclick="return confirm('Apakah Anda yakin ingin menghapus kategori: <?php echo htmlspecialchars(addslashes($category['nama'])); ?>?');"
-                                                class="font-medium text-red-600 hover:underline">Hapus</a>
+                                            <form action="/inventaris-barang-kantor/kategori" method="POST" style="display:inline;">
+        <input type="hidden" name="action" value="delete_kategori">
+        <input type="hidden" name="id" value="<?php echo htmlspecialchars($category['id_kategori']); ?>">
+        <button type="submit" class="font-medium text-red-600 hover:underline bg-transparent border-0 p-0 m-0 cursor-pointer">Hapus</button>
+    </form>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -343,7 +346,7 @@ try {
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                <form action="/inventaris-barang-kantor/kategori" method="POST">
                     <input type="hidden" name="action" value="add_kategori">
                     <div class="grid gap-4 mb-4">
                         <div>
@@ -381,7 +384,7 @@ try {
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                <form action="/inventaris-barang-kantor/kategori" method="POST">
                     <input type="hidden" name="action" value="update_kategori">
                     <input type="hidden" name="id_kategori" id="id_kategori_edit">
 
