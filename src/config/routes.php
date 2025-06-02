@@ -294,6 +294,10 @@ switch ($comp) {
         require_once "../pages/barang.php";
         break;
 
+    case 'GET:barang_user':
+        require_once "../pages/barang_user.php";
+        break;
+
     case 'GET:gambar':
         require_once __DIR__ . "/../pages/gambar.php";
         break;
