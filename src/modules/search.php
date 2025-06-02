@@ -258,5 +258,49 @@ class Search {
       'types' => $filter_param_types
     ];
   }
+
+  /**
+   * Fungsi `getAllItemsForClientSide()`:
+   * Mengambil semua barang beserta detailnya (jenis, state, kategori) untuk digunakan di client-side (JavaScript).
+   *
+   * @param mysqli $connDB Objek koneksi database.
+   * @return array Array berisi semua data barang atau array kosong jika terjadi error atau tidak ada data.
+   */
+  public static function getAllItemsForClientSide(mysqli $connDB): array {
+    $items = [];
+    $query = "SELECT b.kode_barang, 
+                     j.nama AS item_name, 
+                     b.status, 
+                     s.nama AS state_name, 
+                     k.nama AS category_name,
+                     b.jenis_id, 
+                     b.state_id, 
+                     j.kategori_id
+              FROM barang b
+              JOIN jenis j ON b.jenis_id = j.id_jenis
+              JOIN state s ON b.state_id = s.id_state
+              JOIN kategori k ON j.kategori_id = k.id_kategori
+              ORDER BY j.nama ASC"; 
+
+    $sql = $connDB->prepare($query);
+    if (!$sql) {
+      error_log("Persiapan query gagal untuk getAllItemsForClientSide. Error: " . $connDB->error . ". Query: " . $query);
+      return [];
+    }
+
+    if ($sql->execute()) {
+      $result = $sql->get_result();
+      if ($result) {
+        while ($row = $result->fetch_assoc()) {
+          $items[] = $row;
+        }
+        $result->free();
+      } else {
+        error_log("Gagal mengambil data untuk getAllItemsForClientSide. Error: " . $sql->error);
+      }
+    }
+    $sql->close();
+    return $items;
+  }
 }
 ?>

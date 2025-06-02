@@ -124,8 +124,34 @@
 
             <!-- Area untuk konten utama -->
             <div class="bg-white p-6 rounded-xl shadow-lg">
-                <h3 class="text-xl font-semibold text-blue-700 mb-4">Konten Utama</h3>
-                <!-- Konten akan ditambahkan di sini -->
+                <h3 class="text-xl font-semibold text-blue-700 mb-6">Akses Cepat Manajemen Data</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <a href="/inventaris-barang-kantor/kategori" 
+                       class="flex flex-col items-center justify-center p-6 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                        <svg class="w-12 h-12 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        <span class="text-lg font-semibold text-center">Manajemen Kategori</span>
+                    </a>
+
+                    <a href="/inventaris-barang-kantor/jenis" 
+                       class="flex flex-col items-center justify-center p-6 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-green-300">
+                        <svg class="w-12 h-12 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                        <span class="text-lg font-semibold text-center">Manajemen Jenis</span>
+                    </a>
+
+                    <a href="/inventaris-barang-kantor/state" 
+                       class="flex flex-col items-center justify-center p-6 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-yellow-300">
+                        <svg class="w-12 h-12 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="text-lg font-semibold text-center">Manajemen State</span>
+                    </a>
+
+                    <a href="/inventaris-barang-kantor/barang" 
+                       class="flex flex-col items-center justify-center p-6 bg-purple-500 hover:bg-purple-600 text-white rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-purple-300">
+                       <svg class="w-12 h-12 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                        <span class="text-lg font-semibold text-center">Manajemen Barang</span>
+                    </a>
+
+                </div>
             </div>
         </main>
     </div>
