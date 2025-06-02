@@ -108,11 +108,12 @@ $pdo = $db->conn;
 // READ (Fetch products for display)
 try {
     // Perbaikan query: konsisten menggunakan alias `b`.`nama`
-    $sql_read = "SELECT `b`.`kode_barang`, `b`.`nama`, `b`.`status`, `s`.`nama` AS `nama_kondisi`, `k`.`nama` AS `nama_kategori`, `b`.`state_id`, `b`.`kategori_id`
+    $sql_read = "SELECT `b`.`kode_barang`, `j`.`nama`, `b`.`status`, `s`.`nama` AS `nama_kondisi`, `j`.`nama` AS `nama_jenis`, `k`.`nama` AS `nama_kategori`
                  FROM `barang` `b`
+                 JOIN `jenis` `j` ON `b`.`jenis_id` = `j`.`id_jenis`
                  JOIN `state` `s` ON `b`.`state_id` = `s`.`id_state`
-                 JOIN `kategori` `k` ON `b`.`kategori_id` = `k`.`id_kategori`                 
-                 ORDER BY `b`.`nama` ASC"; // Menggunakan `b`.`nama` di ORDER BY                
+                 JOIN `kategori` `k` ON `j`.`kategori_id` = `k`.`id_kategori`
+                 ORDER BY `b`.`kode_barang` ASC, `j`.`nama` ASC;"; // Menggunakan `b`.`nama` di ORDER BY                
     error_log("Executing SQL for READ (v3 - direct table.column for nama): " . $sql_read); 
     $result = $pdo->query($sql_read);
     $products = [];
