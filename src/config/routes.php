@@ -278,7 +278,12 @@ switch ($comp) {
         require_once "../pages/kategori.php";
         break;
 
+    
     case 'GET:jenis':
+        require_once "../pages/jenis.php";
+        break;
+
+    case 'POST:jenis':
         require_once "../pages/jenis.php";
         break;
 
