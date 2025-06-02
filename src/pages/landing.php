@@ -122,7 +122,7 @@
         <h1 class="text-2xl font-bold text-blue-600">Inventaris</h1>
       </div>
       <nav class="flex-1 px-4 py-6 space-y-2">
-        <a href="/inventaris-barang-kantor/landing"
+        <a href="/inventaris-barang-kantor/"
           class="sidebar-link active flex items-center px-4 py-3 rounded-lg">
           <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
