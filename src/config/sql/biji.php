@@ -70,9 +70,9 @@ $barang_list = [];
 foreach ($jenis as $j) {
     for ($i = 0; $i < $j['stok']; $i++) {
         $kode_barang = "BRG" . str_pad($kode++, 3, '0', STR_PAD_LEFT);
-        $nama_barang = $j['nama'] . " Unit " . ($i + 1);
-        $db->conn->query("INSERT INTO barang (kode_barang, nama, status, state_id, jenis_id) VALUES (
-            '{$kode_barang}', '{$nama_barang}', 'tersedia', 1, '{$j['id_jenis']}')");
+        // $nama_barang = $j['nama'] . " Unit " . ($i + 1);
+        $db->conn->query("INSERT INTO barang (kode_barang, status, state_id, jenis_id) VALUES (
+            '{$kode_barang}', 'tersedia', 1, '{$j['id_jenis']}')");
         $barang_list[] = $kode_barang;
     }
 }
