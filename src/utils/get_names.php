@@ -68,7 +68,7 @@ class GetNames {
    */
   public static function type(mysqli $connDB) {
     $types = [];
-    $sql = "SELECT id_state, nama FROM jenis";
+    $sql = "SELECT id_jenis, nama FROM jenis";
     $result = $connDB->query($sql);
 
     if ($result) {
@@ -78,7 +78,7 @@ class GetNames {
         }
       }
     } else {
-      error_log("Gagal mengambil state dari database. Error: " . $connDB->error);
+      error_log("Gagal mengambil jenis dari database. Error: " . $connDB->error);
     }
 
     return $types;

@@ -1,7 +1,5 @@
 <?php
 session_start();
-
-require "../config/db.php";
 require "../modules/search.php";
 
 $db = new db();
@@ -138,7 +136,7 @@ foreach ($filter_keys as $key)
   if ($result != null)
     while ($row = mysqli_fetch_array($result)) {
       echo "Kode Barang: " . htmlspecialchars($row["kode_barang"]) . "<br>";
-      echo "Nama Barang: " . htmlspecialchars($row["nama"] ?? 'N/A') . "<br>";
+      echo "Nama Barang: " . htmlspecialchars($row["item_name"] ?? 'N/A') . "<br>";
       echo "Status: " . htmlspecialchars($row["status"]) . "<br>";
       echo "Kondisi: " . htmlspecialchars($row["state"]) . "<br>";
       echo "Kategori: " . htmlspecialchars($row["kategori"]) . "<br>";
