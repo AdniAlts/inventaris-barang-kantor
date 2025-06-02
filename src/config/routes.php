@@ -179,7 +179,7 @@ switch ($comp) {
             $row = $query->fetch_assoc();
             $total_pinjam = $row['total_pinjam'];
 
-            $querys2 = $db->conn->query("SELECT b.nama, d.barang_kode FROM peminjaman p JOIN peminjaman_detail d ON p.id_peminjaman = d.peminjaman_id JOIN barang b ON d.barang_kode = b.kode_barang WHERE p.id_peminjaman = '$id'");
+            $querys2 = $db->conn->query("SELECT j.nama, d.barang_kode FROM peminjaman p JOIN peminjaman_detail d ON p.id_peminjaman = d.peminjaman_id JOIN barang b ON d.barang_kode = b.kode_barang JOIN jenis j ON j.id_jenis = b.jenis_id WHERE p.id_peminjaman = '$id'");
         }
 
         require_once "../pages/pengembalian.php";
