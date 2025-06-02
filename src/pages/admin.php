@@ -253,7 +253,7 @@ try {
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                <form action="" method="POST">
                     <input type="hidden" name="action" value="add_product">
                     <div class="grid gap-4 mb-4 sm:grid-cols-2">
                         <div>
