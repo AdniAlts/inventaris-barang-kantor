@@ -139,8 +139,6 @@ switch ($comp) {
             $stok = $row['stok'];
             if ($jumlah > $stok) {
                 $err = "Jumlah $barang yang Anda masukkan = $jumlah melebihi jumlah stok = $stok";
-                // header("Location: " . strtok($_SERVER["REQUEST_URI"], '?') . "?err=" . urlencode($err));
-                // exit;
 
                 Helper::route("/peminjaman", [
                     "error" => $err

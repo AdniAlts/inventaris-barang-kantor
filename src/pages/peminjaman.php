@@ -74,9 +74,13 @@ terus ntar saat di submit akan otomatis membuat enrty untuk peminjaman dan detai
     </table>
 
     <div>
-        <form action="" method="get">
-            <input type="submit" name="reset" value="Reset">
-        </form>
+        <?php
+            if (isset($_COOKIE['peminjaman'])) {
+                echo '<form action="" method="get">
+                        <input type="submit" name="reset" value="Reset">
+                    </form>';
+            }
+        ?>
         <form action="/inventaris-barang-kantor/loan" method="post">
             <?php
             if (isset($_COOKIE['peminjaman'])) {
