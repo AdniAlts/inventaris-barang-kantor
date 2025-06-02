@@ -67,7 +67,6 @@ CREATE TABLE state (
 
 CREATE TABLE barang (
   kode_barang VARCHAR(30) NOT NULL,
-  nama VARCHAR(100) NOT NULL,
   status ENUM('dipinjam','tersedia') NOT NULL,
   state_id INT(11) NOT NULL,
   jenis_id VARCHAR(10) NOT NULL,
