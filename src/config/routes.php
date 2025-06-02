@@ -2,104 +2,117 @@
 require_once "db.php";
 require_once "helper.php";
 
+// PENTING: Path ini HARUS BENAR relatif terhadap lokasi file routes.php
+// Berdasarkan struktur folder yang Anda tunjukkan (routes.php, helper.php, db.php di src/config/)
+require_once __DIR__ . "/helper.php";
+require_once __DIR__ . "/db.php";
+
 /**
  * P BACA, PENTING
- * 
+ *
  * Jadi konteksnya begini, harapannya jika user searching misal /login, url user tidak perlu ke /src/pages/login.php
  * Maka dibuatlah routing seperti ini,
- * 
+ *
  * Jika user searching /login (automatis dengan metode GET), maka akan diproses disini sebagai "GET:login"
  * Maka bisa ditambahkan sendiri case GET:LOGIN dibawah
- * 
+ *
  * Untuk menampilkan tampilan pages, maka bisa pakai require_once ke arah file
  * @example require_once "../pages/login.php";
- * 
+ *
  * Jika ada data yang harus diambil, bisa pakai $_GET untuk method GET dan $_POST untuk method POST (Untuk method POST sebaiknya ada return)
  * @example $nama = $_GET['nama']  atau  $nama = $_POST['nama'];
- * 
+ *
  * Untuk metode GET, disarankan/harus memakai require_once. Jika metodenya POST maka memakai return
  * @example require_once "../pages/login.php"; //GET
  * @example return $data; //POST
- * 
+ *
  * Satu route bisa untuk dua method, Semisal GET:login untuk menampilkan halaman login dan POST:login untuk proses login
- * @example 
+ * @example
  * case 'GET:login':
- *      require_once "src/pages/login.php";
- *      break;
+ * require_once "src/pages/login.php";
+ * break;
  * case 'POST:login':
- *      $emailUser = $_POST['email'];
- *      $passwordUser = $_POST['password'];
- *      $login = cekKredensial($emailUser, $passwordUser);     
- * 
- *      return $login ? true : false; #kalau true berhasil login, false gagl
- *      break;
- *  
+ * $emailUser = $_POST['email'];
+ * $passwordUser = $_POST['password'];
+ * $login = cekKredensial($emailUser, $passwordUser);
+ *
+ * return $login ? true : false; #kalau true berhasil login, false gagl
+ * break;
+ *
  * Jika ada logic yang harus digeluti, bisa ditaruh diantara keyword case dan (require_once/return) (penjelasan di step selanjutnya)
- * @example 
+ * @example
  * case 'POST:cihuyy':
- *      $num = $_GET['num'];
- *      $total = $num + 99;  # logicnya taruh disini
- *      return $total;
- *      break;
- * 
+ * $num = $_GET['num'];
+ * $total = $num + 99;  # logicnya taruh disini
+ * return $total;
+ * break;
+ *
  * Kenapa diantara case dan require_once/return, kalau return jelas logicnya akan berakhir jika sudah return nilai,
  * kalau require, sistem akan memanggil file tsb untuk ditampilkan ke user, dan SEMUA variabel yang dideklarasikan sebelumnya bisa DIAKSES di page tsb
- * @example 
+ * @example
  * case 'GET:login':
- *      $data = $_GET['data'];
- * 
- *      $nama = ambildaridb();
- *      $umur = ambildaridb();
- * 
- *      require_once "src/pages/login.php";
- *      break;
- * 
+ * $data = $_GET['data'];
+ *
+ * $nama = ambildaridb();
+ * $umur = ambildaridb();
+ *
+ * require_once "src/pages/login.php";
+ * break;
+ *
  * Lalu didalam kode login.php
- * @example 
+ * @example
  * <html>
- *      <body>
- *          <h1>Nama : <?php echo $nama ?> </h1>
- *          <h2>Umur : <?php echo $umur ?> </h2>
- *          <p>Data : <?php echo $data ?> </p> #bisa diakses
- *      </body>
+ * <body>
+ * <h1>Nama : <?php echo $nama ?> </h1>
+ * <h2>Umur : <?php echo $umur ?> </h2>
+ * <p>Data : <?php echo $data ?> </p> #bisa diakses
+ * </body>
  * </html>
- * 
+ *
  * Lalu reminder, jika ingin mengakses route, misal pengen bikin route /hitung, arahkan ke /inventaris-barang-kantor/<nama route>
  * @example jika GET:hitung maka set metode ke GET dan arahkan ke inventaris-barang-kantor/hitung
- * 
+ *
  * Selain ini, baca juga dokumentasi dari:
  * @see helper.php
  * @see db.php
- * 
+ *
  * Selamat mengerjakan, dari @author rehan, kalau masih bingung chat aja
  */
 
 /**
  * File untuk routing, agar url tidak menunjukan file
  *
- * @author rehan 
+ * @author rehan
  */
 
+// Periksa apakah port 8080 masih digunakan di URL Anda.
+// Jika Anda mengaksesnya di http://localhost/inventaris-barang-kantor/, maka portnya 80 (default).
+// Jika Anda mengaksesnya di http://localhost:8080/inventaris-barang-kantor/, maka portnya 8080.
+// Error "Server at localhost Port 80" menunjukkan Apache berjalan di port 80.
+// Pastikan URL di browser Anda sesuai dengan port ini.
 $loc = "/inventaris-barang-kantor/";
+
 
 $request = $_SERVER['REQUEST_URI'];
 $method = $_SERVER['REQUEST_METHOD'];
 
 $request = str_replace($loc, "", $request);
 
-// echo $loc . "<br>";
-// echo $request . "<br>";
-
 $comp = "$method:$request";
 $comp = preg_replace('/\?.*$/', '', $comp);
 
 $comp = preg_replace('/\?.*$/', '', $comp);
-// echo $comp;
+
+// Mulai sesi PHP jika belum dimulai
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 switch ($comp) {
 
     case 'GET:home':
-        require_once "../pages/dashboard.php";
+        require_once __DIR__ . "/../pages/dashboard.php";
         break;
 
     case 'GET:peminjaman':
@@ -177,11 +190,83 @@ switch ($comp) {
     case 'GET:search':
         require_once "../pages/search_barang.php";
         break;
+        
+    case 'GET:login':
+        // HANYA UNTUK MENAMPILKAN FORM LOGIN
+        require_once __DIR__ . "/../pages/login.php";
+        break;
+
+    case 'POST:login': // LOGIKA PROSES LOGIN ADA DI SINI (metode POST)
+        $username = $_POST['username'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        $login_successful = false;
+        $error_message = "";
+
+        if (empty($username) || empty($password)) {
+            $error_message = "Username dan password harus diisi.";
+        } else {
+            $db = new db(); // Membuat objek database
+
+            $stmt = $db->conn->prepare("SELECT id_admin, username, password FROM admin WHERE username = ?");
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows === 1) {
+                $admin = $result->fetch_assoc();
+                if ($password === $admin['password']) { // INGAT: HARUSNYA PAKAI password_verify()
+                    $_SESSION['admin_id'] = $admin['id_admin'];
+                    $_SESSION['username'] = $admin['username'];
+                    $login_successful = true;
+                } else {
+                    $error_message = "Username atau password salah.";
+                }
+            } else {
+                $error_message = "Username atau password salah.";
+            }
+
+            $stmt->close();
+            $db->close();
+        }
+
+        if ($login_successful) {
+            Helper::route("admin"); // Arahkan ke halaman 'home' (dashboard)
+        } else {
+            Helper::route("login", ['error' => urlencode($error_message)]); // Arahkan kembali ke login dengan error
+        }
+        break; // Penting: Jangan lupa break!
+
+    case 'GET:logout':
+         $_SESSION = array();
+
+        // Hancurkan sesi
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        session_destroy();
+
+        // Arahin ke halaman login
+        Helper::route("home");
+        break; 
+
+    case 'GET:admin':
+        require_once "../pages/admin.php";
+        break;
 
     default:
-        echo "$comp";
-        http_response_code(404);
-        require "../pages/error/404.php";
-        // echo $request;
+        // Coba arahkan ke halaman utama atau login jika rute tidak ditemukan secara default
+        // Agar tidak langsung 404 pada URL root
+        if ($request == '') { // Jika user hanya mengakses URL dasar (misal: http://localhost/inventaris-barang-kantor/)
+            Helper::route("home"); // Arahkan ke home atau dashboard
+        } else {
+            echo "$comp"; // Untuk debugging, bisa diaktifkan
+            http_response_code(404);
+            require __DIR__ . "/../pages/error/404.php";
+        }
         break;
 }
