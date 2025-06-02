@@ -33,7 +33,7 @@ CREATE TABLE admin (
 -- --------------------------------------------------------
 
 CREATE TABLE kategori (
-  id_kategori INT(11) NOT NULL,
+  id_kategori INT(11) NOT NULL AUTO_INCREMENT,
   nama VARCHAR(100) NOT NULL,
   PRIMARY KEY (id_kategori)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -56,7 +56,7 @@ CREATE TABLE jenis (
 -- --------------------------------------------------------
 
 CREATE TABLE state (
-  id_state INT(11) NOT NULL,
+  id_state INT(11) NOT NULL AUTO_INCREMENT,
   nama VARCHAR(30) NOT NULL,
   PRIMARY KEY (id_state)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
