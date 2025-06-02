@@ -6,6 +6,7 @@ require_once "helper.php";
 // Berdasarkan struktur folder yang Anda tunjukkan (routes.php, helper.php, db.php di src/config/)
 require_once __DIR__ . "/helper.php";
 require_once __DIR__ . "/db.php";
+require_once __DIR__ . "/../modules/barang.php";
 
 /**
  * P BACA, PENTING
@@ -278,7 +279,7 @@ switch ($comp) {
         require_once "../pages/kategori.php";
         break;
 
-    
+
     case 'GET:jenis':
         require_once "../pages/jenis.php";
         break;
@@ -303,9 +304,25 @@ switch ($comp) {
         require_once "../pages/barang_user.php";
         break;
 
-    case 'GET:gambar':
-        require_once __DIR__ . "/../pages/gambar.php";
+
+    case 'POST:barang/create':
+        Barang::create();
         break;
+
+    case 'POST:barang/update':
+        Barang::update();
+        break;
+
+    case 'POST:barang/delete':
+    case 'GET:barang/delete':
+        Barang::delete();
+        break;
+
+    // Remove the old POST:gambar case since it's now integrated into the Barang class
+
+    // case 'GET:gambar':
+    //     require_once __DIR__ . "/../pages/gambar.php";
+    //     break;
 
     case 'POST:gambar':
         header('Content-Type: application/json');
