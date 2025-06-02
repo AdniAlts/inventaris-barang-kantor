@@ -180,7 +180,6 @@ switch ($comp) {
             $total_pinjam = $row['total_pinjam'];
 
             $querys2 = $db->conn->query("SELECT b.nama, d.barang_kode FROM peminjaman p JOIN peminjaman_detail d ON p.id_peminjaman = d.peminjaman_id JOIN barang b ON d.barang_kode = b.kode_barang WHERE p.id_peminjaman = '$id'");
-
         }
 
         require_once "../pages/pengembalian.php";
@@ -194,7 +193,7 @@ switch ($comp) {
     case 'GET:search':
         require_once "../pages/search_barang.php";
         break;
-        
+
     case 'GET:login':
         // HANYA UNTUK MENAMPILKAN FORM LOGIN
         require_once __DIR__ . "/../pages/login.php";
@@ -242,25 +241,30 @@ switch ($comp) {
         break; // Penting: Jangan lupa break!
 
     case 'GET:logout':
-         $_SESSION = array();
+        $_SESSION = array();
 
         // Hancurkan sesi
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
             );
         }
         session_destroy();
 
         // Arahin ke halaman login
         Helper::route("home");
-        break; 
-      
+        break;
+
     case 'GET:dashboard':
         require_once "../pages/dashboard.php";
-        break;    
+        break;
 
     case 'GET:kategori':
         require_once "../pages/kategori.php";
@@ -278,6 +282,9 @@ switch ($comp) {
         require_once "../pages/barang.php";
         break;
 
+    case 'GET:barang_user':
+        require_once "../pages/barang_user.php";
+        break;
 
     default:
         // Coba arahkan ke halaman utama atau login jika rute tidak ditemukan secara default
