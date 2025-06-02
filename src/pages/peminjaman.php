@@ -177,7 +177,7 @@ $db = new db();
                     <form action="" method="GET" class="space-y-4">
                         <div>
                             <label for="barang" class="block text-sm font-medium text-gray-700 mb-2">Barang:</label>
-                            <select name="barang" id="barang" 
+                            <select name="barang" id="barang"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 <option value="">-- Pilih Barang --</option>
                                 <?php
@@ -192,7 +192,7 @@ $db = new db();
                             <input type="number" name="jumlah" id="jumlah" required
                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
-                        <input type="submit" name="tambah" value="tambah"
+                        <input type="submit" name="tambah" value="Tambah"
                             class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
                     </form>
                 </div>
@@ -235,42 +235,52 @@ $db = new db();
                             </tfoot>
                         </table>
                     </div>
+                    <!-- Reset Button -->
+                    <div class="mt-4">
+                        <?php
+                        if (isset($_COOKIE['peminjaman'])) {
+                            echo '<form action="" method="get">
+                                            <input type="submit" name="reset" value="Reset"
+                                                class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors">
+                                        </form>';
+                        }
+                        ?>
+                    </div>
                 </div>
 
                 <!-- Action Buttons -->
                 <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <div class="flex flex-col sm:flex-row gap-4 justify-between">
-                        <!-- Reset Button -->
-                        <?php
-                            if (isset($_COOKIE['peminjaman'])) {
-                                echo '<form action="" method="get">
-                                        <input type="submit" name="reset" value="Reset"
-                                            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors">
-                                    </form>';
-                            }
-                        ?>
+                    <div class="flex justify-center items-center">
 
                         <!-- Submit Peminjaman -->
-                        <form action="/inventaris-barang-kantor/loan" method="POST">
-                            <?php
-                            if (isset($_COOKIE['peminjaman'])) {
-                                $data = json_decode($_COOKIE['peminjaman'], true);
-                                foreach ($data as $index => $item) {
-                                    echo "<input type='hidden' name='barang[$index][nama]' value='{$item['barang']}'>";
-                                    echo "<input type='hidden' name='barang[$index][jumlah]' value='{$item['jumlah']}'>";
+                        <form action="/inventaris-barang-kantor/loan" method="POST" class="w-full">
+                            <div class="mt-4">
+                                <label for="deskripsi" class="block text-sm font-medium text-gray-700 mb-2">Deskripsi:</label>
+                                <textarea type="number" name="deskripsi" id="deskripsi" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                            </div>
+                            <div>
+                                <?php
+                                if (isset($_COOKIE['peminjaman'])) {
+                                    $data = json_decode($_COOKIE['peminjaman'], true);
+                                    foreach ($data as $index => $item) {
+                                        echo "<input type='hidden' name='barang[$index][nama]' value='{$item['barang']}'>";
+                                        echo "<input type='hidden' name='barang[$index][jumlah]' value='{$item['jumlah']}'>";
+                                    }
+                                    echo "<input type='hidden' name='total' value='{$total}'>";
                                 }
-                                echo "<input type='hidden' name='total' value='{$total}'>";
-                            }
-                            ?>
-                            <button type="submit" 
-                                class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors">
-                                Submit Peminjaman
-                            </button>
-                        </form>
+                                ?>
+                                <button type="submit"
+                                    class="mt-3 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors">
+                                    Submit Peminjaman
+                                </button>
+                            </div>
                     </div>
+                    </form>
                 </div>
             </div>
-        </main>
+    </div>
+    </main>
     </div>
 
     <script>

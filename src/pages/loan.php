@@ -11,63 +11,64 @@ if (!isset($_POST['total'])) {
     ]);
 }
 
-// $id_peminjaman = generateIdPeminjaman($db->conn);
-// $tgl_peminjaman = date('Y-m-d');
-// $total = $_POST['total'];
-// $status = 'dipinjam';
+$id_peminjaman = generateIdPeminjaman($db->conn);
+$deskripsi = $_POST['deskripsi'];
+$tgl_peminjaman = date('Y-m-d');
+$total = $_POST['total'];
+$status = 'dipinjam';
 
-// // Insert ke tabel peminjaman
-// $db->conn->query("INSERT INTO peminjaman (id_peminjaman, tgl_peminjaman, total_pinjam, status) VALUES ('$id_peminjaman', '$tgl_peminjaman', $total, '$status')");
+// Insert ke tabel peminjaman
+$db->conn->query("INSERT INTO peminjaman (id_peminjaman, deskripsi, tgl_peminjaman, total_pinjam, status) VALUES ('$id_peminjaman', '$deskripsi', '$tgl_peminjaman', $total, '$status')");
 
-// $barangs = $_POST['barang'];
-// foreach ($barangs as $item) {
-//     $namaBarang = $item['nama'];
-//     $jumlahDiminta = (int)$item['jumlah'];
+$barangs = $_POST['barang'];
+foreach ($barangs as $item) {
+    $namaBarang = $item['nama'];
+    $jumlahDiminta = (int)$item['jumlah'];
 
-//     // Ambil id_kategori berdasarkan nama barang (kategori)
-//     $stmt = $db->conn->prepare("SELECT id_kategori FROM kategori WHERE nama = ?");
-//     $stmt->bind_param("s", $namaBarang);
-//     $stmt->execute();
-//     $result = $stmt->get_result()->fetch_assoc();
+    // Ambil id_kategori berdasarkan nama barang (kategori)
+    $stmt = $db->conn->prepare("SELECT id_jenis FROM jenis WHERE nama = ?");
+    $stmt->bind_param("s", $namaBarang);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
 
-//     if (!$result) continue; // Jika nama kategori tidak ditemukan, skip
+    if (!$result) continue; // Jika nama kategori tidak ditemukan, skip
 
-//     $id_kategori = $result['id_kategori']; // Misal: 'AA'
+    $id_jenis = $result['id_jenis']; // Misal: 'AA'
 
-//     // Ambil kode barang yang tersedia sesuai jumlah permintaan
-//     $stmt = $db->conn->prepare("
-//         SELECT kode_barang 
-//         FROM barang 
-//         WHERE kategori_id = ? 
-//           AND state_id = 1 
-//           AND status = 'tersedia' 
-//         ORDER BY kode_barang ASC 
-//         LIMIT ?
-//     ");
-//     $stmt->bind_param("si", $id_kategori, $jumlahDiminta);
-//     $stmt->execute();
-//     $barangResult = $stmt->get_result();
+    // Ambil kode barang yang tersedia sesuai jumlah permintaan
+    $stmt = $db->conn->prepare("
+        SELECT kode_barang 
+        FROM barang 
+        WHERE jenis_id = ? 
+          AND state_id = 1 
+          AND status = 'tersedia' 
+        ORDER BY kode_barang ASC 
+        LIMIT ?
+    ");
+    $stmt->bind_param("si", $id_jenis, $jumlahDiminta);
+    $stmt->execute();
+    $barangResult = $stmt->get_result();
 
-//     while ($barang = $barangResult->fetch_assoc()) {
-//         $kode_barang = $barang['kode_barang'];
+    while ($barang = $barangResult->fetch_assoc()) {
+        $kode_barang = $barang['kode_barang'];
 
-//         // Insert ke peminjaman_detail
-//         $stmtInsert = $db->conn->prepare("
-//             INSERT INTO peminjaman_detail (peminjaman_id, barang_kode) 
-//             VALUES (?, ?)
-//         ");
-//         $stmtInsert->bind_param("is", $id_peminjaman, $kode_barang);
-//         $stmtInsert->execute();
+        // Insert ke peminjaman_detail
+        $stmtInsert = $db->conn->prepare("
+            INSERT INTO peminjaman_detail (peminjaman_id, barang_kode) 
+            VALUES (?, ?)
+        ");
+        $stmtInsert->bind_param("is", $id_peminjaman, $kode_barang);
+        $stmtInsert->execute();
 
-//         // Update status barang menjadi 'dipinjam'
-//         $db->conn->query("UPDATE barang SET status = 'dipinjam' WHERE kode_barang = '$kode_barang'");
-//     }
-// }
+        // Update status barang menjadi 'dipinjam'
+        $db->conn->query("UPDATE barang SET status = 'dipinjam' WHERE kode_barang = '$kode_barang'");
+    }
+}
 
-// setcookie('peminjaman', 'y', time() + (-3600 * 24));
-// Helper::route("/peminjaman", [
-//     "success" => "Barang berhasil dipinjam"
-// ]);
+setcookie('peminjaman', 'y', time() + (-3600 * 24));
+Helper::route("/peminjaman", [
+    "success" => "Barang berhasil dipinjam"
+]);
 
 function generateIdPeminjaman($conn)
 {

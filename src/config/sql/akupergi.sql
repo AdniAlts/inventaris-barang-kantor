@@ -45,7 +45,7 @@ CREATE TABLE kategori (
 CREATE TABLE jenis (
   id_jenis VARCHAR(10) NOT NULL,
   nama VARCHAR(30) NOT NULL,
-  stok INT(11) NOT NULL,
+  stok INT(11) NOT NULL DEFAULT 0,
   kategori_id INT(11) NOT NULL,
   PRIMARY KEY (id_jenis),
   KEY kategori_id (kategori_id)
@@ -82,10 +82,11 @@ CREATE TABLE barang (
 
 CREATE TABLE peminjaman (
   id_peminjaman INT(11) NOT NULL,
+  deskripsi TEXT NOT NULL,
   tgl_peminjaman DATE NOT NULL,
   tgl_balik DATE DEFAULT NULL,
   total_pinjam INT(11) NOT NULL,
-  status ENUM('dipinjam','dikembalikan') NOT NULL,
+  status ENUM('dipinjam','dikembalikan','menunggu') NOT NULL,
   PRIMARY KEY (id_peminjaman)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -94,8 +95,7 @@ CREATE TABLE peminjaman (
 -- --------------------------------------------------------
 
 CREATE TABLE peminjaman_detail (
-  id_peminjaman_detail INT(11) NOT NULL,
-  jumlah INT(11) NOT NULL,
+  id_peminjaman_detail INT(11) NOT NULL AUTO_INCREMENT,
   barang_kode VARCHAR(30) NOT NULL,
   peminjaman_id INT(11) NOT NULL,
   PRIMARY KEY (id_peminjaman_detail),
