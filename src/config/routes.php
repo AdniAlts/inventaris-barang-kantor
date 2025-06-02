@@ -119,6 +119,12 @@ switch ($comp) {
         $db = new db();
         $querys = $db->conn->query("SELECT DISTINCT k.nama, k.stok FROM kategori k JOIN barang b ON k.id_kategori = b.kategori_id WHERE b.status = 'tersedia' AND b.state_id = 1 AND k.stok > 0");
 
+        if (isset($_GET['reset'])) {
+            setcookie('peminjaman', '', time() + (-3600 * 24));
+            header("Location: " . strtok($_SERVER["REQUEST_URI"], '?'));
+            exit;
+        }
+
         if (isset($_GET['barang']) && isset($_GET['jumlah'])) {
             $id = $_GET['id_kategori'];
             $barang = $_GET['barang'];

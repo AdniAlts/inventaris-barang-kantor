@@ -1,8 +1,6 @@
 <?php
 require_once "../config/db.php";
 $db = new db();
-
-// setcookie('peminjaman', 'y', time() + (-3600 * 24));
 ?>
 
 <!-- buat penyimpanan sementaranya make cookie aja ntar oke
@@ -75,19 +73,24 @@ terus ntar saat di submit akan otomatis membuat enrty untuk peminjaman dan detai
         </tfoot>
     </table>
 
-    <form action="/inventaris-barang-kantor/loan" method="post">
-        <?php
-        if (isset($_COOKIE['peminjaman'])) {
-            $data = json_decode($_COOKIE['peminjaman'], true);
-            foreach ($data as $index => $item) {
-                echo "<input type='hidden' name='barang[$index][nama]' value='{$item['barang']}'>";
-                echo "<input type='hidden' name='barang[$index][jumlah]' value='{$item['jumlah']}'>";
+    <div>
+        <form action="" method="get">
+            <input type="submit" name="reset" value="Reset">
+        </form>
+        <form action="/inventaris-barang-kantor/loan" method="post">
+            <?php
+            if (isset($_COOKIE['peminjaman'])) {
+                $data = json_decode($_COOKIE['peminjaman'], true);
+                foreach ($data as $index => $item) {
+                    echo "<input type='hidden' name='barang[$index][nama]' value='{$item['barang']}'>";
+                    echo "<input type='hidden' name='barang[$index][jumlah]' value='{$item['jumlah']}'>";
+                }
+                echo "<input type='hidden' name='total' value='{$total}'>";
             }
-            echo "<input type='hidden' name='total' value='{$total}'>";
-        }
-        ?>
-        <button type="submit">Submit Peminjaman</button>
-    </form>
+            ?>
+            <button type="submit">Submit Peminjaman</button>
+        </form>
+    </div>
 </body>
 
 </html>
