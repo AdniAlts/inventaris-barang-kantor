@@ -40,6 +40,7 @@ class db
         $dbname = Helper::getEnv('DB_DATABASE');
         $dbport = Helper::getEnv('DB_PORT');
 
+        // var_dump();
         $this->conn = new mysqli(
             $servername,
             $username,
@@ -47,6 +48,7 @@ class db
             $dbname,
             $dbport
         );
+
 
         if ($this->conn->connect_error) {
             die("Koneksi gagal: " . $this->conn->connect_error);
