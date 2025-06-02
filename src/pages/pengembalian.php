@@ -47,7 +47,7 @@
                     echo "<tr>
                             <td>{$query2['barang_kode']}</td>
                             <td>{$query2['nama']}</td>
-                          </tr>";
+                        </tr>";
                 }
             }
             ?>

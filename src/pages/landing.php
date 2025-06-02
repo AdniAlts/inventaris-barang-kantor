@@ -122,7 +122,7 @@
         <h1 class="text-2xl font-bold text-blue-600">Inventaris</h1>
       </div>
       <nav class="flex-1 px-4 py-6 space-y-2">
-        <a href="/inventaris-barang-kantor/admin"
+        <a href="/inventaris-barang-kantor/landing"
           class="sidebar-link active flex items-center px-4 py-3 rounded-lg">
           <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -284,25 +284,6 @@
         </div>
       </div>
     </main>
-  </div>
-
-  <div id="add-category-modal" class="fixed inset-0 bg-modalOverlay justify-center items-center z-50 hidden">
-    <div class="bg-modalBg rounded-lg shadow-xl p-8 w-full max-w-md">
-      <div class="flex justify-between items-center mb-6">
-        <h3 class="text-2xl font-bold text-modalText">Add Categories</h3>
-        <button id="modal-close-btn" class="text-gray-400 hover:text-gray-600 text-3xl focus:outline-none">
-          &times;
-        </button>
-      </div>
-      <div class="mb-4">
-        <label for="category-name" class="block text-modalText text-lg font-semibold mb-2">Name</label>
-        <input type="text" id="category-name" class="w-full px-4 py-2 rounded-md bg-modalInputBg border border-modalInputBorder text-modalText focus:outline-none focus:ring-1 focus:ring-blue-500" placeholder="e.g., Laptop">
-      </div>
-      <div class="flex justify-end space-x-4">
-        <button id="modal-cancel-btn" class="bg-modalButtonCancel text-white px-5 py-2 rounded-md hover:opacity-90 transition-colors">Cancel</button>
-        <button id="modal-submit-btn" class="bg-modalButtonSubmit text-white px-5 py-2 rounded-md hover:opacity-90 transition-colors">Submit</button>
-      </div>
-    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
