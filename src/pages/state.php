@@ -15,17 +15,14 @@ $message = $_SESSION['message'] ?? '';
 $message_type = $_SESSION['message_type'] ?? '';
 unset($_SESSION['message'], $_SESSION['message_type']);
 
-// Gunakan koneksi dari $db
-$pdo = $db->conn;
-
 // CREATE
 if ($action === 'add_state' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama_state = trim($_POST['nama_state'] ?? '');
 
     if (!empty($nama_state)) {
         try {
-            $sql_check = "SELECT COUNT(*) as count FROM `state` WHERE `nama` = ?";
-            $stmt_check = $pdo->prepare($sql_check);
+            $sql_check = "SELECT COUNT(*) as count FROM state WHERE nama = ?";
+            $stmt_check = $conn->prepare($sql_check);
             $stmt_check->bind_param('s', $nama_state);
             $stmt_check->execute();
             $result_check = $stmt_check->get_result();
@@ -35,12 +32,13 @@ if ($action === 'add_state' && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['message'] = 'Gagal! Nama state sudah ada.';
                 $_SESSION['message_type'] = 'error';
             } else {
-                $sql = "INSERT INTO `state` (`nama`) VALUES (?)";
-                $stmt = $pdo->prepare($sql);
+                $sql = "INSERT INTO state (nama) VALUES (?)";
+                $stmt = $conn->prepare($sql);
                 $stmt->bind_param('s', $nama_state);
                 $stmt->execute();
                 $_SESSION['message'] = 'State berhasil ditambahkan!';
                 $_SESSION['message_type'] = 'success';
+                $stmt->close();
             }
             $stmt_check->close();
         } catch (\Exception $e) {
@@ -51,7 +49,7 @@ if ($action === 'add_state' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['message'] = 'Nama state wajib diisi.';
         $_SESSION['message_type'] = 'error';
     }
-    header("Location: " . $_SERVER['PHP_SELF']);
+    header("Location: /inventaris-barang-kantor/state");
     exit;
 }
 
@@ -62,9 +60,8 @@ if ($action === 'update_state' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!empty($id_state) && !empty($nama_state_edit)) {
         try {
-            // Cek apakah nama state sudah ada (kecuali untuk state yang sedang diedit)
-            $sql_check = "SELECT COUNT(*) as count FROM `state` WHERE `nama` = ? AND `id_state` != ?";
-            $stmt_check = $pdo->prepare($sql_check);
+            $sql_check = "SELECT COUNT(*) as count FROM state WHERE nama = ? AND id_state != ?";
+            $stmt_check = $conn->prepare($sql_check);
             $stmt_check->bind_param('si', $nama_state_edit, $id_state);
             $stmt_check->execute();
             $result_check = $stmt_check->get_result();
@@ -74,12 +71,13 @@ if ($action === 'update_state' && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['message'] = 'Gagal! Nama state sudah ada.';
                 $_SESSION['message_type'] = 'error';
             } else {
-                $sql = "UPDATE `state` SET `nama` = ? WHERE `id_state` = ?";
-                $stmt = $pdo->prepare($sql);
+                $sql = "UPDATE state SET nama = ? WHERE id_state = ?";
+                $stmt = $conn->prepare($sql);
                 $stmt->bind_param('si', $nama_state_edit, $id_state);
                 $stmt->execute();
                 $_SESSION['message'] = 'State berhasil diperbarui!';
                 $_SESSION['message_type'] = 'success';
+                $stmt->close();
             }
             $stmt_check->close();
         } catch (\Exception $e) {
@@ -90,20 +88,25 @@ if ($action === 'update_state' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['message'] = 'Semua field wajib diisi untuk update.';
         $_SESSION['message_type'] = 'error';
     }
-    header("Location: " . $_SERVER['PHP_SELF']);
+    header("Location: /inventaris-barang-kantor/state");
     exit;
 }
 
 // DELETE
-if ($action === 'delete_state' && isset($_GET['id'])) {
-    $id_to_delete = $_GET['id'];
+if ($action === 'delete_state' && isset($_POST['id'])) {
+    $id_to_delete = $_POST['id'];
     try {
-        $sql = "DELETE FROM `state` WHERE `id_state` = ?";
-        $stmt = $pdo->prepare($sql);
+        $sql = "DELETE FROM state WHERE id_state = ?";
+        $stmt = $conn->prepare($sql);
         $stmt->bind_param('i', $id_to_delete);
         $stmt->execute();
-        $_SESSION['message'] = 'State berhasil dihapus!';
-        $_SESSION['message_type'] = 'success';
+        if ($stmt->affected_rows > 0) {
+            $_SESSION['message'] = 'State berhasil dihapus!';
+            $_SESSION['message_type'] = 'success';
+        } else {
+            $_SESSION['message'] = 'State tidak ditemukan atau gagal dihapus.';
+            $_SESSION['message_type'] = 'error';
+        }
         $stmt->close();
     } catch (\Exception $e) {
         if (strpos($e->getMessage(), '1451') !== false || strpos($e->getMessage(), 'foreign key constraint') !== false) {
@@ -113,16 +116,15 @@ if ($action === 'delete_state' && isset($_GET['id'])) {
         }
         $_SESSION['message_type'] = 'error';
     }
-    header("Location: " . $_SERVER['PHP_SELF']);
+    header("Location: /inventaris-barang-kantor/state");
     exit;
 }
 
 // READ (Fetch states for display)
+$states = [];
 try {
-    $sql_read = "SELECT `id_state`, `nama` FROM `state` ORDER BY `nama` ASC";
-    error_log("Executing SQL for READ state: " . $sql_read);
-    $result = $pdo->query($sql_read);
-    $states = [];
+    $sql_read = "SELECT id_state, nama FROM state ORDER BY nama ASC";
+    $result = $conn->query($sql_read);
 
     if ($result) {
         while ($row = $result->fetch_assoc()) {
@@ -130,14 +132,12 @@ try {
         }
         $result->free_result();
     } else {
-        $_SESSION['message'] = 'Gagal mengambil data state: ' . $pdo->error;
+        $_SESSION['message'] = 'Gagal mengambil data state: ' . $conn->error;
         $_SESSION['message_type'] = 'error';
-        error_log('MySQLi Error READ: ' . $pdo->error . ' Query: ' . $sql_read);
     }
 } finally {
     $db->close();
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -306,9 +306,11 @@ try {
                                                 data-id_state="<?php echo htmlspecialchars($state['id_state']); ?>"
                                                 data-nama="<?php echo htmlspecialchars($state['nama']); ?>"
                                                 class="font-medium text-blue-600 hover:underline mr-3 edit-button">Edit</button>
-                                            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?action=delete_state&id=<?php echo htmlspecialchars($state['id_state']); ?>"
-                                                onclick="return confirm('Apakah Anda yakin ingin menghapus state: <?php echo htmlspecialchars(addslashes($state['nama'])); ?>?');"
-                                                class="font-medium text-red-600 hover:underline">Hapus</a>
+                                            <form action="/inventaris-barang-kantor/state" method="POST" style="display:inline;">
+                                                <input type="hidden" name="action" value="delete_state">
+                                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($state['id_state']); ?>">
+                                                <button type="submit" class="font-medium text-red-600 hover:underline bg-transparent border-0 p-0 m-0 cursor-pointer">Hapus</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -343,7 +345,7 @@ try {
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                <form action="/inventaris-barang-kantor/state" method="POST">
                     <input type="hidden" name="action" value="add_state">
                     <div class="grid gap-4 mb-4">
                         <div>
@@ -381,7 +383,7 @@ try {
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                <form action="/inventaris-barang-kantor/state" method="POST">
                     <input type="hidden" name="action" value="update_state">
                     <input type="hidden" name="id_state" id="id_state_edit">
 

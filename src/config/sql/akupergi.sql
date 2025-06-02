@@ -69,6 +69,7 @@ CREATE TABLE barang (
   kode_barang VARCHAR(30) NOT NULL,
   status ENUM('dipinjam','tersedia') NOT NULL,
   state_id INT(11) NOT NULL,
+  gambar_url VARCHAR(150),
   jenis_id VARCHAR(10) NOT NULL,
   PRIMARY KEY (kode_barang),
   KEY state_id (state_id),
