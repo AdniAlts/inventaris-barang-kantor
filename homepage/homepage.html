@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Most Used Products (Tailwind CSS)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ff9800', // Definisi warna oranye kustom
+                        darkGray: '#333',
+                        mediumGray: '#666',
+                        lightGray: '#f0f2f5',
+                    },
+                    fontFamily: {
+                        montserrat: ['Montserrat', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-montserrat bg-lightGray flex flex-col items-center py-5 px-5 sm:px-10 md:px-20">
+
+    <header class="w-full max-w-6xl flex justify-between items-center py-5 mb-5 flex-col sm:flex-row sm:mb-8">
+        <h1 class="text-4xl font-bold text-darkGray mb-4 sm:mb-0">Most Used</h1>
+        <button class="bg-primary text-white font-semibold py-2.5 px-7 rounded-md hover:bg-orange-600 transition duration-300"><a href="/login/loginAdmin.html">Login</a></button>
+    </header>
+
+    <main class="w-full max-w-6xl flex flex-col gap-8">
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-center">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col items-center p-5 text-center">
+                <img src="images/macbook.png" alt="MacBook Pro M4 Series" class="w-full h-44 object-contain mb-4">
+                <div class="flex flex-col items-center w-full px-2">
+                    <h2 class="text-xl font-semibold text-darkGray mb-1">MacBook Pro</h2>
+                    <p class="text-sm text-mediumGray mb-4">M4 Series</p>
+                    <button class="bg-primary text-white font-semibold py-2.5 px-5 rounded-md hover:bg-orange-600 transition duration-300 w-full max-w-xs">ADD TO RENT</button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col items-center p-5 text-center">
+                <img src="images/keyboard.png" alt="Keyboard Pro MX Series" class="w-full h-44 object-contain mb-4">
+                <div class="flex flex-col items-center w-full px-2">
+                    <h2 class="text-xl font-semibold text-darkGray mb-1">Keyboard Pro</h2>
+                    <p class="text-sm text-mediumGray mb-4">MX Series</p>
+                    <button class="bg-primary text-white font-semibold py-2.5 px-5 rounded-md hover:bg-orange-600 transition duration-300 w-full max-w-xs">ADD TO RENT</button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col items-center p-5 text-center">
+                <img src="images/printer.png" alt="Canon imagePRESS C10010VP" class="w-full h-44 object-contain mb-4">
+                <div class="flex flex-col items-center w-full px-2">
+                    <h2 class="text-xl font-semibold text-darkGray mb-1">Canon imagePRESS</h2>
+                    <p class="text-sm text-mediumGray mb-4">C10010VP</p>
+                    <button class="bg-primary text-white font-semibold py-2.5 px-5 rounded-md hover:bg-orange-600 transition duration-300 w-full max-w-xs">ADD TO RENT</button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col items-center p-5 text-center">
+                <img src="images/mouse.png" alt="Intimus High-Performance HDD Granulator Series" class="w-full h-44 object-contain mb-4">
+                <div class="flex flex-col items-center w-full px-2">
+                    <h2 class="text-xl font-semibold text-darkGray mb-1">Mouse</h2>
+                    <p class="text-sm text-mediumGray mb-4">Wirreless Apple Magic Slim</p>
+                    <button class="bg-primary text-white font-semibold py-2.5 px-5 rounded-md hover:bg-orange-600 transition duration-300 w-full max-w-xs">ADD TO RENT</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-primary rounded-lg shadow-md p-8 flex items-center relative min-h-64 sm:min-h-80">
+            <div class="absolute top-8 left-8 text-black"> <h2 class="text-5xl font-bold mb-1">Bolpoin</h2> <p class="text-2xl">dewa 999++</p> </div>
+
+            <img src="images/bulpen.png" alt="Ana Ballpoint Pen" class="max-w-[100%] h-auto object-contain ml-auto">
+
+            <button class="absolute bottom-8 left-8 bg-white text-primary font-semibold py-3 px-8 rounded-md text-lg hover:bg-gray-100 transition duration-300">ADD TO RENT</button>
+        </section>
+    </main>
+</body>
+</html>

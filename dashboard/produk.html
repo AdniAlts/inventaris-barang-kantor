@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory System Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dashboardBg: '#f0f2f5',
+                        sidebarBg: '#FF9800',
+                        cardBg: '#2D3748',
+                        cardText: '#cbd5e0',
+                        darkText: '#1a202c',
+                        onlineGreen: '#4CAF50',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+            plugins: [],
+        };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="font-sans flex h-screen bg-dashboardBg">
+
+    <aside class="w-64 bg-sidebarBg text-white flex flex-col p-4 fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 z-50">
+        <div class="mb-10">
+            <h1 class="text-2xl font-bold mb-2">Inventory System</h1>
+            </div>
+
+        <div class="flex items-center mb-10">
+            <div class="w-12 h-12 rounded-full mr-3 overflow-hidden"> <img src="images/profile 1.png" alt="Admin Profile" class="w-full h-full object-cover">
+            </div>
+            <div>
+                <p class="font-semibold text-lg">Admin</p>
+                <p class="text-sm text-onlineGreen flex items-center">
+                    <span class="w-2 h-2 bg-onlineGreen rounded-full mr-1"></span>
+                    online
+                </p>
+            </div>
+        </div>
+
+        <nav class="flex-grow">
+            <ul>
+                <li class="mb-4">
+                    <a href="/dashboard/pinjambarang.html" class="flex items-center py-2 px-4 rounded-md hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-box-open mr-3 text-xl"></i>
+                        <span class="text-lg">Pinjam Barang</span> </a>
+                </li>
+                <li class="mb-4">
+                    <a href="/dashboard/kategori.html" class="flex items-center py-2 px-4 rounded-md hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-list mr-3 text-xl"></i>
+                        <span class="text-lg">Category</span>
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="/dashboard/produk.html" class="flex items-center py-2 px-4 rounded-md hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-cube mr-3 text-xl"></i>
+                        <span class="text-lg">Product</span>
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="/dashboard/user.html" class="flex items-center py-2 px-4 rounded-md hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-user mr-3 text-xl"></i>
+                        <span class="text-lg">User</span>
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="/dashboard/daftarpinjam.html" class="flex items-center py-2 px-4 rounded-md hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-book mr-3 text-xl"></i>
+                        <span class="text-lg">Daftar Pinjam</span>
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="/dashboard/statuspinjam.html" class="flex items-center py-2 px-4 rounded-md hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-clipboard-check mr-3 text-xl"></i>
+                        <span class="text-lg">Status Pinjam</span>
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="/dashboard/settings.html" class="flex items-center py-2 px-4 rounded-md hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-cog mr-3 text-xl"></i>
+                        <span class="text-lg">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="flex-grow flex flex-col">
+        <header class="h-16 bg-white shadow-sm flex justify-between items-center px-6 md:px-10">
+            <button class="text-darkText focus:outline-none" id="menu-toggle">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+            <div class="flex items-center ml-auto">
+                <div class="w-10 h-10 rounded-full overflow-hidden"> <img src="images/profile 1.png" alt="Admin Profile" class="w-full h-full object-cover">
+                </div>
+                <span class="ml-2 font-semibold text-darkText">Admin</span>
+            </div>
+        </header>
+
+        <main class="flex-grow p-6 md:p-10 overflow-y-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+
+                <div class="bg-cardBg text-cardText rounded-lg shadow-md p-6 flex flex-col justify-between h-40">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-4xl font-bold">6</span>
+                        <i class="fas fa-book text-6xl opacity-20"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <h3 class="text-lg font-semibold mb-1">Pinjam Barang</h3>
+                        <a href="#" class="text-sm flex items-center hover:underline mx-auto">
+                            More info <i class="fas fa-arrow-circle-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-cardBg text-cardText rounded-lg shadow-md p-6 flex flex-col justify-between h-40">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-4xl font-bold">6</span>
+                        <i class="fas fa-list-alt text-6xl opacity-20"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <h3 class="text-lg font-semibold mb-1">Kategori</h3>
+                        <a href="#" class="text-sm flex items-center hover:underline mx-auto">
+                            More info <i class="fas fa-arrow-circle-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-cardBg text-cardText rounded-lg shadow-md p-6 flex flex-col justify-between h-40">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-4xl font-bold">6</span>
+                        <i class="fas fa-boxes text-6xl opacity-20"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <h3 class="text-lg font-semibold mb-1">Produk</h3>
+                        <a href="#" class="text-sm flex items-center hover:underline mx-auto">
+                            More info <i class="fas fa-arrow-circle-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-cardBg text-cardText rounded-lg shadow-md p-6 flex flex-col justify-between h-40">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-4xl font-bold">1</span>
+                        <i class="fas fa-user-circle text-6xl opacity-20"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <h3 class="text-lg font-semibold mb-1">User</h3>
+                        <a href="#" class="text-sm flex items-center hover:underline mx-auto">
+                            More info <i class="fas fa-arrow-circle-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-cardBg text-cardText rounded-lg shadow-md p-6 flex flex-col justify-between h-40">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-4xl font-bold">6</span>
+                        <i class="fas fa-book-reader text-6xl opacity-20"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <h3 class="text-lg font-semibold mb-1">Daftar Pinjam</h3>
+                        <a href="#" class="text-sm flex items-center hover:underline mx-auto">
+                            More info <i class="fas fa-arrow-circle-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-cardBg text-cardText rounded-lg shadow-md p-6 flex flex-col justify-between h-40">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-4xl font-bold">6</span>
+                        <i class="fas fa-clipboard-list text-6xl opacity-20"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <h3 class="text-lg font-semibold mb-1">Status Pinjam</h3>
+                        <a href="#" class="text-sm flex items-center hover:underline mx-auto">
+                            More info <i class="fas fa-arrow-circle-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-cardBg text-cardText rounded-lg shadow-md p-6 flex flex-col justify-between h-40">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-4xl font-bold"></span>
+                        <i class="fas fa-cogs text-6xl opacity-20"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <h3 class="text-lg font-semibold mb-1">Settings</h3>
+                        <a href="#" class="text-sm flex items-center hover:underline mx-auto">
+                            More info <i class="fas fa-arrow-circle-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const sidebar = document.querySelector('aside');
+        const menuToggleButton = document.getElementById('menu-toggle');
+        // const mobileSidebarCloseButton = document.getElementById('mobile-sidebar-close'); // Jika Anda menambahkan tombol close di sidebar
+
+        // Fungsi untuk membuka/menutup sidebar
+        function toggleSidebar() {
+            sidebar.classList.toggle('-translate-x-full');
+        }
+
+        // Event listener untuk tombol menu di header
+        if (menuToggleButton) {
+            menuToggleButton.addEventListener('click', toggleSidebar);
+        }
+
+        // Event listener untuk tombol close di sidebar (jika ada)
+        // if (mobileSidebarCloseButton) {
+        //     mobileSidebarCloseButton.addEventListener('click', toggleSidebar);
+        // }
+
+        // Menutup sidebar jika mengklik di luar sidebar (hanya untuk mobile/overlay)
+        document.addEventListener('click', (event) => {
+            // Cek apakah klik bukan di sidebar itu sendiri dan bukan di tombol toggle
+            if (!sidebar.contains(event.target) && !menuToggleButton.contains(event.target)) {
+                // Periksa apakah sidebar saat ini terbuka (tidak memiliki -translate-x-full)
+                if (!sidebar.classList.contains('-translate-x-full')) {
+                    // Cek juga ukuran layar, hanya tutup jika layar kecil
+                    if (window.innerWidth < 768) { // md breakpoint
+                        sidebar.classList.add('-translate-x-full');
+                    }
+                }
+            }
+        });
+
+
+        // Pastikan sidebar terlihat di desktop dan tersembunyi di mobile saat di-load
+        function handleResize() {
+            if (window.innerWidth >= 768) { // md breakpoint
+                sidebar.classList.remove('-translate-x-full'); // Pastikan terlihat di desktop
+                sidebar.classList.add('relative'); // Kembali ke posisi relatif untuk desktop
+            } else {
+                sidebar.classList.add('-translate-x-full'); // Sembunyikan di mobile
+                sidebar.classList.remove('relative'); // Gunakan fixed untuk mobile overlay
+            }
+        }
+
+        // Jalankan saat load dan resize
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Jalankan saat halaman pertama kali dimuat
+    </script>
+</body>
+</html>

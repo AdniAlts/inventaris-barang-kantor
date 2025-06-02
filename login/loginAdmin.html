@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Login Admin</title> </head>
+<body>
+
+    <div class="wrapper">
+
+        <div class="video-background">
+            <video autoplay loop muted playsinline> <source src="images/gudangvideo.mp4" type="video/mp4">
+            </video>
+        </div>
+        
+        <nav class="nav">
+            <div class="nav-logo">
+                <p>Login Admin</p>
+            </div>
+            <div class="dashboard-title">
+                <a href="/homepage/homepage.html">Homepage</a>
+            </div>
+        </nav>
+
+        <div class="form-box">
+            <div class="login-container" id="login">
+                <div class="top">
+                    <header>Admin</header>
+                </div>
+                <form id="loginForm">
+                    <div class="input-box">
+                        <input type="text" class="input-field" placeholder="Username or Email" id="usernameInput" name="username">
+                        <i class="bx bx-user"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" class="input-field" placeholder="Password" id="passwordInput" name="password">
+                        <i class="bx bx-lock-alt"></i>
+                    </div>
+                    <div class="input-box">
+                        <button type="button" class="submit">Login</button>
+                        </div>
+                    <div class="two-col">
+                        <div class="one">
+                            <input type="checkbox" id="login-check">
+                            <label for="login-check">Remember Me</label>
+                        </div>
+                        <div class="two">
+                            <label><a href="/forgotpassword.html">Forgot password?</a></label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> 
+    
+    <script>
+
+function myMenuFunction() {
+            var i = document.getElementById("navMenu");
+            if(i.className === "nav-menu") {
+                i.className += " responsive";
+            } else {
+                i.className = "nav-menu";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const usernameInput = document.getElementById('usernameInput');
+            const passwordInput = document.getElementById('passwordInput');
+            const loginForm = document.getElementById('loginForm');
+            const loginButton = document.querySelector('.submit');
+
+            // Fokus ke password ketika tekan Enter di username
+            usernameInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    passwordInput.focus();
+                }
+            });
+
+            // Submit form ketika tekan Enter di password
+            passwordInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    handleLogin(); // Panggil fungsi login
+                }
+            });
+
+            // Klik tombol login
+            loginButton.addEventListener('click', function() {
+                handleLogin(); // Panggil fungsi login
+            });
+
+            // Fungsi untuk menangani login
+            function handleLogin() {
+                // Validasi sederhana
+                if(usernameInput.value.trim() === '' || passwordInput.value.trim() === '') {
+                    alert('Username dan password harus diisi!');
+                    return;
+                }
+                
+                // Jika valid, redirect ke halaman utama
+                window.location.href = '/dashboard/dashboard.html';
+                
+                // Jika ingin menggunakan form submission dengan AJAX:
+                /*
+                const formData = new FormData(loginForm);
+                fetch('/api/login', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        window.location.href = '/halamanutama.html';
+                    } else {
+                        alert('Login gagal: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat login');
+                });
+                */
+            }
+        });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory System Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dashboardBg: '#f0f2f5',
+                        sidebarBg: '#FF9800',
+                        cardBg: '#2D3748',
+                        cardText: '#cbd5e0',
+                        darkText: '#1a202c',
+                        onlineGreen: '#4CAF50',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+            plugins: [],
+        };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="font-sans flex h-screen bg-dashboardBg">
+
+    <aside class="w-64 bg-sidebarBg text-white flex flex-col p-4 fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 z-50">
+        <div class="mb-10">
+            <h1 class="text-2xl font-bold mb-2">Inventory System</h1>
+            </div>
+
+        <div class="flex items-center mb-10">
+            <div class="w-12 h-12 rounded-full mr-3 overflow-hidden"> <img src="images/profile 1.png" alt="Admin Profile" class="w-full h-full object-cover">
+            </div>
+            <div>
+                <p class="font-semibold text-lg">Admin</p>
+                <p class="text-sm text-onlineGreen flex items-center">
+                    <span class="w-2 h-2 bg-onlineGreen rounded-full mr-1"></span>
+                    online
+                </p>
+            </div>
+        </div>
+
+        <nav class="flex-grow">
+            <ul>
+                <li class="mb-4">
+                    <a href="/dashboard/pinjambarang.html" class="flex items-center py-2 px-4 rounded-md hover:bg-orange-600"> <i class="fas fa-box-open mr-3 text-xl"></i>
+                        <span class="text-lg">Pinjam Barang</span>
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="#" class="flex items-center py-2 px-4 rounded-md bg-orange-600 transition-colors">
+                        <i class="fas fa-list mr-3 text-xl"></i>
+                        <span class="text-lg">Category</span>
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="/dashboard/produk.html" class="flex items-center py-2 px-4 rounded-md hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-cube mr-3 text-xl"></i>
+                        <span class="text-lg">Product</span>
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="/dashboard/user.html" class="flex items-center py-2 px-4 rounded-md hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-user mr-3 text-xl"></i>
+                        <span class="text-lg">User</span>
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="/dashboard/daftarpinjam.html" class="flex items-center py-2 px-4 rounded-md hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-book mr-3 text-xl"></i>
+                        <span class="text-lg">Daftar Pinjam</span>
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="/dashboard/statuspinjam.html" class="flex items-center py-2 px-4 rounded-md hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-clipboard-check mr-3 text-xl"></i>
+                        <span class="text-lg">Status Pinjam</span>
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="/dashboard/settings.html" class="flex items-center py-2 px-4 rounded-md hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-cog mr-3 text-xl"></i>
+                        <span class="text-lg">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="flex-grow flex flex-col">
+        <header class="h-16 bg-white shadow-sm flex justify-between items-center px-6 md:px-10">
+            <button class="text-darkText focus:outline-none" id="menu-toggle">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+            <div class="flex items-center ml-auto">
+                <div class="w-10 h-10 rounded-full overflow-hidden">
+                    <img src="images/profile 1.png" alt="Admin Profile" class="w-full h-full object-cover">
+                </div>
+                <span class="ml-2 font-semibold text-darkText">Admin</span>
+            </div>
+        </header>
+
+        <main class="flex-grow p-6 md:p-10 bg-pageBg overflow-y-auto">
+            <div class="bg-cardBgWhite text-primaryText rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-6">List of Categories</h2>
+
+                <div class="flex flex-wrap items-center gap-4 mb-6">
+                    <button id="add-category-btn" class="bg-green-500 text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity flex items-center">
+                        <i class="fas fa-plus mr-2"></i>Add a New Category
+                    </button>
+                    <button id="export-excel-btn" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity flex items-center">
+                        <i class="fas fa-file-excel mr-2"></i>Export Excel
+                    </button>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                    <div class="flex items-center text-secondaryText">
+                        <span class="mr-2">Show</span>
+                        <select id="entries-select" class="bg-white border border-borderColorLight text-primaryText rounded-md p-1 focus:outline-none focus:ring-1 focus:ring-blue-300">
+                            <option value="5" selected>5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="25">25</option>
+                        </select>
+                        <span class="ml-2">entries</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="mr-2 text-secondaryText">Search:</span>
+                        <input type="text" id="search-input" class="bg-white border border-borderColorLight text-primaryText rounded-md p-1 focus:outline-none focus:ring-1 focus:ring-blue-300">
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto rounded-lg border border-borderColorLight">
+                    <table id="category-table" class="min-w-full divide-y divide-borderColorLight">
+                        <thead class="bg-tableHeaderBgLight">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-tableHeaderText">
+                                    NO
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-tableHeaderText">
+                                    Nama Barang
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-tableHeaderText">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body" class="bg-white divide-y divide-borderColorLight">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">1</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Komputer</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">2</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Printer</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">3</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Monitor</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">4</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Mouse</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">5</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Bolpoin</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">6</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Penghapus</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">7</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">MSapu</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">8</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Lap</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">9</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Router</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">10</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Kabel LAN</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">11</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">DIspenser</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">12</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Teko</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">13</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Speaker</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">14</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Mikrofon</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">15</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Lampu Meja</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">16</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Senter</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">17</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Bola</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">18</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Matras</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">19</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Vas Bunga</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">20</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Pigura</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">21</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">CCTV</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">22</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Alarm</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">23</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Kipas Angin</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">24</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">AC</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">25</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-primaryText">Obeng</td>
+                                <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 transition-colors text-sm">
+                                        <i class="fas fa-edit mr-1"></i>Edit
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 transition-colors text-sm">
+                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-between items-center mt-6 text-paginationTextDark text-sm gap-4">
+                    <span id="showing-entries-text">Showing 1 to 10 of X entries</span>
+                    <nav class="flex space-x-1" aria-label="Pagination">
+                        <a href="#" class="bg-paginationBgLight border border-paginationBorderLight text-paginationTextDark px-3 py-1 rounded-md hover:bg-gray-200 transition-colors" id="prev-page">Previous</a>
+                        <span id="pagination-numbers" class="flex space-x-1">
+                            <a href="#" class="bg-paginationActiveBgLight text-paginationActiveTextDark px-3 py-1 rounded-md font-semibold page-link" data-page="1">1</a>
+                        </span>
+                        <a href="#" class="bg-paginationBgLight border border-paginationBorderLight text-paginationTextDark px-3 py-1 rounded-md hover:bg-gray-200 transition-colors" id="next-page">Next</a>
+                    </nav>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="add-category-modal" class="fixed inset-0 bg-modalOverlay justify-center items-center z-50 hidden">
+        <div class="bg-modalBg rounded-lg shadow-xl p-8 w-full max-w-md">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-modalText">Add Categories</h3>
+                <button id="modal-close-btn" class="text-modalText hover:text-gray-400 text-3xl focus:outline-none">
+                    &times;
+                </button>
+            </div>
+            <div class="mb-4">
+                <label for="category-name" class="block text-modalText text-lg font-semibold mb-2">Name</label>
+                <input type="text" id="category-name" class="w-full px-4 py-2 rounded-md bg-modalInputBg border border-modalInputBorder text-modalText focus:outline-none focus:ring-1 focus:ring-blue-500" placeholder="e.g., Laptop">
+            </div>
+            <div class="flex justify-end space-x-4">
+                <button id="modal-cancel-btn" class="bg-red-500 text-white px-5 py-2 rounded-md hover:bg-red-600 transition-colors">Cancel</button>
+                <button id="modal-submit-btn" class="bg-green-500 text-white px-5 py-2 rounded-md hover:bg-green-600 transition-colors">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script> <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Sidebar Toggling Logic ---
+        const sidebar = document.querySelector('aside');
+        const menuToggleButton = document.getElementById('menu-toggle');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('-translate-x-full');
+        }
+
+        if (menuToggleButton) {
+            menuToggleButton.addEventListener('click', toggleSidebar);
+        }
+
+        document.addEventListener('click', (event) => {
+            if (!sidebar.contains(event.target) && !menuToggleButton.contains(event.target)) {
+                if (!sidebar.classList.contains('-translate-x-full')) {
+                    if (window.innerWidth < 768) {
+                        sidebar.classList.add('-translate-x-full');
+                    }
+                }
+            }
+        });
+
+        function handleResize() {
+            if (window.innerWidth >= 768) {
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('relative');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('relative');
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize();
+
+        // --- Table Pagination & Search Logic ---
+        const entriesSelect = document.getElementById('entries-select');
+        const tableBody = document.getElementById('table-body');
+        const allRows = Array.from(tableBody.querySelectorAll('tr'));
+        const showingEntriesText = document.getElementById('showing-entries-text');
+        const paginationNumbersContainer = document.getElementById('pagination-numbers');
+        const prevPageButton = document.getElementById('prev-page');
+        const nextPageButton = document.getElementById('next-page');
+        const searchInput = document.getElementById('search-input');
+
+        let currentPage = 1;
+        let entriesPerPage = parseInt(entriesSelect.value);
+
+        function updateTable() {
+            const searchTerm = searchInput.value.toLowerCase();
+            let filteredRows = allRows.filter(row => {
+                const rowText = row.textContent.toLowerCase();
+                return rowText.includes(searchTerm);
+            });
+
+            const totalRows = filteredRows.length;
+
+            const startIndex = (currentPage - 1) * entriesPerPage;
+            const endIndex = Math.min(startIndex + entriesPerPage, totalRows);
+
+            allRows.forEach(row => row.style.display = 'none');
+
+            if (totalRows === 0) {
+                showingEntriesText.textContent = `No matching entries found.`;
+                updatePagination(0);
+                return;
+            }
+
+            filteredRows.slice(startIndex, endIndex).forEach(row => {
+                row.style.display = '';
+            });
+
+            showingEntriesText.textContent = `Showing ${startIndex + 1} to ${endIndex} of ${totalRows} entries`;
+            updatePagination(totalRows);
+        }
+
+        function updatePagination(totalRows) {
+            paginationNumbersContainer.innerHTML = '';
+            const totalPages = Math.ceil(totalRows / entriesPerPage);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageLink = document.createElement('a');
+                pageLink.href = '#';
+                pageLink.textContent = i;
+                pageLink.classList.add(
+                    'px-3', 'py-1', 'rounded-md', 'font-semibold', 'page-link',
+                    'transition-colors'
+                );
+                if (i === currentPage) {
+                    pageLink.classList.add('bg-paginationActiveBgLight', 'text-paginationActiveTextDark');
+                    pageLink.classList.remove('bg-paginationBgLight', 'border', 'border-paginationBorderLight', 'text-paginationTextDark', 'hover:bg-gray-200');
+                } else {
+                    pageLink.classList.add('bg-paginationBgLight', 'border', 'border-paginationBorderLight', 'text-paginationTextDark', 'hover:bg-gray-200');
+                    pageLink.classList.remove('bg-paginationActiveBgLight', 'text-paginationActiveTextDark');
+                }
+                pageLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    currentPage = i;
+                    updateTable();
+                });
+                paginationNumbersContainer.appendChild(pageLink);
+            }
+
+            prevPageButton.classList.toggle('opacity-50', currentPage === 1 || totalPages === 0);
+            prevPageButton.style.pointerEvents = (currentPage === 1 || totalPages === 0) ? 'none' : 'auto';
+
+            nextPageButton.classList.toggle('opacity-50', currentPage === totalPages || totalPages === 0);
+            nextPageButton.style.pointerEvents = (currentPage === totalPages || totalPages === 0) ? 'none' : 'auto';
+        }
+
+        entriesSelect.addEventListener('change', function() {
+            entriesPerPage = parseInt(this.value);
+            currentPage = 1;
+            updateTable();
+        });
+
+        searchInput.addEventListener('input', function() {
+            currentPage = 1;
+            updateTable();
+        });
+
+        prevPageButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (currentPage > 1) {
+                currentPage--;
+                updateTable();
+            }
+        });
+
+        nextPageButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            const currentTotalRows = allRows.filter(row => {
+                const rowText = row.textContent.toLowerCase();
+                return rowText.includes(searchInput.value.toLowerCase());
+            }).length;
+
+            const totalPages = Math.ceil(currentTotalRows / entriesPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateTable();
+            }
+        });
+
+        updateTable(); // Panggil updateTable saat halaman pertama kali dimuat
+
+        // --- Export Excel Logic ---
+        const exportExcelBtn = document.getElementById('export-excel-btn');
+        const categoryTable = document.getElementById('category-table');
+
+        if (exportExcelBtn && categoryTable) {
+            exportExcelBtn.addEventListener('click', function() {
+                const tableClone = categoryTable.cloneNode(true);
+
+                const headerRow = tableClone.querySelector('thead tr');
+                const actionHeader = headerRow.children[headerRow.children.length - 1];
+                if (actionHeader && actionHeader.textContent.trim().toLowerCase() === 'action') {
+                    actionHeader.remove();
+                }
+
+                tableClone.querySelectorAll('tbody tr').forEach(row => {
+                    if (row.children.length > 2) { // Asumsi ID, Name, Action
+                        row.children[row.children.length - 1].remove();
+                    }
+                });
+
+                const ws = XLSX.utils.table_to_sheet(tableClone);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Categories");
+                XLSX.writeFile(wb, "Categories.xlsx");
+            });
+        }
+
+        // --- Add Category Modal Logic ---
+        const addCategoryBtn = document.getElementById('add-category-btn');
+        const addCategoryModal = document.getElementById('add-category-modal');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const modalCancelBtn = document.getElementById('modal-cancel-btn');
+        const modalSubmitBtn = document.getElementById('modal-submit-btn');
+        const categoryNameInput = document.getElementById('category-name');
+
+        function showModal() {
+            addCategoryModal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden'); // Mencegah scroll body
+        }
+
+        function hideModal() {
+            addCategoryModal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden'); // Mengizinkan scroll body kembali
+            categoryNameInput.value = ''; // Bersihkan input saat modal ditutup
+        }
+
+        if (addCategoryBtn) {
+            addCategoryBtn.addEventListener('click', showModal);
+        }
+        if (modalCloseBtn) {
+            modalCloseBtn.addEventListener('click', hideModal);
+        }
+        if (modalCancelBtn) {
+            modalCancelBtn.addEventListener('click', hideModal);
+        }
+
+            // Menutup modal jika klik di luar modal konten
+        addCategoryModal.addEventListener('click', function(event) {
+            if (event.target === addCategoryModal) {
+                hideModal();
+            }
+        });
+
+            // Logika Submit (Contoh Sederhana)
+        if (modalSubmitBtn) {
+            modalSubmitBtn.addEventListener('click', function() {
+                const categoryName = categoryNameInput.value.trim();
+                if (categoryName) {
+                    alert(`Category submitted: ${categoryName}`);
+                        // Di sini Anda akan menambahkan logika untuk mengirim data ke server
+                        // atau menambahkannya secara dinamis ke tabel.
+                    hideModal();
+                        // Setelah submit, Anda mungkin perlu memanggil updateTable() jika data ditambahkan secara dinamis
+                } else {
+                    alert('Category Name cannot be empty.');
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>
