@@ -285,6 +285,10 @@ switch ($comp) {
     case 'GET:state':
         require_once "../pages/state.php";
         break;
+    
+    case 'POST:state':
+    require_once "../pages/state.php";
+    break;
 
     case 'GET:barang':
         require_once "../pages/barang.php";
