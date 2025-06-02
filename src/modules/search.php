@@ -44,10 +44,11 @@ class Search {
       return null;
     
     // Query utama
-    $base_query = "SELECT b.kode_barang, b.nama, b.status, s.nama AS state, k.nama AS kategori
+    $base_query = "SELECT b.kode_barang, j.nama AS item_name, b.status, s.nama AS state, k.nama AS kategori
                   FROM barang b
+                  JOIN jenis j ON b.jenis_id = j.id_jenis
                   JOIN state s ON b.state_id = s.id_state
-                  JOIN kategori k ON b.kategori_id = k.id_kategori";
+                  JOIN kategori k ON j.kategori_id = k.id_kategori";
     
     list($where_clauses, $params, $param_types) = self::queryConstruct($keyword, $type, $active_categories, $active_states, $active_statuses);
 
@@ -105,15 +106,16 @@ class Search {
     if ($keyword) {
       $searchTerm = "%" . $keyword . "%";
       if ($type === 'barang') {
-        // Mencari di kolom barang
-        $where_clauses[] = "b.nama LIKE ?";
+        // Mencari di kolom nama item (dari tabel jenis)
+        $where_clauses[] = "j.nama LIKE ?";
         $params[] = $searchTerm;
         $param_types .= "s";
       } elseif ($type === 'all') {
         // Mencari di beberapa kolom untuk tipe 'all'
-        $where_clauses[] = "(b.kode_barang LIKE ? OR b.nama LIKE ? OR b.status LIKE ? OR s.nama LIKE ? OR k.nama LIKE ?)";
+        // Kolom yang dicari: kode_barang, nama item (dari jenis), status barang, nama state, nama kategori
+        $where_clauses[] = "(b.kode_barang LIKE ? OR j.nama LIKE ? OR b.status LIKE ? OR s.nama LIKE ? OR k.nama LIKE ?)";
         
-        // 5 (sesuai jumlah kolom) placeholder untuk pencarian keyword 'all'
+        // 5 placeholder untuk pencarian keyword 'all'
         for ($i = 0; $i < 5; $i++) {
           $params[] = $searchTerm;
           $param_types .= "s";

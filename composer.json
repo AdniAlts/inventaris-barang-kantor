@@ -1,14 +1,14 @@
 {
-    "name": "raz/inventaris-barang-kantor",
-    "description": "uas project",
-    "authors": [
-        {
-            "name": "Reydv",
-            "email": "reyhanputraariutama@gmail.com"
-        }
-    ],
-    "require": {
-        "vlucas/phpdotenv": "^5.6",
-        "dompdf/dompdf": "^3.1"
+  "name": "raz/inventaris-barang-kantor",
+  "description": "uas project",
+  "authors": [
+    {
+      "name": "Reydv",
+      "email": "reyhanputraariutama@gmail.com"
     }
+  ],
+  "require": {
+    "vlucas/phpdotenv": "^5.6",
+    "phpoffice/phpspreadsheet": "^4.3"
+  }
 }
