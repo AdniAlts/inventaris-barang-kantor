@@ -7,6 +7,7 @@
 </head>
 <body>
   <a href="/inventaris-barang-kantor/peminjaman">Pinjam Barang</a><br>
-  <a href="/inventaris-barang-kantor/pengembalian">Kembalikan Barang</a>
+  <a href="/inventaris-barang-kantor/pengembalian">Kembalikan Barang</a><br>  
+  <a href="/inventaris-barang-kantor/kategori">Kategori</a>
 </body>
 </html>

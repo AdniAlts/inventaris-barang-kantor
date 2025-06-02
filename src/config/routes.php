@@ -257,10 +257,15 @@ switch ($comp) {
         // Arahin ke halaman login
         Helper::route("home");
         break; 
+        
+    case 'GET:kategori':
+        require_once "../pages/kategori.php";
+        break;
 
     case 'GET:admin':
         require_once __DIR__ . "/../pages/admin.php";
         break;
+
 
     default:
         // Coba arahkan ke halaman utama atau login jika rute tidak ditemukan secara default
