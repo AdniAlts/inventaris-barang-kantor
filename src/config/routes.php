@@ -126,7 +126,7 @@ switch ($comp) {
         }
 
         if (isset($_GET['barang']) && isset($_GET['jumlah'])) {
-            $id = $_GET['id_kategori'];
+            // $id = $_GET['id_jenis'];
             $barang = $_GET['barang'];
             $jumlah = $_GET['jumlah'];
 
@@ -134,7 +134,7 @@ switch ($comp) {
             $dataPeminjaman = isset($_COOKIE['peminjaman']) ? json_decode($_COOKIE['peminjaman'], true) : [];
 
             // Cek apakah jumlah > stok
-            $query = $db->conn->query("SELECT stok FROM kategori WHERE nama = '$barang'");
+            $query = $db->conn->query("SELECT stok FROM jenis WHERE nama = '$barang'");
             $row = $query->fetch_assoc();
             $stok = $row['stok'];
             if ($jumlah > $stok) {
@@ -147,7 +147,7 @@ switch ($comp) {
 
             // Tambahkan data baru
             $dataPeminjaman[] = [
-                'id' => $id,
+                // 'id' => $id,
                 'barang' => $barang,
                 'jumlah' => $jumlah
             ];
