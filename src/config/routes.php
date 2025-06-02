@@ -161,6 +161,7 @@ switch ($comp) {
             Helper::route("login", ['error' => urlencode($error_message)]); // Arahkan kembali ke login dengan error
         }
         break; // Penting: Jangan lupa break!
+
     case 'GET:logout':
          $_SESSION = array();
 
@@ -177,6 +178,10 @@ switch ($comp) {
         // Arahin ke halaman login
         Helper::route("home");
         break; 
+
+    case 'GET:admin':
+        require_once "../pages/admin.php";
+        break;
 
     default:
         // Coba arahkan ke halaman utama atau login jika rute tidak ditemukan secara default
