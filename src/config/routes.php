@@ -1,4 +1,6 @@
 <?php
+require_once "db.php";
+require_once "helper.php";
 
 // PENTING: Path ini HARUS BENAR relatif terhadap lokasi file routes.php
 // Berdasarkan struktur folder yang Anda tunjukkan (routes.php, helper.php, db.php di src/config/)
@@ -97,6 +99,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 $request = str_replace($loc, "", $request);
 
 $comp = "$method:$request";
+$comp = preg_replace('/\?.*$/', '', $comp);
 
 $comp = preg_replace('/\?.*$/', '', $comp);
 
@@ -113,7 +116,79 @@ switch ($comp) {
         break;
 
     case 'GET:peminjaman':
-        echo "peminjaman";
+        $db = new db();
+        $querys = $db->conn->query("SELECT DISTINCT k.nama, k.stok FROM kategori k JOIN barang b ON k.id_kategori = b.kategori_id WHERE b.status = 'tersedia' AND b.state_id = 1 AND k.stok > 0");
+
+        if (isset($_GET['barang']) && isset($_GET['jumlah'])) {
+            $id = $_GET['id_kategori'];
+            $barang = $_GET['barang'];
+            $jumlah = $_GET['jumlah'];
+
+            // Ambil data cookie yang sudah ada
+            $dataPeminjaman = isset($_COOKIE['peminjaman']) ? json_decode($_COOKIE['peminjaman'], true) : [];
+
+            // Cek apakah jumlah > stok
+            $query = $db->conn->query("SELECT stok FROM kategori WHERE nama = '$barang'");
+            $row = $query->fetch_assoc();
+            $stok = $row['stok'];
+            if ($jumlah > $stok) {
+                $err = "Jumlah $barang yang Anda masukkan = $jumlah melebihi jumlah stok = $stok";
+                // header("Location: " . strtok($_SERVER["REQUEST_URI"], '?') . "?err=" . urlencode($err));
+                // exit;
+
+                Helper::route("/peminjaman", [
+                    "error" => $err
+                ]);
+            }
+
+            // Tambahkan data baru
+            $dataPeminjaman[] = [
+                'id' => $id,
+                'barang' => $barang,
+                'jumlah' => $jumlah
+            ];
+
+            // Simpan kembali ke cookie (serialize array ke JSON)
+            setcookie('peminjaman', json_encode($dataPeminjaman), time() + (3600 * 24)); // berlaku 1 hari
+
+            // Redirect
+            header("Location: " . strtok($_SERVER["REQUEST_URI"], '?'));
+            exit;
+        }
+        // $error = $_GET['error'];
+        require_once "../pages/peminjaman.php";
+        break;
+
+    case 'POST:loan':
+        require_once "../pages/loan.php";
+        break;
+
+    case 'GET:pengembalian':
+        $db = new db();
+
+        $querys = $db->conn->query("SELECT id_peminjaman FROM peminjaman WHERE status = 'dipinjam'");
+
+        if (isset($_GET['id_peminjaman'])) {
+            $id = $_GET['id_peminjaman'];
+
+            $query = $db->conn->query("SELECT total_pinjam FROM peminjaman WHERE id_peminjaman = '$id'");
+            $row = $query->fetch_assoc();
+            $total_pinjam = $row['total_pinjam'];
+
+            $querys2 = $db->conn->query("SELECT b.nama, d.barang_kode FROM peminjaman p JOIN peminjaman_detail d ON p.id_peminjaman = d.peminjaman_id JOIN barang b ON d.barang_kode = b.kode_barang WHERE p.id_peminjaman = '$id'");
+
+        }
+
+        require_once "../pages/pengembalian.php";
+        break;
+
+    case 'POST:return':
+        require_once "../pages/return.php";
+        break;
+
+    case 'POST:search':
+    case 'GET:search':
+        require_once "../pages/search_barang.php";
         break;
         
     case 'GET:login':

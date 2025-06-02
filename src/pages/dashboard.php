@@ -6,8 +6,7 @@
   <link href="../output.css" rel="stylesheet">
 </head>
 <body>
-  <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
+  <a href="/inventaris-barang-kantor/peminjaman">Pinjam Barang</a><br>
+  <a href="/inventaris-barang-kantor/pengembalian">Kembalikan Barang</a>
 </body>
 </html>
