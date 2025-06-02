@@ -179,7 +179,7 @@ $db->close();
                 <h1 class="text-2xl font-bold text-blue-600">Inventaris</h1>
             </div>
             <nav class="flex-1 px-4 py-6 space-y-2">
-                <a href="/inventaris-barang-kantor/admin"
+                <a href="/inventaris-barang-kantor/"
                     class="sidebar-link flex items-center px-4 py-3 rounded-lg">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -216,14 +216,14 @@ $db->close();
             </nav>
 
             <div class="px-4 py-4 border-t border-blue-100">
-                <a href="/inventaris-barang-kantor/logout"
+                <a href="/inventaris-barang-kantor/login"
                     class="sidebar-link flex items-center px-4 py-3 rounded-lg hover:bg-red-50 hover:text-red-600">
                     <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
                         </path>
                     </svg>
-                    Logout
+                    Login
                 </a>
             </div>
         </aside>

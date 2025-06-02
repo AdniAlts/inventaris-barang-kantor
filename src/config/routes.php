@@ -117,7 +117,7 @@ switch ($comp) {
 
     case 'GET:peminjaman':
         $db = new db();
-        $querys = $db->conn->query("SELECT DISTINCT k.nama, k.stok FROM kategori k JOIN barang b ON k.id_kategori = b.kategori_id WHERE b.status = 'tersedia' AND b.state_id = 1 AND k.stok > 0");
+        $querys = $db->conn->query("SELECT DISTINCT j.nama, j.stok FROM jenis j JOIN barang b ON j.id_jenis = b.jenis_id WHERE b.status = 'tersedia' AND b.state_id = 1 AND j.stok > 0");
 
         if (isset($_GET['reset'])) {
             setcookie('peminjaman', '', time() + (-3600 * 24));
