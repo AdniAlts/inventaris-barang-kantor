@@ -255,7 +255,7 @@ switch ($comp) {
         break; 
 
     case 'GET:admin':
-        require_once "../pages/admin.php";
+        require_once __DIR__ . "/../pages/admin.php";
         break;
 
     default:
