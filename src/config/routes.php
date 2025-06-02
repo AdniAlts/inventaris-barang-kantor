@@ -126,7 +126,7 @@ switch ($comp) {
         }
 
         if (isset($_GET['barang']) && isset($_GET['jumlah'])) {
-            $id = $_GET['id_kategori'];
+            // $id = $_GET['id_jenis'];
             $barang = $_GET['barang'];
             $jumlah = $_GET['jumlah'];
 
@@ -134,7 +134,7 @@ switch ($comp) {
             $dataPeminjaman = isset($_COOKIE['peminjaman']) ? json_decode($_COOKIE['peminjaman'], true) : [];
 
             // Cek apakah jumlah > stok
-            $query = $db->conn->query("SELECT stok FROM kategori WHERE nama = '$barang'");
+            $query = $db->conn->query("SELECT stok FROM jenis WHERE nama = '$barang'");
             $row = $query->fetch_assoc();
             $stok = $row['stok'];
             if ($jumlah > $stok) {
@@ -147,7 +147,7 @@ switch ($comp) {
 
             // Tambahkan data baru
             $dataPeminjaman[] = [
-                'id' => $id,
+                // 'id' => $id,
                 'barang' => $barang,
                 'jumlah' => $jumlah
             ];
@@ -179,7 +179,7 @@ switch ($comp) {
             $row = $query->fetch_assoc();
             $total_pinjam = $row['total_pinjam'];
 
-            $querys2 = $db->conn->query("SELECT b.nama, d.barang_kode FROM peminjaman p JOIN peminjaman_detail d ON p.id_peminjaman = d.peminjaman_id JOIN barang b ON d.barang_kode = b.kode_barang WHERE p.id_peminjaman = '$id'");
+            $querys2 = $db->conn->query("SELECT j.nama, d.barang_kode FROM peminjaman p JOIN peminjaman_detail d ON p.id_peminjaman = d.peminjaman_id JOIN barang b ON d.barang_kode = b.kode_barang JOIN jenis j ON j.id_jenis = b.jenis_id WHERE p.id_peminjaman = '$id'");
         }
 
         require_once "../pages/pengembalian.php";
