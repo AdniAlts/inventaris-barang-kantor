@@ -235,7 +235,7 @@ switch ($comp) {
         }
 
         if ($login_successful) {
-            Helper::route("admin"); // Arahkan ke halaman 'home' (dashboard)
+            Helper::route("dashboard"); // Arahkan ke halaman 'home' (dashboard)
         } else {
             Helper::route("login", ['error' => urlencode($error_message)]); // Arahkan kembali ke login dengan error
         }
