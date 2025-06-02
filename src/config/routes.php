@@ -262,6 +262,10 @@ switch ($comp) {
         require_once __DIR__ . "/../pages/admin.php";
         break;
 
+    case 'POST:admin':
+        
+        break;
+
     default:
         // Coba arahkan ke halaman utama atau login jika rute tidak ditemukan secara default
         // Agar tidak langsung 404 pada URL root
