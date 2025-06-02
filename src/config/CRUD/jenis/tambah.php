@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 include "../koneksi.php";
 
 // Ambil data kategori buat dropdown
@@ -38,4 +38,4 @@ $kategori = mysqli_query($conn, "SELECT * FROM kategori");
     <br>
     <a href="index.php">Kembali</a>
 </body>
-</html>
+</html> -->

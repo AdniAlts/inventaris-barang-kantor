@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 include "../koneksi.php";
 
 $id_jenis = htmlspecialchars($_POST['id_jenis']);
@@ -16,4 +16,4 @@ if ($query) {
 } else {
     echo "Gagal: " . mysqli_error($conn);
 }
-?>
+?> -->

@@ -44,13 +44,13 @@ $result = mysqli_query($conn, $query);
 <?php
 include "../koneksi.php";
 
-$query = mysqli_query($conn, "
-    SELECT barang.*, state.nama AS nama_state, jenis.nama AS nama_jenis
-    FROM barang
-    JOIN state ON barang.state_id = state.state_id
-    JOIN jenis ON barang.jenis_id = jenis.id_jenis
-");
-?>
+// $query = mysqli_query($conn, "
+//     SELECT barang.*, state.nama AS nama_state, jenis.nama AS nama_jenis
+//     FROM barang
+//     JOIN state ON barang.state_id = state.state_id
+//     JOIN jenis ON barang.jenis_id = jenis.id_jenis
+// ");
+// ?>
 
 <!DOCTYPE html>
 <html lang="en">

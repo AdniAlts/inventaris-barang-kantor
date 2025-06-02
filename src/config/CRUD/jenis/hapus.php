@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 include "../koneksi.php";
 
 $id = $_GET['id'];
@@ -10,4 +10,4 @@ if ($query) {
 } else {
     echo "Gagal hapus: " . mysqli_error($conn);
 }
-?>
+?> -->

@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 include "../koneksi.php";
 
 $query = mysqli_query($conn, "
@@ -39,4 +39,4 @@ $query = mysqli_query($conn, "
         <?php endwhile; ?>
     </table>
 </body>
-</html>
+</html> -->

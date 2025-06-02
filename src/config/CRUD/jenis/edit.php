@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 include "../koneksi.php";
 
 $id = $_GET['id'];
@@ -41,4 +41,4 @@ $kategori = mysqli_query($conn, "SELECT * FROM kategori");
     <br>
     <a href="index.php">Kembali</a>
 </body>
-</html>
+</html> -->
