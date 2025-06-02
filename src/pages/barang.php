@@ -1,6 +1,7 @@
 <?php
-require_once "../utils/get_names.php";
+// require_once "../utils/get_names.php"; // This file was not provided, assuming it's not strictly necessary for this CRUD
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../config/helper.php'; // Ensure helper.php is included for Helper::basePath()
 
 // Memulai sesi hanya jika belum ada sesi yang aktif
 if (session_status() == PHP_SESSION_NONE) {
@@ -9,137 +10,25 @@ if (session_status() == PHP_SESSION_NONE) {
 $db = new db();
 $conn = $db->conn;
 
-// --- LOGIKA CRUD ---
-$action = $_POST['action'] ?? $_GET['action'] ?? '';
 $message = $_SESSION['message'] ?? '';
 $message_type = $_SESSION['message_type'] ?? '';
 unset($_SESSION['message'], $_SESSION['message_type']);
 
-// Gunakan koneksi dari $db
-$pdo = $db->conn;
-
-// CREATE
-if ($action === 'add_barang' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $kode_barang = trim($_POST['kode_barang'] ?? '');
-    $status = trim($_POST['status'] ?? '');
-    $jenis_id = $_POST['jenis_id'] ?? '';
-    $state_id = $_POST['state_id'] ?? '';
-
-    if (!empty($kode_barang) && !empty($status) && !empty($jenis_id) && !empty($state_id)) {
-        try {
-            // Cek apakah kode barang sudah ada
-            $sql_check = "SELECT COUNT(*) as count FROM `barang` WHERE `kode_barang` = ?";
-            $stmt_check = $pdo->prepare($sql_check);
-            $stmt_check->bind_param('s', $kode_barang);
-            $stmt_check->execute();
-            $result_check = $stmt_check->get_result();
-            $row_check = $result_check->fetch_assoc();
-
-            if ($row_check['count'] > 0) {
-                $_SESSION['message'] = 'Gagal! Kode barang sudah ada.';
-                $_SESSION['message_type'] = 'error';
-            } else {
-                $sql = "INSERT INTO `barang` (`kode_barang`, `status`, `jenis_id`, `state_id`) VALUES (?, ?, ?, ?)";
-                $stmt = $pdo->prepare($sql);
-                $stmt->bind_param('ssii', $kode_barang, $status, $jenis_id, $state_id);
-                $stmt->execute();
-                $_SESSION['message'] = 'Barang berhasil ditambahkan!';
-                $_SESSION['message_type'] = 'success';
-            }
-            $stmt_check->close();
-        } catch (\Exception $e) {
-            $_SESSION['message'] = 'Gagal menambahkan barang: ' . $e->getMessage();
-            $_SESSION['message_type'] = 'error';
-        }
-    } else {
-        $_SESSION['message'] = 'Semua field wajib diisi.';
-        $_SESSION['message_type'] = 'error';
-    }
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit;
-}
-
-// UPDATE
-if ($action === 'update_barang' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_barang = $_POST['id_barang'] ?? '';
-    $kode_barang_edit = trim($_POST['kode_barang_edit'] ?? '');
-    $status_edit = trim($_POST['status_edit'] ?? '');
-    $jenis_id_edit = $_POST['jenis_id_edit'] ?? '';
-    $state_id_edit = $_POST['state_id_edit'] ?? '';
-
-    if (!empty($id_barang) && !empty($kode_barang_edit) && !empty($status_edit) && !empty($jenis_id_edit) && !empty($state_id_edit)) {
-        try {
-            // Cek apakah kode barang sudah ada (kecuali untuk barang yang sedang diedit)
-            $sql_check = "SELECT COUNT(*) as count FROM `barang` WHERE `kode_barang` = ? AND `id_barang` != ?";
-            $stmt_check = $pdo->prepare($sql_check);
-            $stmt_check->bind_param('si', $kode_barang_edit, $id_barang);
-            $stmt_check->execute();
-            $result_check = $stmt_check->get_result();
-            $row_check = $result_check->fetch_assoc();
-
-            if ($row_check['count'] > 0) {
-                $_SESSION['message'] = 'Gagal! Kode barang sudah ada.';
-                $_SESSION['message_type'] = 'error';
-            } else {
-                $sql = "UPDATE `barang` SET `kode_barang` = ?, `status` = ?, `jenis_id` = ?, `state_id` = ? WHERE `id_barang` = ?";
-                $stmt = $pdo->prepare($sql);
-                $stmt->bind_param('ssiii', $kode_barang_edit, $status_edit, $jenis_id_edit, $state_id_edit, $id_barang);
-                $stmt->execute();
-                $_SESSION['message'] = 'Barang berhasil diperbarui!';
-                $_SESSION['message_type'] = 'success';
-            }
-            $stmt_check->close();
-        } catch (\Exception $e) {
-            $_SESSION['message'] = 'Gagal memperbarui barang: ' . $e->getMessage();
-            $_SESSION['message_type'] = 'error';
-        }
-    } else {
-        $_SESSION['message'] = 'Semua field wajib diisi untuk update.';
-        $_SESSION['message_type'] = 'error';
-    }
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit;
-}
-
-// DELETE
-if ($action === 'delete_barang' && isset($_GET['id'])) {
-    $id_to_delete = $_GET['id'];
-    try {
-        $sql = "DELETE FROM `barang` WHERE `id_barang` = ?";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bind_param('i', $id_to_delete);
-        $stmt->execute();
-        $_SESSION['message'] = 'Barang berhasil dihapus!';
-        $_SESSION['message_type'] = 'success';
-        $stmt->close();
-    } catch (\Exception $e) {
-        if (strpos($e->getMessage(), '1451') !== false || strpos($e->getMessage(), 'foreign key constraint') !== false) {
-            $_SESSION['message'] = 'Gagal menghapus barang: Barang ini sedang digunakan dalam transaksi lain.';
-        } else {
-            $_SESSION['message'] = 'Gagal menghapus barang: ' . $e->getMessage();
-        }
-        $_SESSION['message_type'] = 'error';
-    }
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit;
-}
-
-// READ (Fetch barang dengan JOIN untuk mendapatkan nama jenis dan state)
 try {
-    $sql_read = "SELECT 
-                    b.id_barang, 
-                    b.kode_barang, 
+    $sql_read = "SELECT
+                    b.kode_barang AS id_barang,
+                    b.kode_barang,
                     b.status,
-                    b.jenis_id,
                     b.state_id,
+                    b.gambar_url,
+                    b.jenis_id,
                     j.nama as nama_jenis,
                     s.nama as nama_state
                 FROM `barang` b
                 LEFT JOIN `jenis` j ON b.jenis_id = j.id_jenis
                 LEFT JOIN `state` s ON b.state_id = s.id_state
-                ORDER BY b.kode_barang ASC";
-    error_log("Executing SQL for READ barang: " . $sql_read);
-    $result = $pdo->query($sql_read);
+                ORDER BY b.jenis_id ASC, CAST(SUBSTRING_INDEX(b.kode_barang, '_', -1) AS UNSIGNED) ASC";
+    $result = $conn->query($sql_read); // Use $conn from the db object
     $barangs = [];
 
     if ($result) {
@@ -148,9 +37,9 @@ try {
         }
         $result->free_result();
     } else {
-        $_SESSION['message'] = 'Gagal mengambil data barang: ' . $pdo->error;
+        $_SESSION['message'] = 'Gagal mengambil data barang: ' . $conn->error;
         $_SESSION['message_type'] = 'error';
-        error_log('MySQLi Error READ: ' . $pdo->error . ' Query: ' . $sql_read);
+        error_log('MySQLi Error READ: ' . $conn->error . ' Query: ' . $sql_read);
     }
 } catch (\Exception $e) {
     $_SESSION['message'] = 'Error mengambil data barang: ' . $e->getMessage();
@@ -158,14 +47,13 @@ try {
     $barangs = [];
 }
 
-// Fetch data untuk dropdown (jenis dan state)
+// Fetch data for dropdowns (jenis and state)
 $jenis_options = [];
 $state_options = [];
 
 try {
-    // Ambil data jenis
     $sql_jenis = "SELECT id_jenis, nama FROM `jenis` ORDER BY nama ASC";
-    $result_jenis = $pdo->query($sql_jenis);
+    $result_jenis = $conn->query($sql_jenis);
     if ($result_jenis) {
         while ($row = $result_jenis->fetch_assoc()) {
             $jenis_options[] = $row;
@@ -173,9 +61,8 @@ try {
         $result_jenis->free_result();
     }
 
-    // Ambil data state
     $sql_state = "SELECT id_state, nama FROM `state` ORDER BY nama ASC";
-    $result_state = $pdo->query($sql_state);
+    $result_state = $conn->query($sql_state);
     if ($result_state) {
         while ($row = $result_state->fetch_assoc()) {
             $state_options[] = $row;
@@ -188,7 +75,9 @@ try {
 
 // Tutup koneksi
 $db->close();
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -234,7 +123,25 @@ $db->close();
     </style>
     <script>
         tailwind.config = {
-            theme: { extend: { colors: { primary: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a', 950: '#172554' } } } }
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                            950: '#172554'
+                        }
+                    }
+                }
+            }
         }
     </script>
 </head>
@@ -247,7 +154,7 @@ $db->close();
                 <h1 class="text-2xl font-bold text-blue-600">Inventaris</h1>
             </div>
             <nav class="flex-1 px-4 py-6 space-y-2">
-                <a href="/inventaris-barang-kantor/dashboard"
+                <a href="<?php echo Helper::basePath(); ?>dashboard"
                     class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-lg">
                     <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -256,7 +163,7 @@ $db->close();
                     </svg>
                     Dashboard
                 </a>
-                <a href="/inventaris-barang-kantor/kategori"
+                <a href="<?php echo Helper::basePath(); ?>kategori"
                     class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-lg">
                     <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -265,7 +172,7 @@ $db->close();
                     </svg>
                     Kategori
                 </a>
-                <a href="/inventaris-barang-kantor/jenis"
+                <a href="<?php echo Helper::basePath(); ?>jenis"
                     class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-lg">
                     <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -274,7 +181,7 @@ $db->close();
                     </svg>
                     Jenis
                 </a>
-                <a href="/inventaris-barang-kantor/state"
+                <a href="<?php echo Helper::basePath(); ?>state"
                     class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-lg">
                     <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -282,7 +189,7 @@ $db->close();
                     </svg>
                     State
                 </a>
-                <a href="/inventaris-barang-kantor/barang"
+                <a href="<?php echo Helper::basePath(); ?>barang"
                     class="sidebar-link active flex items-center px-4 py-3 text-gray-600 rounded-lg">
                     <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -291,9 +198,8 @@ $db->close();
                     Barang
                 </a>
             </nav>
-            <!-- Logout Button at Bottom -->
             <div class="px-4 py-4 border-t border-blue-100">
-                <a href="/inventaris-barang-kantor/logout"
+                <a href="<?php echo Helper::basePath(); ?>logout"
                     class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-red-50 hover:text-red-600">
                     <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -333,6 +239,19 @@ $db->close();
                     </button>
                 </div>
             <?php endif; ?>
+            <div id="dynamic-alert" class="hidden p-4 mb-4 text-sm rounded-lg" role="alert">
+                <span class="font-medium" id="alert-title"></span>
+                <span id="alert-text"></span>
+                <button type="button"
+                    class="ml-auto -mx-1.5 -my-1.5 bg-transparent text-current rounded-lg focus:ring-2 focus:ring-current p-1.5 hover:bg-current/10 inline-flex items-center justify-center h-8 w-8"
+                    onclick="document.getElementById('dynamic-alert').style.display='none'" aria-label="Close">
+                    <span class="sr-only">Dismiss</span><svg class="w-3 h-3" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                </button>
+            </div>
 
             <div class="bg-white p-6 rounded-xl shadow-lg">
                 <h3 class="text-xl font-semibold text-blue-700 mb-4">Daftar Barang</h3>
@@ -340,8 +259,8 @@ $db->close();
                     <table class="w-full text-sm text-left text-gray-500">
                         <thead class="text-xs text-gray-700 uppercase bg-blue-50">
                             <tr>
-                                <th scope="col" class="px-6 py-3">ID</th>
-                                <th scope="col" class="px-6 py-3">Kode Barang</th>
+                                <th scope="col" class="px-6 py-3">ID (Kode Barang)</th>
+                                <th scope="col" class="px-6 py-3">Gambar</th>
                                 <th scope="col" class="px-6 py-3">Status</th>
                                 <th scope="col" class="px-6 py-3">Jenis</th>
                                 <th scope="col" class="px-6 py-3">State</th>
@@ -354,7 +273,14 @@ $db->close();
                                     <tr class="bg-white border-b hover:bg-blue-50">
                                         <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             <?php echo htmlspecialchars($barang['id_barang']); ?></td>
-                                        <td class="px-6 py-4"><?php echo htmlspecialchars($barang['kode_barang']); ?></td>
+                                        <td class="px-6 py-4">
+                                            <?php if ($barang['gambar_url']): ?>
+                                                <img src="<?php echo Helper::basePath() . 'storages/' . htmlspecialchars($barang['gambar_url']); ?>"
+                                                    alt="Gambar Barang" class="w-16 h-16 object-cover rounded-md">
+                                            <?php else: ?>
+                                                Tidak ada gambar
+                                            <?php endif; ?>
+                                        </td>
                                         <td class="px-6 py-4"><?php echo htmlspecialchars($barang['status']); ?></td>
                                         <td class="px-6 py-4"><?php echo htmlspecialchars($barang['nama_jenis'] ?? 'N/A'); ?>
                                         </td>
@@ -367,10 +293,11 @@ $db->close();
                                                 data-status="<?php echo htmlspecialchars($barang['status']); ?>"
                                                 data-jenis_id="<?php echo htmlspecialchars($barang['jenis_id']); ?>"
                                                 data-state_id="<?php echo htmlspecialchars($barang['state_id']); ?>"
+                                                data-gambar_url="<?php echo htmlspecialchars($barang['gambar_url']); ?>"
                                                 class="font-medium text-blue-600 hover:underline mr-3 edit-button">Edit</button>
-                                            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?action=delete_barang&id=<?php echo htmlspecialchars($barang['id_barang']); ?>"
-                                                onclick="return confirm('Apakah Anda yakin ingin menghapus barang: <?php echo htmlspecialchars(addslashes($barang['kode_barang'])); ?>?');"
-                                                class="font-medium text-red-600 hover:underline">Hapus</a>
+                                            <button type="button"
+                                                onclick="deleteBarang('<?php echo htmlspecialchars($barang['id_barang']); ?>', '<?php echo htmlspecialchars(addslashes($barang['kode_barang'])); ?>')"
+                                                class="font-medium text-red-600 hover:underline">Hapus</button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -387,7 +314,6 @@ $db->close();
         </main>
     </div>
 
-    <!-- Modal Tambah Barang -->
     <div id="defaultModal" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
         <div class="relative p-4 w-full max-w-2xl md:h-auto">
@@ -405,28 +331,29 @@ $db->close();
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                    <input type="hidden" name="action" value="add_barang">
-                    <div class="grid gap-4 mb-4">
+                <form id="addBarangForm" enctype="multipart/form-data">
+                    <div class="grid gap-4 mb-4 ml-[20px]">
                         <div>
-                            <label for="kode_barang_add" class="block mb-2 text-sm font-medium text-gray-900">Kode
-                                Barang</label>
-                            <input type="text" name="kode_barang" id="kode_barang_add"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                placeholder="Contoh: BRG001" required>
+                            <label for="gambar_add" class="block mb-2 text-sm font-medium text-gray-900">Gambar</label>
+                            <input type="file" id="gambar_add" name="gambar" accept="image/*"
+                                class="pl-[27px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                         </div>
                         <div>
                             <label for="status_add" class="block mb-2 text-sm font-medium text-gray-900">Status</label>
-                            <input type="text" name="status" id="status_add"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                placeholder="Contoh: Aktif" required>
-                        </div>
-                        <div>
-                            <label for="jenis_id_add" class="block mb-2 text-sm font-medium text-gray-900">Jenis</label>
-                            <select name="jenis_id" id="jenis_id_add"
+                            <select name="status" id="status_add"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                 required>
-                                <option value="">Pilih Jenis</option>
+                                <option value="" disabled selected>Pilih status</option>
+                                <option value="tersedia">tersedia</option>
+                                <option value="dipinjam">dipinjam</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="jenis_add" class="block mb-2 text-sm font-medium text-gray-900">Jenis</label>
+                            <select name="jenis" id="jenis_add"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                required>
+                                <option value="" disabled>Pilih Jenis</option>
                                 <?php foreach ($jenis_options as $jenis): ?>
                                     <option value="<?php echo htmlspecialchars($jenis['id_jenis']); ?>">
                                         <?php echo htmlspecialchars($jenis['nama']); ?></option>
@@ -434,11 +361,11 @@ $db->close();
                             </select>
                         </div>
                         <div>
-                            <label for="state_id_add" class="block mb-2 text-sm font-medium text-gray-900">State</label>
-                            <select name="state_id" id="state_id_add"
+                            <label for="state_add" class="block mb-2 text-sm font-medium text-gray-900">State</label>
+                            <select name="state" id="state_add"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                 required>
-                                <option value="">Pilih State</option>
+                                <option value="" disabled>Pilih State</option>
                                 <?php foreach ($state_options as $state): ?>
                                     <option value="<?php echo htmlspecialchars($state['id_state']); ?>">
                                         <?php echo htmlspecialchars($state['nama']); ?></option>
@@ -455,7 +382,6 @@ $db->close();
         </div>
     </div>
 
-    <!-- Modal Edit Barang -->
     <div id="editModal" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
         <div class="relative p-4 w-full max-w-2xl md:h-auto">
@@ -473,23 +399,223 @@ $db->close();
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                    <input type="hidden" name="action" value="update_barang">
+                <form id="editBarangForm" enctype="multipart/form-data">
                     <input type="hidden" name="id_barang" id="id_barang_edit">
-
                     <div class="grid gap-4 mb-4">
                         <div>
                             <label for="kode_barang_edit" class="block mb-2 text-sm font-medium text-gray-900">Kode
                                 Barang</label>
-                            <input type="text" name="kode_barang_edit" id="kode_barang_edit"
+                            <input type="text" name="kode_barang" id="kode_barang_edit"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                required>
+                                required readonly>
                         </div>
                         <div>
-                            <label for="status_edit" class="block mb-2 text-sm font-medium text-gray-900">Status</label>
-                            <input type="text" name="status_edit" id="status_edit"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                required>
+                            <label for="gambar_edit" class="block mb-2 text-sm font-medium text-gray-900">Gambar (Biarkan
+                                kosong jika tidak diubah)</label>
+                            <input type="file" id="gambar_edit" name="gambar" accept="image/*"
+                                class="pl-[27px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            <img id="current_gambar_preview" src="" alt="Current Image" class="w-24 h-24 object-cover mt-2 rounded-md hidden">
                         </div>
                         <div>
-                            <label for="jenis_id_edit" class="block mb-2 text-sm font-medium text-gray-
+                            <label for="status_edit_modal" class="block mb-2 text-sm font-medium text-gray-900">Status</label>
+                            <select name="status" id="status_edit_modal"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                required>
+                                <option value="tersedia">tersedia</option>
+                                <option value="dipinjam">dipinjam</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="jenis_edit_modal" class="block mb-2 text-sm font-medium text-gray-900">Jenis</label>
+                            <select name="jenis" id="jenis_edit_modal"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                required>
+                                <option value="" disabled>Pilih Jenis</option>
+                                <?php foreach ($jenis_options as $jenis): ?>
+                                    <option value="<?php echo htmlspecialchars($jenis['id_jenis']); ?>">
+                                        <?php echo htmlspecialchars($jenis['nama']); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="state_edit_modal" class="block mb-2 text-sm font-medium text-gray-900">State</label>
+                            <select name="state" id="state_edit_modal"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                required>
+                                <option value="" disabled>Pilih State</option>
+                                <?php foreach ($state_options as $state): ?>
+                                    <option value="<?php echo htmlspecialchars($state['id_state']); ?>">
+                                        <?php echo htmlspecialchars($state['nama']); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="text-white inline-flex items-center bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                        Perbarui Barang
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const basePath = "<?php echo Helper::basePath(); ?>";
+
+        function showDynamicAlert(type, title, message) {
+            const alertDiv = document.getElementById('dynamic-alert');
+            const alertTitle = document.getElementById('alert-title');
+            const alertText = document.getElementById('alert-text');
+
+            alertDiv.className = `p-4 mb-4 text-sm rounded-lg alert-${type}`; // Reset classes and add new
+            alertDiv.classList.remove('hidden');
+            alertTitle.textContent = title;
+            alertText.textContent = message;
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                alertDiv.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Add Barang Form Submission
+        document.getElementById('addBarangForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            try {
+                const response = await fetch(basePath + 'barang/create', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showDynamicAlert('success', 'Sukses!', result.message);
+                    // Perbaikan: Tambahkan pengecekan sebelum mengakses Flowbite.flowbite.Modal
+                    if (typeof Flowbite !== 'undefined' && Flowbite.flowbite && Flowbite.flowbite.Modal) {
+                        const addModal = Flowbite.flowbite.Modal.getInstance(document.getElementById('defaultModal'));
+                        if (addModal) addModal.hide();
+                    } else {
+                        console.warn("Flowbite Modal object not yet available or not found for addModal. Attempting manual close.");
+                        // Fallback manual close
+                        document.getElementById('defaultModal').classList.add('hidden');
+                        document.getElementById('defaultModal').setAttribute('aria-hidden', 'true');
+                        document.body.classList.remove('overflow-hidden');
+                        // Optional: remove padding if Flowbite applies it to body
+                        // document.body.style.paddingRight = ''; 
+                    }
+                    setTimeout(() => {
+                        location.reload(); // Reload page to show new data
+                    }, 1000);
+                } else {
+                    showDynamicAlert('error', 'Gagal!', result.message);
+                }
+            } catch (error) {
+                console.error('Error adding barang:', error);
+                showDynamicAlert('error', 'Error!', 'Terjadi kesalahan saat menambahkan barang.');
+            }
+        });
+
+        // Edit Barang Form Submission
+        document.getElementById('editBarangForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            try {
+                const response = await fetch(basePath + 'barang/update', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showDynamicAlert('success', 'Sukses!', result.message);
+                    // Perbaikan: Tambahkan pengecekan sebelum mengakses Flowbite.flowbite.Modal
+                    if (typeof Flowbite !== 'undefined' && Flowbite.flowbite && Flowbite.flowbite.Modal) {
+                        const editModal = Flowbite.flowbite.Modal.getInstance(document.getElementById('editModal'));
+                        if (editModal) editModal.hide();
+                    } else {
+                        console.warn("Flowbite Modal object not yet available or not found for editModal. Attempting manual close.");
+                        // Fallback manual close
+                        document.getElementById('editModal').classList.add('hidden');
+                        document.getElementById('editModal').setAttribute('aria-hidden', 'true');
+                        document.body.classList.remove('overflow-hidden');
+                        // Optional: remove padding if Flowbite applies it to body
+                        // document.body.style.paddingRight = '';
+                    }
+                    setTimeout(() => {
+                        location.reload(); // Reload page to show updated data
+                    }, 1000);
+                } else {
+                    showDynamicAlert('error', 'Gagal!', result.message);
+                }
+            } catch (error) {
+                console.error('Error updating barang:', error);
+                showDynamicAlert('error', 'Error!', 'Terjadi kesalahan saat memperbarui barang.');
+            }
+        });
+
+        // Populate Edit Modal
+        document.querySelectorAll('.edit-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const idBarang = this.dataset.id_barang; // This contains kode_barang from PHP loop
+                const kodeBarang = this.dataset.kode_barang;
+                const status = this.dataset.status;
+                const jenisId = this.dataset.jenis_id;
+                const stateId = this.dataset.state_id;
+                const gambarUrl = this.dataset.gambar_url;
+
+                // Populate form fields
+                document.getElementById('id_barang_edit').value = idBarang; // Hidden input for identifier
+                document.getElementById('kode_barang_edit').value = kodeBarang;
+                document.getElementById('status_edit_modal').value = status;
+                document.getElementById('jenis_edit_modal').value = jenisId;
+                document.getElementById('state_edit_modal').value = stateId;
+
+                // Handle image preview
+                const currentGambarPreview = document.getElementById('current_gambar_preview');
+                if (gambarUrl) {
+                    currentGambarPreview.src = basePath + 'storages/' + gambarUrl;
+                    currentGambarPreview.classList.remove('hidden');
+                } else {
+                    currentGambarPreview.classList.add('hidden');
+                    currentGambarPreview.src = '';
+                }
+            });
+        });
+
+        // Delete Barang Function
+        async function deleteBarang(idBarang, kodeBarang) {
+            if (confirm(`Apakah Anda yakin ingin menghapus barang: ${kodeBarang}?`)) {
+                try {
+                    const response = await fetch(basePath + 'barang/delete', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `id_barang=${encodeURIComponent(idBarang)}` // Pass kode_barang as id_barang
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        showDynamicAlert('success', 'Sukses!', result.message);
+                        setTimeout(() => {
+                            location.reload(); // Reload page to reflect deletion
+                        }, 1000);
+                    } else {
+                        showDynamicAlert('error', 'Gagal!', result.message);
+                    }
+                } catch (error) {
+                    console.error('Error deleting barang:', error);
+                    showDynamicAlert('error', 'Error!', 'Terjadi kesalahan saat menghapus barang.');
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
