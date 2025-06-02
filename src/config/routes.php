@@ -269,7 +269,7 @@ switch ($comp) {
     case 'GET:kategori':
         require_once "../pages/kategori.php";
         break;
-    
+
     case 'GET:kategori':
         require_once "../pages/kategori.php";
         break;
@@ -290,13 +290,17 @@ switch ($comp) {
     case 'GET:state':
         require_once "../pages/state.php";
         break;
-    
+
     case 'POST:state':
-    require_once "../pages/state.php";
-    break;
+        require_once "../pages/state.php";
+        break;
 
     case 'GET:barang':
         require_once "../pages/barang.php";
+        break;
+
+    case 'GET:barang_user':
+        require_once "../pages/barang_user.php";
         break;
 
     case 'GET:gambar':
