@@ -112,7 +112,7 @@ if (session_status() == PHP_SESSION_NONE) {
 switch ($comp) {
 
     case 'GET:home':
-        require_once __DIR__ . "/../pages/dashboard.php";
+        require_once "../pages/landing.php";
         break;
 
     case 'GET:peminjaman':
@@ -257,13 +257,25 @@ switch ($comp) {
         // Arahin ke halaman login
         Helper::route("home");
         break; 
-        
+      
+    case 'GET:dashboard':
+        require_once "../pages/dashboard.php";
+        break;    
+
     case 'GET:kategori':
         require_once "../pages/kategori.php";
         break;
 
-    case 'GET:admin':
-        require_once __DIR__ . "/../pages/admin.php";
+    case 'GET:jenis':
+        require_once "../pages/jenis.php";
+        break;
+
+    case 'GET:state':
+        require_once "../pages/state.php";
+        break;
+
+    case 'GET:barang':
+        require_once "../pages/barang.php";
         break;
 
 
