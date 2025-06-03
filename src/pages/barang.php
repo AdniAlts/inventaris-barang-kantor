@@ -275,7 +275,7 @@ $db->close();
                                             <?php echo htmlspecialchars($barang['id_barang']); ?></td>
                                         <td class="px-6 py-4">
                                             <?php if ($barang['gambar_url']): ?>
-                                                <img src="<?php echo Helper::basePath() . 'storages/' . htmlspecialchars($barang['gambar_url']); ?>"
+                                                <img src="<?php echo Helper::basePath() . '/src/storages/' . htmlspecialchars($barang['gambar_url']); ?>"
                                                     alt="Gambar Barang" class="w-16 h-16 object-cover rounded-md">
                                             <?php else: ?>
                                                 Tidak ada gambar
@@ -331,7 +331,7 @@ $db->close();
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <form id="addBarangForm" enctype="multipart/form-data">
+                <form method="post" id="addBarangForm" enctype="multipart/form-data">
                     <div class="grid gap-4 mb-4 ml-[20px]">
                         <div>
                             <label for="gambar_add" class="block mb-2 text-sm font-medium text-gray-900">Gambar</label>
@@ -429,8 +429,8 @@ $db->close();
                             <label for="jenis_edit_modal" class="block mb-2 text-sm font-medium text-gray-900">Jenis</label>
                             <select name="jenis" id="jenis_edit_modal"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                required>
-                                <option value="" disabled>Pilih Jenis</option>
+                                required disabled>
+                                <option value="">Pilih Jenis</option>
                                 <?php foreach ($jenis_options as $jenis): ?>
                                     <option value="<?php echo htmlspecialchars($jenis['id_jenis']); ?>">
                                         <?php echo htmlspecialchars($jenis['nama']); ?></option>
@@ -484,7 +484,7 @@ $db->close();
 
             const formData = new FormData(this);
             try {
-                const response = await fetch(basePath + 'barang/create', {
+                const response = await fetch(basePath + '/barang/create', {
                     method: 'POST',
                     body: formData
                 });
@@ -524,7 +524,7 @@ $db->close();
 
             const formData = new FormData(this);
             try {
-                const response = await fetch(basePath + 'barang/update', {
+                const response = await fetch(basePath + '/barang/update', {
                     method: 'POST',
                     body: formData
                 });
@@ -578,7 +578,7 @@ $db->close();
                 // Handle image preview
                 const currentGambarPreview = document.getElementById('current_gambar_preview');
                 if (gambarUrl) {
-                    currentGambarPreview.src = basePath + 'storages/' + gambarUrl;
+                    currentGambarPreview.src = basePath + '/src/storages/' + gambarUrl;
                     currentGambarPreview.classList.remove('hidden');
                 } else {
                     currentGambarPreview.classList.add('hidden');
@@ -591,7 +591,7 @@ $db->close();
         async function deleteBarang(idBarang, kodeBarang) {
             if (confirm(`Apakah Anda yakin ingin menghapus barang: ${kodeBarang}?`)) {
                 try {
-                    const response = await fetch(basePath + 'barang/delete', {
+                    const response = await fetch(basePath + '/barang/delete', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',

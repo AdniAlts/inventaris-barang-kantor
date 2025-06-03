@@ -80,10 +80,9 @@ class Barang
             $original_kode_barang = $_POST['id_barang'] ?? ''; // This is the identifier from UI (kode_barang)
             $new_kode_barang = trim($_POST['kode_barang'] ?? ''); // This is the new value for kode_barang (should be same as original_kode_barang as it's readonly)
             $status = trim($_POST['status'] ?? '');
-            $jenis_id = $_POST['jenis'] ?? '';
             $state_id = $_POST['state'] ?? '';
 
-            if (empty($original_kode_barang) || empty($new_kode_barang) || empty($status) || empty($jenis_id) || empty($state_id)) {
+            if (empty($original_kode_barang) || empty($new_kode_barang) || empty($status) || empty($state_id)) {
                 echo json_encode([
                     'success' => false,
                     'message' => 'Semua field wajib diisi untuk update.'
@@ -93,6 +92,26 @@ class Barang
 
             $db = new db();
             $conn = $db->conn;
+
+            // Fetch existing jenis_id as it's not editable and not reliably sent from a disabled field
+            $stmt_get_jenis = $conn->prepare("SELECT jenis_id FROM barang WHERE kode_barang = ?");
+            if (!$stmt_get_jenis) {
+                echo json_encode(['success' => false, 'message' => 'Failed to prepare statement to get jenis_id: ' . $conn->error]);
+                exit();
+            }
+            $stmt_get_jenis->bind_param("s", $original_kode_barang);
+            if (!$stmt_get_jenis->execute()) {
+                echo json_encode(['success' => false, 'message' => 'Failed to execute statement to get jenis_id: ' . $stmt_get_jenis->error]);
+                exit();
+            }
+            $result_jenis = $stmt_get_jenis->get_result();
+            if ($result_jenis->num_rows === 0) {
+                echo json_encode(['success' => false, 'message' => 'Barang tidak ditemukan untuk mengambil jenis_id.']);
+                exit();
+            }
+            $existing_item_data = $result_jenis->fetch_assoc();
+            $jenis_id = $existing_item_data['jenis_id'];
+            $stmt_get_jenis->close();
 
             // Handle image upload if new image is provided
             $gambar_url = null;
@@ -220,10 +239,20 @@ class Barang
         $uploadDir = __DIR__ . '/../storages/';
         $destination = $uploadDir . $randomName;
 
+        if (!is_dir($uploadDir)) {
+            // Attempt to create the directory if it doesn't exist
+            if (!mkdir($uploadDir, 0775, true)) {
+                 return [
+                    'success' => false,
+                    'message' => 'Upload directory does not exist and could not be created: ' . $uploadDir . ' Please check parent directory permissions.'
+                ];
+            }
+        }
+
         if (!is_writable($uploadDir)) {
             return [
                 'success' => false,
-                'message' => 'Upload directory is not writable: ' . $uploadDir
+                'message' => 'Upload directory is not writable by the web server: ' . realpath($uploadDir) . '. Please check permissions.'
             ];
         }
 
