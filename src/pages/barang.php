@@ -154,7 +154,7 @@ $db->close();
                 <h1 class="text-2xl font-bold text-blue-600">Inventaris</h1>
             </div>
             <nav class="flex-1 px-4 py-6 space-y-2">
-                <a href="<?php echo Helper::basePath(); ?>dashboard"
+                <a href="<?php echo Helper::basePath(); ?>/dashboard"
                     class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-lg">
                     <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -163,7 +163,7 @@ $db->close();
                     </svg>
                     Dashboard
                 </a>
-                <a href="<?php echo Helper::basePath(); ?>kategori"
+                <a href="<?php echo Helper::basePath(); ?>/kategori"
                     class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-lg">
                     <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -172,7 +172,7 @@ $db->close();
                     </svg>
                     Kategori
                 </a>
-                <a href="<?php echo Helper::basePath(); ?>jenis"
+                <a href="<?php echo Helper::basePath(); ?>/jenis"
                     class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-lg">
                     <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -181,7 +181,7 @@ $db->close();
                     </svg>
                     Jenis
                 </a>
-                <a href="<?php echo Helper::basePath(); ?>state"
+                <a href="<?php echo Helper::basePath(); ?>/state"
                     class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-lg">
                     <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -189,7 +189,7 @@ $db->close();
                     </svg>
                     State
                 </a>
-                <a href="<?php echo Helper::basePath(); ?>barang"
+                <a href="<?php echo Helper::basePath(); ?>/barang"
                     class="sidebar-link active flex items-center px-4 py-3 text-gray-600 rounded-lg">
                     <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -199,7 +199,7 @@ $db->close();
                 </a>
             </nav>
             <div class="px-4 py-4 border-t border-blue-100">
-                <a href="<?php echo Helper::basePath(); ?>logout"
+                <a href="<?php echo Helper::basePath(); ?>/logout"
                     class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-red-50 hover:text-red-600">
                     <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
