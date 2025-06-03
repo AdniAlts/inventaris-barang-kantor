@@ -30,8 +30,8 @@ foreach ($states as $state)
                                                       'value' => $state['nama'] ];
 foreach ($statuses as $status_key => $status_label)
   $filters_display['status_' . strtolower(str_replace(' ', '_', $status_key))] = [ 'label' => $status_label,
-                                                                                   'type' => 'status',
-                                                                                   'value' => $status_key ];
+                                                                                                                     'type' => 'status',
+                                                                                                                     'value' => $status_key ];
 ?>
 
 <!DOCTYPE html>
