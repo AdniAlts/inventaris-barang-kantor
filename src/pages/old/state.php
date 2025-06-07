@@ -1,6 +1,6 @@
 <?php
-require_once "../utils/get_names.php";
-require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . "/../../utils/get_names.php";
+require_once __DIR__ . '/../../config/db.php';
 
 // Memulai sesi hanya jika belum ada sesi yang aktif
 if (session_status() == PHP_SESSION_NONE) {

@@ -1,7 +1,7 @@
 <?php
 // require_once "../utils/get_names.php"; // This file was not provided, assuming it's not strictly necessary for this CRUD
-require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../config/helper.php'; // Ensure helper.php is included for Helper::basePath()
+require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../../config/helper.php'; // Ensure helper.php is included for Helper::basePath()
 
 // Memulai sesi hanya jika belum ada sesi yang aktif
 if (session_status() == PHP_SESSION_NONE) {
