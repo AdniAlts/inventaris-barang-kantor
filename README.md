@@ -22,7 +22,7 @@ git config user.name "[nama github kalian, bukan username github]"
 git config user.email "[isi email github kalian]"
 ```
 9. Coba `git pull`, harusnya diminta login ke GitHub sama VS Code nya
-10. Bikin branch buat fitur bagian yang kamu kerjain
+10. Bikin branch biar ambil dari dev
 ```
 git checkout -b dev origin/dev
 ```
