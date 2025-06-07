@@ -4,30 +4,34 @@ Tugas Proyek Akhir Semester Praktikum Pemrograman Web yang tercinta 🥰🥰
 
 ## Untuk mulai ngerjain
 1. Install git dulu [disini](https://git-scm.com/downloads)
-2. Buka folder XAMPP `htdocs`
-3. Buka terminal di folder itu
-4. Clone repositori ini pake command ini
+2. Install composer juga sekalian [disini](https://getcomposer.org/download/)
+3. Buka folder XAMPP `htdocs`
+4. Buka terminal di folder itu
+5. Clone repositori ini pake command ini
 ```
 git clone https://github.com/AdniAlts/inventaris-barang-kantor.git
 ```
-5. Buka VS Code di dalam folder itu pake command ini
+6. Buka VS Code di dalam folder itu pake command ini
 ```
 code inventaris-barang-kantor/
 ```
-6. Buka terminal di VS Code
-7. Masukin informasi akun GitHub kamu (ambilnya di [setting GitHub bagian e-mail](https://github.com/settings/emails))
+7. Buka terminal di VS Code
+8. Masukin informasi akun GitHub kamu (ambilnya di [setting GitHub bagian e-mail](https://github.com/settings/emails))
 ```
-git config user.email "{ID}+{username}@users.noreply.github.com"
+git config user.name "[nama github kalian, bukan username github]"
+git config user.email "[isi email github kalian]"
 ```
-8. Coba `git pull`, harusnya diminta login ke GitHub sama VS Code nya
-9. Bikin branch buat fitur bagian yang kamu kerjain
+9. Coba `git pull`, harusnya diminta login ke GitHub sama VS Code nya
+10. Bikin branch buat fitur bagian yang kamu kerjain
 ```
-git checkout -b fitur-[isi nama fitur tanpa kurung ini]
+git checkout -b dev origin/dev
 ```
-10. Install CSS library (Tailwind) dengan `npm install`
-11. Start XAMPP Apache server di control panel atau entah gimana cara kalian biasanya
-12. Buka link `localhost/inventaris-barang-kantor/src/dashboard.html` atau entah dimana kalian nyimpen folder nya
-13. Selamat mengerjakan
+11. Install CSS library (Tailwind) dengan `npm install`
+12. Install PHP library dengan `composer install` atau `composer update` kalau failed
+13. Jalanin `npm run build` untuk nge-build tailwind CSS nya
+14. Start XAMPP Apache server di control panel atau entah gimana cara kalian biasanya
+15. Buka link `localhost/inventaris-barang-kantor/admin`
+16. Selamat mengerjakan
 
 ## Selama ngerjain (jangan lupa ini)
 1. Kalo kamu nambah file baru, jalanin `git add [nama filenya]`
@@ -37,12 +41,7 @@ git commit -m "Taruh penjelasan fitur yang kamu commit diantara petik ini"
 ```
 3. Kalo siap upload ke repositori jalanin
 ```
-git push -u origin fitur-[nama fitur yang kamu tulis di command <git checkout...> sebelumnya tanpa kurung ini]
+git push -u origin dev
 ```
 
-## Setelah fitur mu sudah dibuat semua
-1. Bikin dokumentasi (penjelasan) dari fungsi apa yang kamu pake biar bisa dihubungin sama front-end atau back-end nantinya
-2. Bikinnya di file README.md kaya gini, ditimpa aja yang sekarang gapapa, pokoknya di branch mu sendiri.
-3. Untuk pemformatan bisa liat [disini](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
-
-## JANGAN LUPA YANG RAPI STRUKTUR FILE DAN FOLDER NYA YAAAA 😃😃😃
+## JANGAN LUPA YANG RAPI STRUKTUR FILE DAN FOLDER NYA YAAAA 😃😃
