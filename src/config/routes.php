@@ -111,9 +111,8 @@ if (session_status() == PHP_SESSION_NONE) {
 
 
 switch ($comp) {
-
     case 'GET:home':
-        require_once "../pages/landing.php";
+        require_once __DIR__ . "/../pages/old/landing.php";
         break;
 
     case 'GET:peminjaman':
@@ -161,11 +160,11 @@ switch ($comp) {
             exit;
         }
         // $error = $_GET['error'];
-        require_once "../pages/peminjaman.php";
+        require_once __DIR__ . "/../pages/pegawai/peminjaman.php";
         break;
 
     case 'POST:loan':
-        require_once "../pages/loan.php";
+        require_once __DIR__ . "/../pages/old/loan.php";
         break;
 
     case 'GET:pengembalian':
@@ -183,16 +182,16 @@ switch ($comp) {
             $querys2 = $db->conn->query("SELECT j.nama, d.barang_kode FROM peminjaman p JOIN peminjaman_detail d ON p.id_peminjaman = d.peminjaman_id JOIN barang b ON d.barang_kode = b.kode_barang JOIN jenis j ON j.id_jenis = b.jenis_id WHERE p.id_peminjaman = '$id'");
         }
 
-        require_once "../pages/pengembalian.php";
+        require_once __DIR__ . "/../pages/pegawai/pengembalian.php";
         break;
 
     case 'POST:return':
-        require_once "../pages/return.php";
+        require_once __DIR__ . "/../pages/old/return.php";
         break;
 
     case 'POST:search':
     case 'GET:search':
-        require_once "../pages/search_barang.php";
+        require_once __DIR__ . "/../pages/old/search_barang.php";
         break;
 
     case 'GET:login':
@@ -235,7 +234,7 @@ switch ($comp) {
         }
 
         if ($login_successful) {
-            Helper::route("dashboard"); // Arahkan ke halaman 'home' (dashboard)
+            Helper::route("admin"); // Arahkan ke halaman 'home' (dashboard)
         } else {
             Helper::route("login", ['error' => urlencode($error_message)]); // Arahkan kembali ke login dengan error
         }
@@ -263,47 +262,41 @@ switch ($comp) {
         Helper::route("home");
         break;
 
-    case 'GET:dashboard':
-        require_once "../pages/dashboard.php";
+    case 'GET:admin':
+        require_once __DIR__ . "/../pages/admin/dashboard.php";
+        break;
+
+    case 'GET:user':
+        require_once __DIR__ . "/../pages/pegawai/dashboard.php";
         break;
 
     case 'GET:kategori':
-        require_once "../pages/kategori.php";
-        break;
-
-    case 'GET:kategori':
-        require_once "../pages/kategori.php";
+        require_once __DIR__ . "/../pages/admin/kategori.php";
         break;
 
     case 'POST:kategori':
-        require_once "../pages/kategori.php";
+        require_once __DIR__ . "/../pages/admin/kategori.php";
         break;
 
-
     case 'GET:jenis':
-        require_once "../pages/jenis.php";
+        require_once __DIR__ . "/../pages/admin/jenis.php";
         break;
 
     case 'POST:jenis':
-        require_once "../pages/jenis.php";
+        require_once __DIR__ . "/../pages/admin/jenis.php";
         break;
 
-    case 'GET:state':
-        require_once "../pages/state.php";
+    case 'GET:kondisi':
+        require_once __DIR__ . "/../pages/admin/kondisi.php";
         break;
 
-    case 'POST:state':
-        require_once "../pages/state.php";
+    case 'POST:kondisi':
+        require_once __DIR__ . "/../pages/admin/kondisi.php";
         break;
 
     case 'GET:barang':
-        require_once "../pages/barang.php";
+        require_once __DIR__ . "/../pages/admin/barang.php";
         break;
-
-    case 'GET:barang_user':
-        require_once "../pages/barang_user.php";
-        break;
-
 
     case 'POST:barang/create':
         Barang::create();
@@ -414,7 +407,7 @@ switch ($comp) {
         // Coba arahkan ke halaman utama atau login jika rute tidak ditemukan secara default
         // Agar tidak langsung 404 pada URL root
         if ($request == '') { // Jika user hanya mengakses URL dasar (misal: http://localhost/inventaris-barang-kantor/)
-            Helper::route("home"); // Arahkan ke home atau dashboard
+            Helper::route("admin"); // Arahkan ke home atau dashboard
         } else {
             echo "$comp"; // Untuk debugging, bisa diaktifkan
             http_response_code(404);
