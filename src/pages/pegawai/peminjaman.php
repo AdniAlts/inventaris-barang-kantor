@@ -1,5 +1,26 @@
 <?php
-require_once __DIR__ . '/../../config/helper.php';
+require_once __DIR__ . "/../../config/helper.php";
+require_once __DIR__ . "/../../modules/search.php";
+require_once __DIR__ . "/../../config/db.php";
+
+$db = new db();
+$connDB = $db->conn;
+
+register_shutdown_function(function() use ($db) {
+  if ($db && $db->conn)
+    $db->close();
+});
+
+$allItems = Search::getAllItems($connDB);
+$categories = GetNames::category($connDB);
+$allTypes = Search::getAllTypes($connDB);
+
+$filters = [];
+foreach ($categories as $category)
+  $filters[strtolower(str_replace(' ', '_', $category['nama']))] = ['label' => $category['nama'],
+                                                                                                                  'type' => 'category',
+                                                                                                                  'value' => $category['nama']];
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -173,18 +194,13 @@ require_once __DIR__ . '/../../config/helper.php';
               <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-100">
                 <!-- Ini ntar diisi kategori (diambil dari table kategori yaa) -->
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-700" aria-labelledby="dropdown-button">
-                  <li>
-                    <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-300 dark:hover:text-gray-900">Alat Tulis</button>
-                  </li>
-                  <li>
-                    <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-300 dark:hover:text-gray-900">Mabel</button>
-                  </li>
-                  <li>
-                    <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-300 dark:hover:text-gray-900">Elektronik</button>
-                  </li>
-                  <li>
-                    <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-300 dark:hover:text-gray-900">Apalah</button>
-                  </li>
+                  <?php
+                  foreach ($filters as $key => $data) {
+                    echo "<li>
+                            <button type='button' id='category-selector' class='inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-300 dark:hover:text-gray-900' data-category-key='{$key}' data-category-value='".htmlspecialchars($data['value'], ENT_QUOTES)."'>" . htmlspecialchars($data['label']) . "</button>
+                          </li>";
+                  }
+                  ?>
                 </ul>
               </div>
               <div class="relative w-full">
@@ -199,7 +215,7 @@ require_once __DIR__ . '/../../config/helper.php';
             </div>
           </form>
         </div>
-        <div class="grid grid-cols-4 gap-2 my-5 px-2">
+        <div id="types-render" class="grid grid-cols-4 gap-2 my-5 px-2">
           <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white mt-1 mx-1.5">
             <img class="w-full h-24 object-cover" src="https://www.shutterstock.com/image-vector/fill-image-preview-icon-simple-260nw-2338969281.jpg" alt="Image" />
             <div class="p-2">
@@ -497,6 +513,66 @@ require_once __DIR__ . '/../../config/helper.php';
         sidebar.classList.toggle('sidebar-hover');
       }
     });
+
+    // Select Category
+    const allTypes = <?= json_encode($allTypes); ?>;
+    const typeContainer = document.getElementById('types-render');
+    const searchInput = document.getElementById('search-dropdown');
+    const categoryFilters = document.querySelectorAll('#category-selector');
+    
+    let activeCategory = '';
+
+    function renderTypes(typesToRender) {
+      typeContainer.innerHTML = '';
+      if (typesToRender.length === 0) {
+        typeContainer.innerHTML = '<p>Tidak ada tipe barang sesuai kriteria.</p>';
+        return;
+      }
+
+      typesToRender.forEach(item => {
+        const typeDiv = document.createElement('div');
+        typeDiv.className = 'max-w-sm rounded overflow-hidden shadow-lg bg-white mt-1 mx-1.5';
+        typeDiv.innerHTML =
+          '<img class="w-full h-24 object-cover" src="https://www.shutterstock.com/image-vector/fill-image-preview-icon-simple-260nw-2338969281.jpg" alt="Image">' +
+          '<div class="p-2"><p class="mb-3 font-normal text-gray-700 dark:text-gray-400">'+ (item.nama || 'N/A') +'</p><button data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Tambah</button><div id="crud-modal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full hidden" aria-hidden="true"><div class="relative p-4 w-full max-w-lg max-h-full"><div class="relative bg-white rounded-lg shadow-sm"><div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200"><h3 class="text-lg font-semibold text-gray-900">Barang</h3><button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-toggle="crud-modal"><svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"></path></svg><span class="sr-only">Close modal</span></button></div><form class="p-4 md:p-5"><div class="mb-4"><div class="mb-2"><img class="w-full h-48 object-cover" src="https://www.shutterstock.com/image-vector/fill-image-preview-icon-simple-260nw-2338969281.jpg" alt="Image"><p>'+ (item.stok || 'N/A') +'</p></div><div class="col-span-2"><label for="jumlah" class="block mb-2 text-sm font-medium text-gray-900">Jumlah</label><input type="number" name="jumlah" id="jumlah" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type product name" required=""></div></div><button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>Tambah</button></form></div></div></div></div>';
+        typeContainer.appendChild(typeDiv);
+      })
+    }
+
+    function applyCategories() {
+      let filteredTypes = allTypes;
+      const searchTerm = searchInput.value.toLowerCase().trim();
+
+      if (searchTerm) {
+        filteredTypes = filteredTypes.filter(item => {
+          return (item.nama && item.nama.toLowerCase().includes(searchTerm)) || 
+                 (item.nama_kategori && item.nama_kategori.toLowerCase().includes(searchTerm));
+        });
+      }
+
+      if (activeCategory) {
+        filteredTypes = filteredTypes.filter(item => item.nama_kategori === activeCategory);
+      }
+
+      renderTypes(filteredTypes);
+    }
+    
+    searchInput.addEventListener('input', applyCategories);
+
+    categoryFilters.forEach(button => {
+      button.addEventListener('click', () => {
+        const categoryValue = button.dataset.categoryValue;
+
+        if (activeCategory === categoryValue) {
+          activeCategory = '';
+        } else {
+          activeCategory = categoryValue;
+        }
+        applyCategories();
+      })
+    });
+
+    applyCategories();
   </script>
 </body>
 
