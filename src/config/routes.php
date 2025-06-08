@@ -304,7 +304,7 @@ switch ($comp) {
             Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/jenis.php";
         break;
     case 'POST:jenis':
         if (!isset($_SESSION['admin_id'])) {
@@ -312,7 +312,7 @@ switch ($comp) {
             Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/jenis.php";
         break;
 
     case 'GET:kondisi':
@@ -321,7 +321,7 @@ switch ($comp) {
             Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/kondisi.php";
         break;
 
     case 'POST:kondisi':
@@ -330,7 +330,7 @@ switch ($comp) {
             Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/kondisi.php";
         break;
 
     case 'GET:barang':
@@ -339,7 +339,7 @@ switch ($comp) {
             Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/barang.php";
         break;
     case 'POST:barang/create':
         if (!isset($_SESSION['admin_id'])) {
@@ -347,7 +347,7 @@ switch ($comp) {
             Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/barang.php";
         Barang::create();
         break;
 
@@ -357,7 +357,7 @@ switch ($comp) {
             Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/barang.php";
         Barang::update();
         break;
 
@@ -367,7 +367,7 @@ switch ($comp) {
             Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/barang.php";
         break;
     case 'GET:barang/delete':
         if (!isset($_SESSION['admin_id'])) {
@@ -375,7 +375,7 @@ switch ($comp) {
             Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/barang.php";
         Barang::delete();
         break;
 
