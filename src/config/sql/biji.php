@@ -111,8 +111,8 @@ foreach ($peminjaman as $p) {
         VALUES ({$p['id']}, '{$p['tgl_peminjaman']}', {$tgl_balik}, {$p['total']}, '{$p['status']}')");
 
     foreach ($p['barang'] as $kode_barang) {
-        $db->conn->query("INSERT INTO peminjaman_detail (id_peminjaman_detail, jumlah, barang_kode, peminjaman_id) 
-            VALUES ({$detail_id}, 1, '{$kode_barang}', {$p['id']})");
+        $db->conn->query("INSERT INTO peminjaman_detail (id_peminjaman_detail, barang_kode, peminjaman_id) 
+            VALUES ({$detail_id}, '{$kode_barang}', {$p['id']})");
         $detail_id++;
     }
 }
