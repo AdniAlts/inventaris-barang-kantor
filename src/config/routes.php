@@ -200,7 +200,8 @@ switch ($comp) {
 
     case 'GET:admin':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/dashboard.php";
@@ -281,7 +282,8 @@ switch ($comp) {
 
     case 'GET:kategori':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/kategori.php";
@@ -289,82 +291,91 @@ switch ($comp) {
 
     case 'POST:kategori':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/kategori.php";
         break;
 
-            case 'GET:jenis':
-            if (!isset($_SESSION['admin_id'])) {
-                Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
-                exit;
-            }
-            require_once __DIR__ . "/../pages/admin/jenis.php";
-            break;
+    case 'GET:jenis':
+        if (!isset($_SESSION['admin_id'])) {
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
+            exit;
+        }
+        require_once __DIR__ . "/../pages/admin/jenis.php";
+        break;
+    case 'POST:jenis':
+        if (!isset($_SESSION['admin_id'])) {
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
+            exit;
+        }
+        require_once __DIR__ . "/../pages/admin/jenis.php";
+        break;
 
-        case 'POST:jenis':
-            if (!isset($_SESSION['admin_id'])) {
-                Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
-                exit;
-            }
-            require_once __DIR__ . "/../pages/admin/jenis.php";
-            break;
+    case 'GET:kondisi':
+        if (!isset($_SESSION['admin_id'])) {
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
+            exit;
+        }
+        require_once __DIR__ . "/../pages/admin/kondisi.php";
+        break;
 
-        case 'GET:kondisi':
-            if (!isset($_SESSION['admin_id'])) {
-                Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
-                exit;
-            }
-            require_once __DIR__ . "/../pages/admin/kondisi.php";
-            break;
-
-        case 'POST:kondisi':
-            if (!isset($_SESSION['admin_id'])) {
-                Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
-                exit;
-            }
-            require_once __DIR__ . "/../pages/admin/kondisi.php";
-            break;
+    case 'POST:kondisi':
+        if (!isset($_SESSION['admin_id'])) {
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
+            exit;
+        }
+        require_once __DIR__ . "/../pages/admin/kondisi.php";
+        break;
 
     case 'GET:barang':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/barang.php";
         break;
     case 'POST:barang/create':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/barang.php";
         Barang::create();
         break;
 
     case 'POST:barang/update':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/barang.php";
         Barang::update();
         break;
 
     case 'POST:barang/delete':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/barang.php";
         break;
     case 'GET:barang/delete':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/barang.php";
         Barang::delete();
         break;
 

@@ -127,7 +127,7 @@ require_once __DIR__ . '/../../config/helper.php';
               <div class="text-sm text-gray-700">Klik untuk ganti mode</div>
             </div>
           </a>
-          <a href="#" class="flex items-center hover:bg-gray-100 my-3 px-4 rounded hidden">
+          <a href="#" class=" items-center hover:bg-gray-100 my-3 px-4 rounded hidden">
             <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png"
               class="mr-3 w-8 h-8 rounded-full" alt="Roberta avatar">
             <div class="text-left">
@@ -156,9 +156,9 @@ require_once __DIR__ . '/../../config/helper.php';
       <p>Ini bisa jadi saran untuk membantu pembuatan dashboard admin:</p>
       <ol style="list-style: decimal;">
         <li>TOLONG BANGET AMBIL DATANYA DARI DATABASE AJA, JANGAN BIKIN DUMMY SENDIRI!!!<br>
-            Kalau memang gatau caranya, ada modul pembelajaran koneksi database dari bu Dian sendiri, atau ada yang namanya 'searching di Google dan YouTube'.<br>
-            Tolong lah, pake AI nya di minimalisir, dan kalau memang mendesak banget. Mumpung waktu libur kita masih banyak, jadi masih bisa meluangkan waktu untuk BELAJAR.<br>
-            Sama mohon TANGGUNG JAWABnya terhadap bagian tugasnya sendiri, jangan mentang-mentang lagi ada kegiatan jadinya ngga bisa meluangkan waktu untuk ngerjain.</li>
+          Kalau memang gatau caranya, ada modul pembelajaran koneksi database dari bu Dian sendiri, atau ada yang namanya 'searching di Google dan YouTube'.<br>
+          Tolong lah, pake AI nya di minimalisir, dan kalau memang mendesak banget. Mumpung waktu libur kita masih banyak, jadi masih bisa meluangkan waktu untuk BELAJAR.<br>
+          Sama mohon TANGGUNG JAWABnya terhadap bagian tugasnya sendiri, jangan mentang-mentang lagi ada kegiatan jadinya ngga bisa meluangkan waktu untuk ngerjain.</li>
         <li>Karena ini mode admin, boleh ditambahkan list peminjaman pegawai yang sedang ada, tapi tidak perlu create, update, sama delete, cuma perlu read DARI DATABASE aja.</li>
         <li>Tampilan 5 kategori pertama yang ada DI DATABASE, boleh tambahin tombol untuk menuju ke halaman kategori untuk selengkapnya.</li>
         <li>Tampilan 5 jenis pertama yang ada DI DATABASE, boleh tambahin tombol untuk menuju ke halaman jenis untuk selengkapnya.</li>
@@ -168,6 +168,124 @@ require_once __DIR__ . '/../../config/helper.php';
       <br>
       <p>Kalau sudah selesai mengimplementasi bagian halaman ini. Bisa menghapus elemen div yang isinya teks ini.</p>
       <p>Dan kalau ada pertanyaan, jangan sungkan tanya di grup. Teman-teman kalian PASTI dan HARUSNYA bisa bantu.</p>
+    </div>
+
+    <!-- Tampilan 5 barang pertama -->
+
+    <!-- Tampilan 5 barang pertama -->
+
+    <!-- Tampilan 5 barang pertama -->
+
+    <!-- Tampilan 5 barang pertama -->
+    <div class="flex flex-wrap justify-center gap-6">
+      <a href="#" class="group relative block overflow-hidden">
+        <button
+          class="absolute end-4 top-4 z-10 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75">
+          <span class="sr-only">Wishlist</span>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-4">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+          </svg>
+        </button>
+
+        <img
+          src="https://images.unsplash.com/photo-1599481238640-4c1288750d7a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2664&q=80"
+          alt=""
+          class="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72" />
+        <div class="relative border border-gray-100 bg-white p-6">
+          <span class="bg-yellow-400 px-3 py-1.5 text-xs font-medium whitespace-nowrap"> New </span>
+          <h3 class="mt-4 text-lg font-medium text-gray-900">Robot Toy</h3>
+          <p class="mt-1.5 text-sm text-gray-700">$14.99</p>
+          <form class="mt-4">
+            <button
+              class="block w-full rounded-sm bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105">
+              Add to Cart
+            </button>
+          </form>
+        </div>
+      </a>
+    </div>
+
+    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+      <a href="#">
+        <img class="rounded-t-lg" src="https://via.placeholder.com/400x200" alt="Card Image 2" />
+      </a>
+      <div class="p-5">
+        <a href="#">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Another exciting tech development</h5>
+        </a>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Exploring the latest breakthroughs and trends in the tech industry.</p>
+        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Read more
+          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+      <a href="#">
+        <img class="rounded-t-lg" src="https://via.placeholder.com/400x200" alt="Card Image 3" />
+      </a>
+      <div class="p-5">
+        <a href="#">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">The future of AI and machine learning</h5>
+        </a>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Discover how AI is shaping our world and what's next in the field.</p>
+        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Read more
+          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+      <a href="#">
+        <img class="rounded-t-lg" src="https://via.placeholder.com/400x200" alt="Card Image 4" />
+      </a>
+      <div class="p-5">
+        <a href="#">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Innovations in renewable energy</h5>
+        </a>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Learn about the latest advancements in clean energy solutions.</p>
+        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Read more
+          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+      <a href="#">
+        <img class="rounded-t-lg" src="https://via.placeholder.com/400x200" alt="Card Image 5" />
+      </a>
+      <div class="p-5">
+        <a href="#">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Cybersecurity threats and solutions</h5>
+        </a>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Understand the evolving landscape of cyber threats and how to protect yourself.</p>
+        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Read more
+          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+          </svg>
+        </a>
+      </div>
+    </div>
     </div>
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg">
       <div class="grid grid-cols-3 gap-4 mb-4">
@@ -295,26 +413,26 @@ require_once __DIR__ . '/../../config/helper.php';
       </div>
     </div>
   </main>
-  
+
   <script src="<?= Helper::basePath(); ?>node_modules/flowbite/dist/flowbite.min.js"></script>
   <script>
     const sidebar = document.getElementById('sidebar');
     const userButton = document.getElementById('dropdownUserNameButton');
     const userDropdown = document.getElementById('dropdownUserName');
-    document.getElementById('toggleSidebarBtn').addEventListener('click', function () {
+    document.getElementById('toggleSidebarBtn').addEventListener('click', function() {
       sidebar.classList.toggle('sidebar-collapsed');
     });
-    sidebar.addEventListener('mouseenter', function () {
+    sidebar.addEventListener('mouseenter', function() {
       if (sidebar.classList.contains('sidebar-collapsed') && userDropdown.classList.contains('hidden')) {
         sidebar.classList.toggle('sidebar-hover');
       }
     });
-    sidebar.addEventListener('mouseleave', function () {
+    sidebar.addEventListener('mouseleave', function() {
       if (sidebar.classList.contains('sidebar-hover') && userDropdown.classList.contains('hidden')) {
         sidebar.classList.toggle('sidebar-hover');
       }
     });
-    userButton.addEventListener('focusout', function () {
+    userButton.addEventListener('focusout', function() {
       if (!userDropdown.classList.contains('hidden')) {
         sidebar.classList.toggle('sidebar-hover');
       }
