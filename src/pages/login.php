@@ -7,12 +7,11 @@
 require_once __DIR__ . "/../config/helper.php";
 require_once __DIR__ . "/../config/routes.php"; // <--- PERBAIKAN PATH INI
 
-
 $error_message = "";
-if (isset($_GET['error'])) {
-    $error_message = urldecode($_GET['error']);
+if (!empty($_SESSION['error_message'])) {
+    $error_message = $_SESSION['error_message'];
+    unset($_SESSION['error_message']); // Hapus agar tidak muncul terus
 }
-
 ?>
 
 <!DOCTYPE html>
