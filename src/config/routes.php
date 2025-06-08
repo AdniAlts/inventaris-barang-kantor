@@ -200,7 +200,8 @@ switch ($comp) {
 
     case 'GET:admin':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/dashboard.php";
@@ -281,7 +282,8 @@ switch ($comp) {
 
     case 'GET:kategori':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/kategori.php";
@@ -289,7 +291,8 @@ switch ($comp) {
 
     case 'POST:kategori':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/kategori.php";
@@ -297,14 +300,16 @@ switch ($comp) {
 
     case 'GET:jenis':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/kategori.php";
         break;
     case 'POST:jenis':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/kategori.php";
@@ -312,7 +317,8 @@ switch ($comp) {
 
     case 'GET:kondisi':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/kategori.php";
@@ -320,7 +326,8 @@ switch ($comp) {
 
     case 'POST:kondisi':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/kategori.php";
@@ -328,14 +335,16 @@ switch ($comp) {
 
     case 'GET:barang':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/kategori.php";
         break;
     case 'POST:barang/create':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/kategori.php";
@@ -344,7 +353,8 @@ switch ($comp) {
 
     case 'POST:barang/update':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/kategori.php";
@@ -353,14 +363,16 @@ switch ($comp) {
 
     case 'POST:barang/delete':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/kategori.php";
         break;
     case 'GET:barang/delete':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/kategori.php";
