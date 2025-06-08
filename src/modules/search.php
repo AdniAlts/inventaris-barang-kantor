@@ -4,7 +4,7 @@
  * Deskripsi: Modul ini bertanggung jawab untuk menangani logika pencarian data dari database.
  * Saat ini, mendukung pencarian berdasarkan 'barang' atau 'all'.
  */
-require_once "../utils/get_names.php";
+require_once __DIR__ . "/../utils/get_names.php";
 
 class Search {
   /**
@@ -260,13 +260,13 @@ class Search {
   }
 
   /**
-   * Fungsi `getAllItemsForClientSide()`:
+   * Fungsi `getAllItems()`:
    * Mengambil semua barang beserta detailnya (jenis, state, kategori) untuk digunakan di client-side (JavaScript).
    *
    * @param mysqli $connDB Objek koneksi database.
    * @return array Array berisi semua data barang atau array kosong jika terjadi error atau tidak ada data.
    */
-  public static function getAllItemsForClientSide(mysqli $connDB): array {
+  public static function getAllItems(mysqli $connDB): array {
     $items = [];
     $query = "SELECT b.kode_barang, 
                      j.nama AS item_name, 
@@ -284,7 +284,7 @@ class Search {
 
     $sql = $connDB->prepare($query);
     if (!$sql) {
-      error_log("Persiapan query gagal untuk getAllItemsForClientSide. Error: " . $connDB->error . ". Query: " . $query);
+      error_log("Persiapan query gagal untuk getAllItems. Error: " . $connDB->error . ". Query: " . $query);
       return [];
     }
 
@@ -296,11 +296,39 @@ class Search {
         }
         $result->free();
       } else {
-        error_log("Gagal mengambil data untuk getAllItemsForClientSide. Error: " . $sql->error);
+        error_log("Gagal mengambil data untuk getAllItems. Error: " . $sql->error);
       }
     }
     $sql->close();
     return $items;
+  }
+
+  public static function getAllTypes(mysqli $connDB) {
+    $types = [];
+    $query = "SELECT j.id_jenis, j.nama, j.stok, k.nama as nama_kategori
+              FROM jenis j
+              JOIN kategori k on j.kategori_id = k.id_kategori
+              ORDER BY j.id_jenis ASC";
+    
+    $sql = $connDB->prepare($query);
+    if (!$sql) {
+      error_log("Persiapan query gagal untuk getAllTypes. Error: " . $connDB->error . ". Query: " . $query);
+      return [];
+    }
+
+    if ($sql->execute()) {
+      $result = $sql->get_result();
+      if ($result) {
+        while ($row = $result->fetch_assoc()) {
+          $types[] = $row;
+        }
+        $result->free();
+      } else {
+        error_log("Gagal mengambil data untuk getAllTypes. Error: " . $sql->error);
+      }
+    }
+    $sql->close();
+    return $types;
   }
 }
 ?>
