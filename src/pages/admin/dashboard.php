@@ -177,20 +177,20 @@ require_once __DIR__ . '/../../config/helper.php';
     </div>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-900 dark:text-black">
         <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-50 text-black">
           <tr>
             <th scope="col" class="px-6 py-3">
-              Product name
-            </th>
-            <th scope="col" class="px-6 py-3">
-              ID Peminjaman
+              Kategori Barang
             </th>
             <th scope="col" class="px-6 py-3">
               Jenis Barang
             </th>
             <th scope="col" class="px-6 py-3">
-              Jumlah Pinjam
+              Kondisi Barang
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Barang tersedia
             </th>
             <th scope="col" class="px-6 py-3">
               Actions
@@ -198,89 +198,89 @@ require_once __DIR__ . '/../../config/helper.php';
           </tr>
         </thead>
         <tbody>
-          <tr class="" bg-white dark:bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
-              Apple MacBook Pro 17"
+              Barang 1
             </th>
             <td class="px-6 py-4">
-              Silver
+              Jenis Barang
             </td>
             <td class="px-6 py-4">
-              Laptop
+              Kondisi Barang
             </td>
             <td class="px-6 py-4">
-              $2999
+              Actions
             </td>
             <td class="px-6 py-4">
-              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Kembalikan</button>
+              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Kembalikan</button>
             </td>
           </tr>
-          <tr class="bg-white dark:bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
-              Microsoft Surface Pro
+              Barang 2
             </th>
             <td class="px-6 py-4">
-              White
+              Jenis Barang
             </td>
             <td class="px-6 py-4">
-              Laptop PC
+              Kondisi Barang
             </td>
             <td class="px-6 py-4">
-              $1999
+              Actions
             </td>
             <td class="px-6 py-4">
-              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Kembalikan</button>
+              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Kembalikan</button>
             </td>
           </tr>
-          <tr class="bg-white dark:bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
-              Magic Mouse 2
+              Barang 3
             </th>
             <td class="px-6 py-4">
-              Black
+              Jenis Barang
             </td>
             <td class="px-6 py-4">
-              Accessories
+              Kondisi Barang
             </td>
             <td class="px-6 py-4">
-              $99
+              Actions
             </td>
             <td class="px-6 py-4">
-              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Kembalikan</button>
+              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Kembalikan</button>
             </td>
           </tr>
-          <tr class="bg-white dark:bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
-              Microsoft Surface Pro
+              Barang 4
             </th>
             <td class="px-6 py-4">
-              White
+              Jenis Barang
             </td>
             <td class="px-6 py-4">
-              Laptop PC
+              Kondisi Barang
             </td>
             <td class="px-6 py-4">
-              $1999
+              Actions
             </td>
             <td class="px-6 py-4">
-              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Kembalikan</button>
+              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Kembalikan</button>
             </td>
           </tr>
-          <tr class="bg-white dark:bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
-              Microsoft Surface Pro
+              Barang 5
             </th>
             <td class="px-6 py-4">
-              White
+              Jenis Barang
             </td>
             <td class="px-6 py-4">
-              Laptop PC
+              Kondisi Barang
             </td>
             <td class="px-6 py-4">
-              $1999
+              Actions
             </td>
             <td class="px-6 py-4">
-              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Kembalikan</button>
+              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Kembalikan</button>
             </td>
           </tr>
         </tbody>
