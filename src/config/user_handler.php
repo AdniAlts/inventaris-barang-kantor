@@ -63,6 +63,7 @@ class UserHandler {
         return 'pegawai';
       }
     } else {
+      $_SESSION['login_errmsg'] = "Silahkan login terlebih dahulu.";
       require_once __DIR__ . "/../pages/login.php";
     }
     exit;

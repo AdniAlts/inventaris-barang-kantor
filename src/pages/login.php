@@ -8,9 +8,9 @@ require_once __DIR__ . "/../config/helper.php";
 require_once __DIR__ . "/../config/routes.php"; // <--- PERBAIKAN PATH INI
 
 $error_message = "";
-if (!empty($_SESSION['error_message'])) {
-    $error_message = $_SESSION['error_message'];
-    unset($_SESSION['error_message']); // Hapus agar tidak muncul terus
+if (!empty($_SESSION['login_errmsg'])) {
+    $error_message = $_SESSION['login_errmsg'];
+    unset($_SESSION['login_errmsg']); // Hapus agar tidak muncul terus
 }
 ?>
 
