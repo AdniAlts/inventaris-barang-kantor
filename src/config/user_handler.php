@@ -54,22 +54,22 @@ class UserHandler {
     exit;
   }
 
-  public static function login_verify() {
+  public static function dashboard_verify() {
     if (!empty($_SESSION['user'])) {
       if ($_SESSION['user']['role'] === "Admin") {
-        return 'admin';
+        require_once __DIR__ . "/../pages/admin/dashboard.php";
       }
       if ($_SESSION['user']['role'] === "Pegawai") {
-        return 'pegawai';
+        require_once __DIR__ . "/../pages/pegawai/dashboard.php";
       }
     } else {
       $_SESSION['login_errmsg'] = "Silahkan login terlebih dahulu.";
-      require_once __DIR__ . "/../pages/login.php";
+      Helper::route("login");
     }
     exit;
   }
 
-  public static function verify() {
+  public static function page_verify() {
     if (!empty($_SESSION['user'])) {
       return true;
     } else {
@@ -77,6 +77,15 @@ class UserHandler {
       Helper::route("login");
       exit;
     }
+  }
+
+  public static function login_verify() {
+    if (!empty($_SESSION['user'])) {
+      Helper::route("dashboard");
+    } else {
+      return false;
+    }
+    exit;
   }
 
   public static function switch($to) {
