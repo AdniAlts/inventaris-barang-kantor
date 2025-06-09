@@ -132,6 +132,25 @@ $db->close();
       background-image: none !important;
       padding-right: 1rem;
     }
+        select {
+      background-color: transparent;     
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;                      
+      border-radius: 0.5rem;             
+      padding: 0.5rem 1rem;              
+      outline: none;
+    }
+
+    select:focus {
+      border-color: white;               
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4); 
+    }
+
+    select option {
+      background-color: rgba(0, 0, 0, 0.5); 
+      color: white;
+    }
+
   </style>
 </head>
 
@@ -191,7 +210,7 @@ $db->close();
           <li>
             <a href="<?= Helper::basePath(); ?>admin"
               class="flex items-center p-2 rounded-lg group pointer-btn
-                <?php if (basename($_SERVER['PHP_SELF']) == 'dashboard.php' || basename($_SERVER['PHP_SELF']) == 'admin.php') echo 'bg-indigo-100 text-indigo-700 ring-2 ring-indigo-200'; ?>">
+                <?php if (basename($_SERVER['PHP_SELF']) == 'dashboard.php' || basename($_SERVER['PHP_SELF']) == 'admin.php') echo 'bg-indigo-100 boxring ring-indigo-300' ; ?>">
               <svg class="shrink-0 w-5 h-5 transition duration-75 <?= (basename($_SERVER['PHP_SELF']) == 'dashboard.php' || basename($_SERVER['PHP_SELF']) == 'admin.php') ? 'text-indigo-700' : 'text-gray-500' ?>"
                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
                 <path
@@ -201,17 +220,16 @@ $db->close();
             </a>
           </li>
           <li>
-            <a href="<?= Helper::basePath(); ?>kategori"
-              class="flex items-center p-2 rounded-lg group pointer-btn
-                <?php if (strpos($_SERVER['REQUEST_URI'], '/kategori') !== false) echo 'bg-indigo-100 text-indigo-700 ring-2 ring-indigo-200'; ?>">
-              <svg class="shrink-0 w-5 h-5 transition duration-75 <?= (strpos($_SERVER['REQUEST_URI'], '/kategori') !== false) ? 'text-indigo-700' : 'text-gray-500' ?>"
-                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="3 3 18 18">
-                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
-                  d="M4.07141 14v6h5.99999v-6H4.07141Zm4.5-4h6.99999l-3.5-6-3.49999 6Zm7.99999 10c1.933 0 3.5-1.567 3.5-3.5s-1.567-3.5-3.5-3.5-3.5 1.567-3.5 3.5 1.567 3.5 3.5 3.5Z" />
-              </svg>
-              <span class="flex-1 ms-5 h-5 flex items-center whitespace-nowrap">Kategori</span>
-            </a>
-          </li>
+        <a href="<?= Helper::basePath(); ?>kategori" 
+          <a class="flex items-center p-2 secondary-color rounded-lg bg-indigo-100 boxring ring-indigo-300 group pointer-btn">
+          <svg class="shrink-0 w-5 h-5 primary-color transition duration-75 group-hover:primary-color"
+            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="3 3 18 18">
+            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+              d="M4.07141 14v6h5.99999v-6H4.07141Zm4.5-4h6.99999l-3.5-6-3.49999 6Zm7.99999 10c1.933 0 3.5-1.567 3.5-3.5s-1.567-3.5-3.5-3.5-3.5 1.567-3.5 3.5 1.567 3.5 3.5 3.5Z" />
+          </svg>
+          <span class="flex-1 ms-5 h-5 flex items-center whitespace-nowrap">Kategori</span>
+        </a>
+      </li>
           <li>
             <a href="<?= Helper::basePath(); ?>jenis" class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-100 group">
               <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"
@@ -313,7 +331,7 @@ $db->close();
         <div class="flex flex-wrap items-center gap-3">
           <form method="GET" action="<?= Helper::basePath(); ?>kategori" class="flex gap-2">
             <select name="sort"
-              class="appearance-none bg-white/10 backdrop-blur border border-white/20 text-white 
+              class="appearance-none bg-white/10 backdrop-blur border border-white/20 text-black 
               py-2 px-3 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/50 
               focus:border-transparent text-sm no-arrow">
               <option value="id_asc" <?= ($_GET['sort'] ?? '') === 'id_asc' ? 'selected' : '' ?>>ID Terkecil</option>
@@ -538,6 +556,12 @@ $db->close();
         sidebar.classList.remove('sidebar-hover');
       }
     });
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.getElementById('edit_id_kategori').value = this.dataset.id;
+    document.getElementById('edit_nama_kategori').value = this.dataset.nama;
+  });
+});
   </script>
 </body>
 

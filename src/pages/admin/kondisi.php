@@ -110,6 +110,15 @@ $db->close();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kondisi - Inventaris Barang Kantor</title>
   <link rel="stylesheet" href="<?= Helper::basePath(); ?>src/output.css">
+  <style>
+      select.no-arrow {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: none !important;
+      padding-right: 1rem;
+    }
+  </style>
 </head>
 
 <body>
@@ -169,15 +178,15 @@ $db->close();
           </li>
           <li>
             <a href="<?= Helper::basePath(); ?>kondisi"
-              class="flex items-center p-2 rounded-lg group pointer-btn transition-all duration-300 <?= strpos($_SERVER['REQUEST_URI'], '/kondisi') !== false ? 'bg-indigo-100 text-indigo-700 ring-2 ring-indigo-200' : 'text-gray-600 hover:bg-gray-100' ?>">
-              <svg class="shrink-0 w-5 h-5 transition-all duration-300 <?= strpos($_SERVER['REQUEST_URI'], '/kondisi') !== false ? 'text-indigo-700' : 'text-gray-500' ?>"
-                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="2 2 20 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              class="flex items-center p-2 secondary-color rounded-lg bg-indigo-100 boxring ring-indigo-300 group pointer-btn">
+              <svg class="shrink-0 w-5 h-5 primary-color transition duration-75 group-hover:primary-color"
+                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="2 2 20 20">
+                <path fill-rule="evenodd"
+                  d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm13.707-1.293a1 1 0 0 0-1.414-1.414L11 12.586l-1.793-1.793a1 1 0 0 0-1.414 1.414l2.5 2.5a1 1 0 0 0 1.414 0l4-4Z"
+                  clip-rule="evenodd" />
               </svg>
               <span class="flex-1 ms-5 h-5 flex items-center whitespace-nowrap">Kondisi</span>
             </a>
-          </li>
           <li>
             <a href="<?= Helper::basePath(); ?>barang"
               class="flex items-center p-2 rounded-lg group pointer-btn transition-all duration-300 <?= strpos($_SERVER['REQUEST_URI'], '/barang') !== false ? 'bg-indigo-100 text-indigo-700 ring-2 ring-indigo-200' : 'text-gray-600 hover:bg-gray-100' ?>">
@@ -274,35 +283,6 @@ $db->close();
           <h1 class="text-2xl font-bold text-white mb-1">Manajemen Kondisi</h1>
           <p class="text-blue-100 text-sm">Total: <?= count($state) ?> kondisi</p>
         </div>
-
-        <div class="flex flex-wrap items-center gap-3">
-          <form method="GET" action="<?= Helper::basePath(); ?>kondisi" class="flex gap-2">
-            <select name="sort"
-              class="appearance-none bg-white/10 backdrop-blur border border-white/20 text-white 
-      py-2 px-3 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/50 
-      focus:border-transparent text-sm no-arrow">
-              <option value="id_asc" <?= ($_GET['sort'] ?? '') === 'id_asc' ? 'selected' : '' ?>>ID Terkecil</option>
-              <option value="id_desc" <?= ($_GET['sort'] ?? '') === 'id_desc' ? 'selected' : '' ?>>ID Terbesar</option>
-              <option value="az" <?= ($_GET['sort'] ?? '') === 'az' ? 'selected' : '' ?>>A-Z</option>
-              <option value="za" <?= ($_GET['sort'] ?? '') === 'za' ? 'selected' : '' ?>>Z-A</option>
-            </select>
-          </form>
-          <script>
-            document.querySelector('select[name="sort"]').addEventListener('change', function() {
-              this.form.submit();
-            });
-          </script>
-
-          <!-- Tombol Tambah -->
-          <button data-modal-target="modalTambah" data-modal-toggle="modalTambah"
-            class="p-2 bg-blue-700 text-white rounded-lg hover:bg-green-600 
-            transition-all duration-300 group shadow-lg shadow-blue-500/20">
-            <svg class="w-5 h-5 transform group-hover:rotate-90 transition-transform duration-300"
-              fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
-          </button>
-        </div>
     </header>
 
     <main class="flex-1 p-6 bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/30">
@@ -310,14 +290,14 @@ $db->close();
         <svg class="w-full h-full">
           <defs>
             <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="1" fill="currentColor"/>
+              <circle cx="2" cy="2" r="1" fill="currentColor" />
             </pattern>
             <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
-              <path d="M0 .5h32M.5 0v32" fill="none" stroke="currentColor" stroke-opacity="0.1"/>
+              <path d="M0 .5h32M.5 0v32" fill="none" stroke="currentColor" stroke-opacity="0.1" />
             </pattern>
           </defs>
-          <rect width="100%" height="100%" fill="url(#grid)"/>
-          <rect width="100%" height="100%" fill="url(#dots)"/>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+          <rect width="100%" height="100%" fill="url(#dots)" />
         </svg>
       </div>
 
@@ -335,20 +315,47 @@ $db->close();
                 <th class="px-6 py-3.5 text-xs font-semibold text-gray-700 uppercase tracking-wider text-left">
                   <div class="flex items-center gap-2">
                     ID
-                    <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                    </svg>
+        <form id="sortForm" method="GET" action="<?= Helper::basePath(); ?>kondisi" class="inline-block">
+          <select name="sort"
+            class="appearance-none bg-white/10 backdrop-blur border border-white/20 text-gray-800 font-semibold
+            py-1 px-2 pr-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400/50
+            focus:border-blue-400 text-xs no-arrow ml-2"
+            onchange="document.getElementById('sortForm').submit()">
+            <option class="bg-white text-gray-900" value="id_asc" <?= ($_GET['sort'] ?? '') === 'id_asc' ? 'selected' : '' ?>>
+              ID Kecil
+            </option>
+            <option class="bg-white text-gray-900" value="id_desc" <?= ($_GET['sort'] ?? '') === 'id_desc' ? 'selected' : '' ?>>
+              ID Besar
+            </option>
+            <option class="bg-white text-gray-900" value="az" <?= ($_GET['sort'] ?? '') === 'az' ? 'selected' : '' ?>>
+              Nama A-Z
+            </option>
+            <option class="bg-white text-gray-900" value="za" <?= ($_GET['sort'] ?? '') === 'za' ? 'selected' : '' ?>>
+              Nama Z-A
+            </option>
+          </select>
+        </form>
                   </div>
                 </th>
                 <th class="px-6 py-3.5 text-xs font-semibold text-gray-700 uppercase tracking-wider text-left">
                   <div class="flex items-center gap-2">
                     Nama Kondisi
-                    <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                    </svg>
                   </div>
                 </th>
-                <th class="px-6 py-3.5 text-xs font-semibold text-gray-700 uppercase tracking-wider text-right">Aksi</th>
+                <th class="px-6 py-3.5 text-xs font-semibold text-gray-700 uppercase tracking-wider text-right">
+                  <div class="flex items-center justify-end gap-2">
+                    Aksi
+                    <!-- Tombol Tambah di dalam table -->
+                    <button data-modal-target="modalTambah" data-modal-toggle="modalTambah"
+                      class="ml-2 p-2 bg-blue-700 text-white rounded-lg hover:bg-green-600 
+                      transition-all duration-300 group shadow-lg shadow-blue-500/20">
+                      <svg class="w-5 h-5 transform group-hover:rotate-90 transition-transform duration-300"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                    </button>
+                  </div>
+                </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
@@ -402,7 +409,7 @@ $db->close();
     <div class="relative w-full max-w-md mx-auto mt-24">
       <div class="bg-white rounded-xl shadow-lg p-6">
         <!-- Header dengan gradient -->
-        <div class="bg-gradient-to-r from-blue-700 to-blue-600 -m-6 mb-6 p-6 rounded-t-xl">
+        <div class="bg-gradient-to-r from-blue-700 to-cyan-600 -m-6 mb-6 p-6 rounded-t-xl">
           <h3 class="text-lg font-bold text-white">Tambah Kondisi</h3>
         </div>
 
@@ -439,7 +446,7 @@ $db->close();
     <div class="relative w-full max-w-md mx-auto mt-24">
       <div class="bg-white rounded-xl shadow-lg p-6">
         <!-- Header dengan gradient -->
-        <div class="bg-gradient-to-r from-blue-600 to-blue-700 -m-6 mb-6 p-6 rounded-t-xl">
+        <div class="bg-gradient-to-r from-blue-700 to-cyan-600 -m-6 mb-6 p-6 rounded-t-xl">
           <h3 class="text-lg font-bold text-white">Edit Kondisi</h3>
         </div>
 

@@ -134,6 +134,25 @@ $db->close();
       background-image: none !important;
       padding-right: 1rem;
     }
+    select {
+      background-color: transparent;     
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;                      
+      border-radius: 0.5rem;             
+      padding: 0.5rem 1rem;              
+      outline: none;
+    }
+
+    select:focus {
+      border-color: white;               
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4); 
+    }
+
+    select option {
+      background-color: rgba(0, 0, 0, 0.5); 
+      color: white;
+    }
+    
   </style>
 </head>
 
@@ -182,12 +201,12 @@ $db->close();
             </a>
           </li>
           <li>
-            <a href="<?= Helper::basePath(); ?>jenis"
-              class="flex items-center p-2 rounded-lg group pointer-btn <?= strpos($_SERVER['REQUEST_URI'], '/jenis') !== false ? 'bg-indigo-100 text-indigo-700 ring-2 ring-indigo-200' : 'text-gray-600 hover:bg-gray-100' ?>">
-              <svg class="shrink-0 w-5 h-5 <?= strpos($_SERVER['REQUEST_URI'], '/jenis') !== false ? 'text-indigo-700' : 'text-gray-500' ?> transition duration-75 group-hover:text-gray-900"
-                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="3 3 18 18">
-                <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                  d="M7.111 20A3.111 3.111 0 0 1 4 16.889v-12C4 4.398 4.398 4 4.889 4h4.444a.89.89 0 0 1 .89.889v12A3.111 3.111 0 0 1 7.11 20Zm0 0h12a.889.889 0 0 0 .889-.889v-4.444a.889.889 0 0 0-.889-.89h-4.389a.889.889 0 0 0-.62.253l-3.767 3.665a.933.933 0 0 0-.146.185c-.868 1.433-1.581 1.858-3.078 2.12Zm0-3.556h.009m7.933-10.927 3.143 3.143a.889.889 0 0 1 0 1.257l-7.974 7.974v-8.8l3.574-3.574a.889.889 0 0 1 1.257 0Z" />
+            <a href="<?= Helper::basePath(); ?>jenis" 
+              class="flex items-center p-2 secondary-color rounded-lg bg-indigo-100 boxring ring-indigo-300 group pointer-btn">
+              <svg class="shrink-0 w-5 h-5 primary-color transition duration-75 group-hover:primary-color"
+                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="3 3 18 18">
+                <path
+                  d="M20 14h-2.722L11 20.278a5.511 5.511 0 0 1-.9.722H20a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1ZM9 3H4a1 1 0 0 0-1 1v13.5a3.5 3.5 0 1 0 7 0V4a1 1 0 0 0-1-1ZM6.5 18.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM19.132 7.9 15.6 4.368a1 1 0 0 0-1.414 0L12 6.55v9.9l7.132-7.132a1 1 0 0 0 0-1.418Z" />
               </svg>
               <span class="flex-1 ms-5 h-5 flex items-center whitespace-nowrap">Jenis</span>
             </a>
@@ -403,7 +422,7 @@ $db->close();
     <div class="relative w-full max-w-md mx-auto mt-24">
       <div class="bg-white rounded-xl shadow-lg p-6">
         <!-- Header modal -->
-        <div class="bg-gradient-to-r from-blue-600 to-blue-700 -m-6 mb-6 p-6 rounded-t-xl">
+        <div class="bg-gradient-to-r from-blue-700 to-cyan-600 -m-6 mb-6 p-6 rounded-t-xl">
           <h3 class="text-lg font-bold text-white">Tambah Jenis</h3>
         </div>
 
@@ -468,7 +487,7 @@ $db->close();
     <div class="relative w-full max-w-md mx-auto mt-24">
       <div class="bg-white rounded-xl shadow-lg p-6">
         <!-- Header-->
-        <div class="bg-gradient-to-r from-blue-600 to-blue-700 -m-6 mb-6 p-6 rounded-t-xl">
+        <div class="bg-gradient-to-r from-blue-700 to-cyan-600 -m-6 mb-6 p-6 rounded-t-xl">
           <h3 class="text-lg font-bold text-white">Edit Jenis</h3>
         </div>
 
