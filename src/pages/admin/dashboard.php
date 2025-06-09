@@ -246,14 +246,6 @@ if ($resultStats && $resultStats->num_rows > 0) {
                 </div>
 
                 <!-- Actions -->
-                <div class="mt-4 pt-4 border-t">
-                  <div class="flex justify-between items-center">
-                    <a href="<?= Helper::basePath(); ?>admin/peminjaman?id=<?= $peminjaman['id_peminjaman'] ?>"
-                      class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                      Lihat Detail
-                    </a>
-                  </div>
-                </div>
               </div>
             </div>
           <?php endforeach; ?>
