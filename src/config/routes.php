@@ -233,7 +233,10 @@ switch ($comp) {
         break;
 
     case 'GET:login':
-        UserHandler::login_verify();
+        $status = UserHandler::login_verify();
+        if (!$status) {
+            require_once __DIR__ . "/../pages/login.php";
+        }
         break;
 
     case 'GET:dashboard':
@@ -246,7 +249,11 @@ switch ($comp) {
         if ($status) {
             Helper::route("dashboard");
         } else {
-            require_once __DIR__ . "/../pages/login.php";
+            if (!empty($_SESSION['login_errmsg'])) {
+                Helper::route("login");
+            } else {
+                require_once __DIR__ . "/../pages/login.php";
+            }
         }
         break; // Penting: Jangan lupa break!
 

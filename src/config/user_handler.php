@@ -64,7 +64,7 @@ class UserHandler {
       }
     } else {
       $_SESSION['login_errmsg'] = "Silahkan login terlebih dahulu.";
-      self::login_verify();
+      Helper::route("login");
     }
     exit;
   }
@@ -83,7 +83,7 @@ class UserHandler {
     if (!empty($_SESSION['user'])) {
       Helper::route("dashboard");
     } else {
-      require_once __DIR__ . "/../pages/login.php";
+      return false;
     }
     exit;
   }
