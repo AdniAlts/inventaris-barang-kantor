@@ -49,13 +49,13 @@ foreach ($jenis as $j) {
 
 // Pengguna
 $data_pengguna = [
-    ['id' => 1, 'nama' => 'Budi Santoso', 'email' => 'budi.s@example.com', 'password' => '123'],
-    ['id' => 2, 'nama' => 'Siti Aminah', 'email' => 'siti.a@example.com', 'password' => '123'],
-    ['id' => 3, 'nama' => 'Joko Susilo', 'email' => 'joko.s@example.com', 'password' => '123'],
+    ['id' => 1, 'username' => 'budi_santoso', 'name' => 'Budi Santoso', 'email' => 'budi.s@example.com', 'password' => '123', 'role' => 'Admin'],
+    ['id' => 2, 'username' => 'siti_aminah', 'name' => 'Siti Aminah', 'email' => 'siti.a@example.com', 'password' => '123', 'role' => 'Pegawai'],
+    ['id' => 3, 'username' => 'joko_susilo', 'name' => 'Joko Susilo', 'email' => 'joko.s@example.com', 'password' => '123', 'role' => 'Pegawai'],
 ];
 foreach ($data_pengguna as $pengguna) {
-    $db->conn->query("INSERT INTO user (id, nama, email, password) VALUES (
-        {$pengguna['id']}, '{$pengguna['nama']}', '{$pengguna['email']}', '{$pengguna['password']}'
+    $db->conn->query("INSERT INTO user (id, username, name, email, password, role) VALUES (
+        {$pengguna['id']}, '{$pengguna['username']}', '{$pengguna['name']}', '{$pengguna['email']}', '{$pengguna['password']}', '{$pengguna['role']}'
     )");
 }
 
