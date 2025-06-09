@@ -41,7 +41,7 @@ foreach ($categories as $category)
       <div class="self-start">
         <div class="flex justify-between ps-1.25 mb-5">
           <a href="<?= Helper::basePath(); ?>home" class="flex items-center sidebar-logo">
-            <img src="https://flowbite.com/docs/images/logo.svg" class="h-7 sm:h-7" alt="Flowbite Logo" />
+            <img src="<?= Helper::basePath(); ?>public/images/logo.png" class="h-7 sm:h-7" alt="Flowbite Logo" />
             <span class="self-center ms-4 text-xl font-extrabold whitespace-nowrap">InventaBox</span>
           </a>
           <button id="toggleSidebarBtn" type="button"
