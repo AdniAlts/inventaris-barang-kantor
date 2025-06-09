@@ -18,17 +18,6 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 -- --------------------------------------------------------
--- Table: admin
--- --------------------------------------------------------
-
-CREATE TABLE admin (
-  id_admin INT(11) NOT NULL,
-  username VARCHAR(30) NOT NULL,
-  password VARCHAR(100) NOT NULL,
-  PRIMARY KEY (id_admin)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
 -- Table: kategori
 -- --------------------------------------------------------
 
@@ -110,9 +99,11 @@ CREATE TABLE peminjaman_detail (
 
 CREATE TABLE user (
   id INT(11) NOT NULL,
-  nama VARCHAR(200) NOT NULL,
+  username VARCHAR(100) NOT NULL,
+  name VARCHAR(200) NOT NULL,
   email VARCHAR(100) NOT NULL,
   password VARCHAR(191) NOT NULL,
+  role ENUM('Admin', 'Pegawai') NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
