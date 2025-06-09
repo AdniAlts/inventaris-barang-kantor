@@ -388,7 +388,7 @@ switch ($comp) {
         }
         require_once __DIR__ . "/../pages/admin/barang.php";
         break;
-    case 'POST:barang/create':
+    case 'GET:barang/create':
         if (!isset($_SESSION['admin_id'])) {
             $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
             Helper::route("login");
@@ -396,10 +396,6 @@ switch ($comp) {
         }
         require_once __DIR__ . "/../pages/admin/barang_logic.php";
         Barang::create();
-        break;
-
-    case 'GET:sasa':
-        var_dump($_GET);
         break;
 
     case 'POST:barang/update':

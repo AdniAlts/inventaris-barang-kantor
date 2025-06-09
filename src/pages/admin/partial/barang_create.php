@@ -23,7 +23,7 @@
                     </div>
                 </div>
 
-                <form id="barangForm" class="space-y-10" method="get" action="<?php echo Helper::basePath() . 'sasa' ?>">
+                <form id="barangForm" class="space-y-10" method="get" action="<?php echo Helper::basePath() . 'barang/create' ?>">
                     <div id="step1" class="form-step">
                         <h2 class="text-lg font-semibold text-gray-800 mb-4">Step 1: Pilih Kategori (Wajib) dan Jenis (Optional)</h2>
                         <div class="space-y-4">

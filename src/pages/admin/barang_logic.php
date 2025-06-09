@@ -52,6 +52,29 @@ class Barang
         $result->free();
         return $categories;
     }
+
+    public static function create()
+    {
+        $kategori = $_GET['kategori'];
+        $jenis = $_GET['jenis'];
+        $kualitas = $_GET['kualitas'];
+        $jumlah = $_GET['jumlah'];
+
+        $conn = (new db())->conn;
+        $query = "SELECT COUNT(*) AS count FROM jenis WHERE nama = '$jenis'";
+        $result = mysqli_query($conn, $query);
+
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            if ($row['count'] > 0) {
+                die("ada");
+            } else {
+                die("no");
+            }
+        } else {
+            echo "Error: " . mysqli_error($conn);
+        }
+    }
 }
 
 
