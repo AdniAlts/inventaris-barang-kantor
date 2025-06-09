@@ -232,20 +232,21 @@ switch ($comp) {
         require_once __DIR__ . "/../pages/old/search_barang.php";
         break;
 
+    case 'POST:loan':
+        require_once __DIR__ . "/../pages/old/loan.php";
+        break;
+    
+
     case 'GET:login':
-        require_once __DIR__ . "/../pages/login.php";
-    case 'GET:login':
-        UserHandler::login_verify();
+        $status = UserHandler::login_verify();
+        if (!$status) {
+            require_once __DIR__ . "/../pages/login.php";
+        }
         break;
 
     case 'GET:dashboard':
         // This route's only job is to figure out where the user should go.
-        $status = UserHandler::login_verify();
-        if ($status === 'admin') {
-            require_once __DIR__ . "/../pages/admin/dashboard.php";
-        } elseif ($status === 'pegawai') {
-            require_once __DIR__ . "/../pages/pegawai/dashboard.php";
-        }
+        UserHandler::dashboard_verify();
         break;
 
     case 'POST:login': // LOGIKA PROSES LOGIN ADA DI SINI (metode POST)
@@ -253,38 +254,11 @@ switch ($comp) {
         if ($status) {
             Helper::route("dashboard");
         } else {
-            $db = new db(); // Membuat objek database
-
-            $stmt = $db->conn->prepare("SELECT id_admin, username, password FROM admin WHERE username = ?");
-            $stmt->bind_param("s", $username);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            if ($result->num_rows === 1) {
-                $admin = $result->fetch_assoc();
-                if ($password === $admin['password']) { // INGAT: HARUSNYA PAKAI password_verify()
-                    $_SESSION['admin_id'] = $admin['id_admin'];
-                    $_SESSION['username'] = $admin['username'];
-                    $login_successful = true;
-                } else {
-                    $error_message = "Username atau password salah.";
-                }
+            if (!empty($_SESSION['login_errmsg'])) {
+                Helper::route("login");
             } else {
-                $error_message = "Username atau password salah.";
+                require_once __DIR__ . "/../pages/login.php";
             }
-
-            $stmt->close();
-            $db->close();
-        }
-
-        if ($login_successful) {
-            $_SESSION['error_message'] = '';
-            Helper::route("admin"); // Arahkan ke halaman 'home' (dashboard)
-        } else {
-            $_SESSION['error_message'] = $error_message;
-            Helper::route("login");
-            // Helper::route("login"); ['error' => urlencode($error_message)]); // Arahkan kembali ke login dengan error
-            require_once __DIR__ . "/../pages/login.php";
         }
         break; // Penting: Jangan lupa break!
 
@@ -302,28 +276,28 @@ switch ($comp) {
 
     case 'POST:kategori':
     case 'GET:kategori':
-        if (UserHandler::verify()) {
+        if (UserHandler::page_verify()) {
             require_once __DIR__ . "/../pages/admin/kategori.php";
         }
         break;
 
     case 'POST:jenis':
     case 'GET:jenis':
-        if (UserHandler::verify()) {
+        if (UserHandler::page_verify()) {
             require_once __DIR__ . "/../pages/admin/jenis.php";
         }
         break;
 
     case 'POST:kondisi':
     case 'GET:kondisi':
-        if (UserHandler::verify()) {
+        if (UserHandler::page_verify()) {
             require_once __DIR__ . "/../pages/admin/kondisi.php";
         }
         break;
 
     case 'POST:barang':
     case 'GET:barang':
-        if (UserHandler::verify()) {
+        if (UserHandler::page_verify()) {
             require_once __DIR__ . "/../pages/admin/barang.php";
         }
         break;
