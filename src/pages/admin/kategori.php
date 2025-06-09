@@ -80,7 +80,7 @@ if ($action === 'delete_kategori' && isset($_POST['id_kategori'])) {
   $stmt->execute();
   $stmt->close();
   $_SESSION['message'] = 'Kategori berhasil dihapus!';
-  $_SESSION['message_type'] = 'success';
+
   header("Location: " . Helper::basePath() . "kategori");
   exit;
 }
@@ -296,77 +296,106 @@ $db->close();
     </div>
   </aside>
   <div id="mainContent" class="min-h-screen flex flex-col transition-all duration-300 sm:ml-64 main-content ml-0">
-    <header class="bg-white shadow-sm px-6 py-4">
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 class="text-2xl font-bold text-gray-800">Manajemen Kategori</h1>
+    <!-- Header-->
+    <header class="bg-gradient-to-r from-indigo-600 to-purple-600 shadow-md px-6 py-8 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+        </svg>
+      </div>
+
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative z-10">
+        <div>
+          <h1 class="text-2xl font-bold text-white mb-1">Manajemen Kategori</h1>
+          <p class="text-indigo-100 text-sm">Total: <?= count($kategori) ?> kategori</p>
+        </div>
+
+        <!-- Action buttons -->
         <div class="flex flex-wrap items-center gap-3">
           <form method="GET" action="<?= Helper::basePath(); ?>kategori" class="flex gap-2">
-            <div class="relative">
-              <select name="sort" class="appearance-none bg-gray-50 border border-gray-200 text-gray-700 py-2 px-3 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm no-arrow">
-                <option value="id_asc" <?= ($_GET['sort'] ?? '') === 'id_asc' ? 'selected' : '' ?>>ID Terkecil</option>
-                <option value="id_desc" <?= ($_GET['sort'] ?? '') === 'id_desc' ? 'selected' : '' ?>>ID Terbesar</option>
-                <option value="az" <?= ($_GET['sort'] ?? '') === 'az' ? 'selected' : '' ?>>A-Z</option>
-                <option value="za" <?= ($_GET['sort'] ?? '') === 'za' ? 'selected' : '' ?>>Z-A</option>
-                <option value="jenis_desc" <?= ($_GET['sort'] ?? '') === 'jenis_desc' ? 'selected' : '' ?>>Jenis Terbanyak</option>
-                <option value="jenis_asc" <?= ($_GET['sort'] ?? '') === 'jenis_asc' ? 'selected' : '' ?>>Jenis Terkecil</option>
-              </select>
-            </div>
-            <button type="submit" class="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-50 font-medium text-sm">Urutkan</button>
+            <select name="sort"
+              class="appearance-none bg-white/10 backdrop-blur border border-white/20 text-white 
+              py-2 px-3 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/50 
+              focus:border-transparent text-sm no-arrow">
+              <option value="id_asc" <?= ($_GET['sort'] ?? '') === 'id_asc' ? 'selected' : '' ?>>ID Terkecil</option>
+              <option value="id_desc" <?= ($_GET['sort'] ?? '') === 'id_desc' ? 'selected' : '' ?>>ID Terbesar</option>
+              <option value="az" <?= ($_GET['sort'] ?? '') === 'az' ? 'selected' : '' ?>>A-Z</option>
+              <option value="za" <?= ($_GET['sort'] ?? '') === 'za' ? 'selected' : '' ?>>Z-A</option>
+              <option value="jenis_desc" <?= ($_GET['sort'] ?? '') === 'jenis_desc' ? 'selected' : '' ?>>Jenis Terbanyak</option>
+              <option value="jenis_asc" <?= ($_GET['sort'] ?? '') === 'jenis_asc' ? 'selected' : '' ?>>Jenis Terkecil</option>
+            </select>
           </form>
+          <script>
+            document.querySelector('select[name="sort"]').addEventListener('change', function() {
+              this.form.submit();
+            });
+          </script>
+
+          <!-- Tombol plus-->
           <button data-modal-target="modalTambah" data-modal-toggle="modalTambah"
-            class="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-blue-700 transition-colors">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            class="p-2 bg-indigo-600 text-white rounded-lg hover:bg-green-600 
+            transition-all duration-300 group shadow-lg shadow-green-500/20">
+            <svg class="w-5 h-5 transform group-hover:rotate-90 transition-transform duration-300"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
-            Tambah Kategori
           </button>
         </div>
       </div>
     </header>
 
-    <main class="flex-1 p-6">
+    <main class="flex-1 p-6 bg-gray-50">
       <?php if ($message): ?>
         <div class="mb-4 p-4 rounded-lg <?= $message_type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' ?>">
           <?= htmlspecialchars($message) ?>
         </div>
       <?php endif; ?>
 
+      <!-- Grid  -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <?php foreach ($kategori as $k): ?>
-          <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
-            <!-- Header dengan warna ungu muda -->
-            <div class="px-6 py-4 bg-indigo-50 rounded-t-xl border-b flex items-center justify-between">
+          <div class="bg-white rounded-xl shadow-sm hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group">
+            <!-- Header  -->
+            <div class="px-6 py-4 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 rounded-t-xl border-b 
+              flex items-center justify-between group-hover:from-indigo-500/10 group-hover:to-purple-500/10 transition-all">
               <div class="flex items-center gap-3">
                 <span class="text-xs font-medium text-indigo-600">ID:</span>
                 <span class="text-sm font-semibold text-indigo-700"><?= $k['id_kategori'] ?></span>
               </div>
               <div class="flex gap-2">
-                <button class="edit-btn p-1.5 rounded-md hover:bg-gray-100"
+                <button class="edit-btn p-1.5 rounded-lg hover:bg-indigo-100 text-indigo-600 
+                  transition-all duration-150"
                   data-id="<?= $k['id_kategori'] ?>"
                   data-nama="<?= htmlspecialchars($k['nama']) ?>"
                   data-modal-target="modalEdit"
                   data-modal-toggle="modalEdit">
-                  <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"
+                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                   </svg>
                 </button>
-                <button type="button" class="p-1.5 rounded-md hover:bg-gray-100"
+                <button type="button"
+                  class="p-1.5 rounded-lg hover:bg-red-100 text-red-600 
+                  transition-all duration-150"
                   onclick="showDeleteModal(<?= $k['id_kategori'] ?>)">
-                  <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                   </svg>
                 </button>
               </div>
             </div>
 
-            <!-- Content -->
+            <!-- Content-->
             <div class="p-6">
-              <h3 class="text-lg font-semibold text-gray-800 mb-4"><?= htmlspecialchars($k['nama']) ?></h3>
+              <h3 class="text-lg font-semibold text-gray-800 mb-4 group-hover:text-indigo-600 transition-colors">
+                <?= htmlspecialchars($k['nama']) ?>
+              </h3>
 
               <?php if (!empty($jenis_per_kategori[$k['id_kategori']])): ?>
                 <button type="button"
                   id="toggle-btn-<?= $k['id_kategori'] ?>"
-                  class="w-full text-left px-4 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-sm font-medium text-indigo-700 transition-colors"
+                  class="w-full text-left px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-500/5 to-purple-500/5 
+                  hover:from-indigo-500/10 hover:to-purple-500/10 text-sm font-medium text-indigo-700 transition-all"
                   onclick="toggleJenis('jenis-list-<?= $k['id_kategori'] ?>', this)">
                   Ada Jenis Terkait
                 </button>
@@ -410,17 +439,35 @@ $db->close();
   <!-- Modal Tambah -->
   <div id="modalTambah" tabindex="-1" class="hidden fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto h-modal h-full bg-black/40">
     <div class="relative w-full max-w-md mx-auto mt-24">
-      <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-lg font-bold mb-4">Tambah Kategori</h3>
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 -m-6 mb-6 p-6 rounded-t-xl">
+          <h3 class="text-lg font-bold text-white">Tambah Kategori</h3>
+        </div>
+
         <form method="POST" action="<?= Helper::basePath(); ?>kategori">
           <input type="hidden" name="action" value="add_kategori">
-          <div class="mb-4">
-            <label class="block mb-1 font-medium text-gray-700">Nama Kategori</label>
-            <input type="text" name="nama_kategori" class="w-full border rounded px-3 py-2" required>
+          <div class="mb-6">
+            <label class="block mb-2 text-sm font-semibold text-gray-700">Nama Kategori</label>
+            <input type="text" name="nama_kategori"
+              class="w-full px-4 py-2.5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 
+              focus:ring-indigo-500 focus:border-transparent transition-colors"
+              required
+              placeholder="Masukkan nama kategori">
           </div>
           <div class="flex justify-end gap-2">
-            <button type="button" data-modal-hide="modalTambah" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">Batal</button>
-            <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Simpan</button>
+            <button type="button"
+              data-modal-hide="modalTambah"
+              class="px-4 py-2.5 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-700 font-medium 
+              border border-gray-200 transition-all duration-300">
+              Batal
+            </button>
+            <button type="submit"
+              class="px-4 py-2.5 rounded-lg bg-gradient-to-r from-green-500 to-green-600 
+              hover:from-green-600 hover:to-green-700 text-white font-medium 
+              transition-all duration-300 shadow-md hover:shadow-lg">
+              Simpan
+            </button>
           </div>
         </form>
       </div>
@@ -428,25 +475,38 @@ $db->close();
   </div>
 
   <!-- Modal Edit -->
-  <div id="modalEdit" tabindex="-1" class="hidden fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto h-modal h-full bg-black/40">
-    <div class="relative w-full max-w-md mx-auto mt-24">
-      <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-lg font-bold mb-4">Edit Kategori</h3>
-        <form method="POST" action="<?= Helper::basePath(); ?>kategori">
-          <input type="hidden" name="action" value="edit_kategori">
-          <input type="hidden" name="id_kategori" id="edit_id_kategori">
-          <div class="mb-4">
-            <label class="block mb-1 font-medium text-gray-700">Nama Kategori</label>
-            <input type="text" name="nama_kategori" id="edit_nama_kategori" class="w-full border rounded px-3 py-2" required>
-          </div>
-          <div class="flex justify-end gap-2">
-            <button type="button" data-modal-hide="modalEdit" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">Batal</button>
-            <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Simpan</button>
-          </div>
-        </form>
+<div id="modalEdit" tabindex="-1" class="hidden fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto h-modal h-full bg-black/40">
+  <div class="relative w-full max-w-md mx-auto mt-24">
+    <div class="bg-white rounded-xl shadow-lg p-6">
+      <div class="bg-gradient-to-r from-indigo-600 to-purple-600 -m-6 mb-6 p-6 rounded-t-xl">
+        <h3 class="text-lg font-bold text-white">Edit Kategori</h3>
       </div>
+
+      <form method="POST" action="<?= Helper::basePath(); ?>kategori">
+        <input type="hidden" name="action" value="edit_kategori">
+        <input type="hidden" name="id_kategori" id="edit_id_kategori">
+        <div class="mb-6">
+          <label class="block mb-2 text-sm font-semibold text-gray-700">Nama Kategori</label>
+          <input type="text" name="nama_kategori" id="edit_nama_kategori"
+            class="w-full px-4 py-2.5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg 
+            focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors"
+            required>
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" data-modal-hide="modalEdit"
+            class="px-4 py-2.5 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-700 font-medium 
+            border border-gray-200 transition-all duration-300">
+            Batal
+          </button>
+          <button type="submit"
+              class="px-4 py-2.5 rounded-lg bg-gradient-to-r from-green-500 to-green-600 
+              hover:from-green-600 hover:to-green-700 text-white font-medium 
+              transition-all duration-300 shadow-md hover:shadow-lg">
+              Simpan
+            </button>
+        </div>
+      </form>
     </div>
-  </div>
 
   <!-- Flowbite JS (untuk modal) -->
   <script src="<?= Helper::basePath(); ?>node_modules/flowbite/dist/flowbite.min.js"></script>
