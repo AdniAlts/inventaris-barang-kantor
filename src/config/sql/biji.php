@@ -59,11 +59,6 @@ foreach ($data_pengguna as $pengguna) {
     )");
 }
 
-// Admin
-$db->conn->query("INSERT INTO admin (id_admin, username, password) VALUES 
-    (1, 'budi_santoso', 'admin123'), 
-    (3, 'joko_susilo', 'admin123')");
-
 // barang
 $data_barang = [
     ['kode_barang' => 'AA_001', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AA'],
