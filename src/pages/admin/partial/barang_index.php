@@ -21,6 +21,12 @@
             </svg>
             Add New Barang
         </button>
+        <button id="excel" type="button" class="ml-4 mb-6 inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <svg class="me-2 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+            </svg>
+            Generate Excel
+        </button>
 
         <!-- Kategori Tabs (Dynamic from $arr) -->
         <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
@@ -98,7 +104,7 @@
                                     <h5 class="text-lg font-medium mb-4 text-gray-900 dark:text-white">Individual Barang Units:</h5>
                                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                                         <?php foreach ($jenis['barang_items'] as $barang):
-                                            $image_url = $barang['gambar_url'] ? $barang['gambar_url'] : 'https://placehold.co/150x100/a0c4ff/2c3e50?text=' . urlencode($jenis['nama']);
+                                            $image_url = $barang['gambar_url'] ? Helper::basePath() . "src/" . $barang['gambar_url'] : 'https://placehold.co/150x100/a0c4ff/2c3e50?text=' . urlencode($jenis['nama']);
                                             $status_display = $barang['status'] == 'tersedia' ? 'Idle' : ucfirst($barang['status']);
                                         ?>
                                             <!-- Barang Unit -->
@@ -317,5 +323,47 @@
             // Remove blur from the main content when the edit modal is closed
             mainContentArea.classList.remove('blur-background');
         });
+    });
+
+    //buat excel
+    document.getElementById('excel').addEventListener('click', function() {
+        fetch('<?php echo Helper::basePath() . 'excel' ?>', {
+                method: 'POST'
+            })
+            .then(response => {
+                const disposition = response.headers.get('Content-Disposition');
+                let filename = 'laporan.xlsx';
+                if (disposition && disposition.includes('filename=')) {
+                    const match = disposition.match(/filename="?([^"]+)"?/);
+                    if (match && match[1]) {
+                        filename = match[1].trim();
+
+                        // Optional: remove trailing underscore or other unwanted chars
+                        filename = filename.replace(/[_\s]+$/, ''); // trims trailing _ or space
+                    }
+                }
+                return response.blob().then(blob => ({
+                    blob,
+                    filename
+                }));
+            })
+            .then(({
+                blob,
+                filename
+            }) => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                console.log('Download filename:', filename);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
     });
 </script>

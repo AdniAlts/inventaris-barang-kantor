@@ -298,13 +298,20 @@ switch ($comp) {
         }
         break;
 
+    case 'POST:excel':
+        if (UserHandler::page_verify()) {
+            require_once __DIR__ . "/../config/excel.php";
+            excel::generate();
+        }
+        break;
+
     case 'POST:barang':
     case 'GET:barang':
         if (UserHandler::page_verify()) {
             require_once __DIR__ . "/../pages/admin/barang.php";
         }
         break;
-    case 'GET:barang/create':
+    case 'POST:barang/create':
         if (!isset($_SESSION['admin_id'])) {
             $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
             Helper::route("login");
@@ -320,7 +327,7 @@ switch ($comp) {
             Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/barang.php";
+        require_once __DIR__ . "/../pages/admin/barang_logic.php";
         Barang::update();
         break;
 
@@ -330,7 +337,8 @@ switch ($comp) {
             Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/barang.php";
+        require_once __DIR__ . "/../pages/admin/barang_logic.php";
+        Barang::delete();
         break;
     case 'GET:barang/delete':
         if (!isset($_SESSION['admin_id'])) {
@@ -339,99 +347,7 @@ switch ($comp) {
             exit;
         }
         require_once __DIR__ . "/../pages/admin/barang.php";
-        Barang::delete();
-        break;
-
-    // Remove the old POST:gambar case since it's now integrated into the Barang class
-
-    // case 'GET:gambar':
-    //     require_once __DIR__ . "/../pages/gambar.php";
-    //     break;
-
-    case 'POST:gambar':
-        header('Content-Type: application/json');
-
-        if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
-            $file = $_FILES['image'];
-            $originalName = $file['name'];
-            $extension = pathinfo($originalName, PATHINFO_EXTENSION);
-            $randomName = bin2hex(random_bytes(16)) . '.' . $extension;
-
-            // MASUKKAN $randomName ke gambar_url di DB saat masukan entry data
-
-            $uploadDir = __DIR__ . '/../storages/';
-            $destination = $uploadDir . $randomName;
-
-            if (!is_writable($uploadDir)) {
-                echo json_encode([
-                    'success' => false,
-                    'message' => 'Upload directory is not writable: ' . $uploadDir
-                ]);
-                exit();
-            }
-
-            $allowedExtensions = ['jpg', 'jpeg', 'png'];
-            if (!in_array(strtolower($extension), $allowedExtensions)) {
-                echo json_encode([
-                    'success' => false,
-                    'message' => 'Invalid file type. Allowed: ' . implode(', ', $allowedExtensions)
-                ]);
-                exit();
-            }
-
-            if (move_uploaded_file($file['tmp_name'], $destination)) {
-                echo json_encode([
-                    'success' => true,
-                    'message' => 'success',
-                    'filename' => $randomName,
-                    'path' => $destination
-                ]);
-            } else {
-                $error = error_get_last();
-                echo json_encode([
-                    'success' => false,
-                    'message' => 'Failed to move uploaded file',
-                    'destination' => $destination,
-                    'error' => $error ? $error['message'] : 'Unknown error',
-                    'temp_file' => $file['tmp_name'],
-                    'temp_exists' => file_exists($file['tmp_name']) ? 'yes' : 'no'
-                ]);
-            }
-        } else {
-            // Handle different upload errors
-            $errorMessage = 'No file was uploaded or there was an upload error';
-            if (isset($_FILES['image']['error'])) {
-                switch ($_FILES['image']['error']) {
-                    case UPLOAD_ERR_INI_SIZE:
-                        $errorMessage = 'File exceeds upload_max_filesize directive';
-                        break;
-                    case UPLOAD_ERR_FORM_SIZE:
-                        $errorMessage = 'File exceeds MAX_FILE_SIZE directive';
-                        break;
-                    case UPLOAD_ERR_PARTIAL:
-                        $errorMessage = 'File was only partially uploaded';
-                        break;
-                    case UPLOAD_ERR_NO_FILE:
-                        $errorMessage = 'No file was uploaded';
-                        break;
-                    case UPLOAD_ERR_NO_TMP_DIR:
-                        $errorMessage = 'Missing temporary folder';
-                        break;
-                    case UPLOAD_ERR_CANT_WRITE:
-                        $errorMessage = 'Failed to write file to disk';
-                        break;
-                    case UPLOAD_ERR_EXTENSION:
-                        $errorMessage = 'File upload stopped by extension';
-                        break;
-                }
-            }
-
-            echo json_encode([
-                'success' => false,
-                'message' => $errorMessage
-            ]);
-        }
-        exit();
+        // Barang::delete();
         break;
 
     default:
