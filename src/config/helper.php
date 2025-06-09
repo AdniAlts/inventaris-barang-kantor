@@ -56,6 +56,26 @@ class Helper
     }
 
     /**
+     * Fungsi untuk mendapatkan path URL saat ini yang sedang diakses user.
+     * Path yang dikembalikan adalah path relatif terhadap root direktori aplikasi.
+     *
+     * @example
+     * Jika user mengakses http://localhost/inventaris-barang-kantor/peminjaman/detail
+     * Fungsi ini akan mengembalikan "/peminjaman/detail"
+     *
+     * @return string Path URL saat ini.
+     */
+    public static function currentPath()
+    {
+        $requestPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $basePath = rtrim(parse_url(self::basePath(), PHP_URL_PATH), '/');
+
+        $path = substr($requestPath, strlen($basePath));
+
+        return $path ?: '/';
+    }
+
+    /**
      * Fungsi untuk berpindah route dan mindahin data (### JENIS GET ###)
      * 
      * @param string $route rute yang akan dituju
