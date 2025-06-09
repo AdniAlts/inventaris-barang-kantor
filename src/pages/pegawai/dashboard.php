@@ -169,6 +169,66 @@ $allPeminjaman = GetFromDB::peminjaman($connDB);
     <?php if (empty($peminjaman)): ?>
       <p>Tidak ada data peminjaman yang ditemukan.</p>
     <?php else: ?>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <?php foreach ($peminjaman as $peminjaman_item): ?>
+          <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-50">
+            <a>
+              <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black">ID Peminjaman: <?php echo htmlspecialchars($peminjaman_item['id_peminjaman']); ?></h5>
+            </a>
+            <p class="mb font-normal text-gray-700 dark:text-black">
+              **Deskripsi**: <?php echo htmlspecialchars($peminjaman_item['deskripsi']); ?>
+            </p>
+            <p class="mb font-normal text-gray-700 dark:text-black">
+              **Tanggal Peminjaman**: <?php echo htmlspecialchars($peminjaman_item['tgl_peminjaman']); ?>
+            </p>
+            <p class="mb-3 font-normal text-gray-700 dark:text-black">
+              **Tanggal Kembali**: <?php echo $peminjaman_item['tgl_balik'] ? htmlspecialchars($peminjaman_item['tgl_balik']) : 'Belum Dikembalikan'; ?>
+            </p>
+            <p class="mb-3 font-normal text-gray-700 dark:text-black">
+              **Jumlah Barang Yang Dipinjam**: <?php echo htmlspecialchars($peminjaman_item['total_pinjam']); ?>
+            </p>
+            <p class="mb-3 font-normal text-gray-700 dark:text-black">
+              **Status**: <?php echo htmlspecialchars(ucfirst($peminjaman_item['status'])); ?>
+            </p>
+
+            <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-150 dark:border-black mt-4">
+              <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-900 dark:text-black">
+                  <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-50 text-black">
+                    <tr>
+                      <th scope="col" class="px-3 py-3">Nama Barang</th>
+                      <th scope="col" class="px-3 py-3">Jumlah</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php if (!empty($peminjaman_item['barang'])): ?>
+                      <?php foreach ($peminjaman_item['barang'] as $barang_item): ?>
+                        <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
+                          <td scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                            <?php echo htmlspecialchars($barang_item['nama_barang']); ?>
+                          </td>
+                          <td class="px-3 py-4">
+                            <?php echo htmlspecialchars($barang_item['jumlah']); ?>
+                          </td>
+                        </tr>
+                      <?php endforeach; ?>
+                    <?php else: ?>
+                      <tr class="bg-white dark:bg-gray-50">
+                        <td colspan="2" class="px-3 py-4 text-center text-gray-500">Tidak ada barang dalam peminjaman ini.</td>
+                      </tr>
+                    <?php endif; ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+
+    <?php if (empty($peminjaman)): ?>
+      <p>Tidak ada data peminjaman yang ditemukan.</p>
+    <?php else: ?>
       <?php foreach ($peminjaman as $data_peminjaman => $Q): ?>
         <div class="grid grid-cols-5 gap-4">
           <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-50">
