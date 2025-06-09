@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../config/helper.php';
+require_once __DIR__ . "/barang_logic.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -9,7 +10,23 @@ require_once __DIR__ . '/../../config/helper.php';
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Barang - Inventaris Barang Kantor</title>
   <link rel="stylesheet" href="<?= Helper::basePath(); ?>src/output.css">
+  <style>
+    html {
+      overflow: scroll;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar {
+      width: 0;
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #FF0000;
+    }
+  </style>
 </head>
+
 
 <body>
   <aside id="sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform duration-500"
@@ -152,170 +169,31 @@ require_once __DIR__ . '/../../config/helper.php';
   </aside>
 
   <main class="p-4 sm:ml-64 main-content transition-margin duration-300">
-    <div>
-      <p>TOLONG BACA AKU!!!</p>
-      <p>Ini bisa jadi saran untuk membantu pembuatan barang:</p>
-      <ol style="list-style: decimal;">
-        <li>TOLONG BANGET AMBIL DATANYA DARI DATABASE AJA, JANGAN BIKIN DUMMY SENDIRI!!!<br>
-            Kalau memang gatau caranya, ada modul pembelajaran koneksi database dari bu Dian sendiri, atau ada yang namanya 'searching di Google dan YouTube'.<br>
-            Tolong lah, pake AI nya di minimalisir, dan kalau memang mendesak banget. Mumpung waktu libur kita masih banyak, jadi masih bisa meluangkan waktu untuk BELAJAR.<br>
-            Sama mohon TANGGUNG JAWABnya terhadap bagian tugasnya sendiri, jangan mentang-mentang lagi ada kegiatan jadinya ngga bisa meluangkan waktu untuk ngerjain.</li>
-        <li>Boleh pake referensi halaman yang mirip sebelumnya, linknya bisa buka <a href="<?= Helper::basePath(); ?>src/pages/old/barang.php" style="text-decoration: underline;">di sini</a>.</li>
-        <li>Kolom tabel yang ditampilkan bisa berupa kode barang, gambar barang (bisa full screen mungkin), status barang, jenis barang, kondisi barang, kategori barang, sama aksi CRUD nya.</li>
-        <li>Boleh tambahan menampilkan berapa row. Misalnya kalo ingin menampilkan 5 row, nanti tampil tabel maksimal 5 row, terus selanjutnya bisa ada pilihan ganti halaman.</li>
-        <li>Sorting tabel ascending atau descending berdasarkan kolom tabel yang dipilih.</li>
-        <li>Kalau mau pake poin 5 dan 6 mending pake JavaScript aja. Ambil data dari database nya tetep pake PHP.</li>
-      </ol>
-      <br>
-      <p>Kalau sudah selesai mengimplementasi bagian halaman ini. Bisa menghapus elemen div yang isinya teks ini.</p>
-      <p>Dan kalau ada pertanyaan, jangan sungkan tanya di grup. Teman-teman kalian PASTI dan HARUSNYA bisa bantu.</p>
-    </div>
-    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg">
-      <div class="grid grid-cols-3 gap-4 mb-4">
-        <div class="flex items-center justify-center h-24 rounded bg-gray-50">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center h-24 rounded bg-gray-50">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center h-24 rounded bg-gray-50">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-      </div>
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50">
-        <p class="text-2xl text-gray-400">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M9 1v16M1 9h16" />
-          </svg>
-        </p>
-      </div>
-      <div class="grid grid-cols-2 gap-4 mb-4">
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-      </div>
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50">
-        <p class="text-2xl text-gray-400">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M9 1v16M1 9h16" />
-          </svg>
-        </p>
-      </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-      </div>
-    </div>
+    <?php require_once "partial/barang_create.php" ?>
+    <?php require_once "partial/barang_edit.php" ?>
+    <?php require_once "partial/barang_index.php" ?>
+    <?php require_once "partial/barang_delete.php" ?>
   </main>
-  
+
   <script src="<?= Helper::basePath(); ?>node_modules/flowbite/dist/flowbite.min.js"></script>
   <script>
     const sidebar = document.getElementById('sidebar');
     const userButton = document.getElementById('dropdownUserNameButton');
     const userDropdown = document.getElementById('dropdownUserName');
-    document.getElementById('toggleSidebarBtn').addEventListener('click', function () {
+    document.getElementById('toggleSidebarBtn').addEventListener('click', function() {
       sidebar.classList.toggle('sidebar-collapsed');
     });
-    sidebar.addEventListener('mouseenter', function () {
+    sidebar.addEventListener('mouseenter', function() {
       if (sidebar.classList.contains('sidebar-collapsed') && userDropdown.classList.contains('hidden')) {
         sidebar.classList.toggle('sidebar-hover');
       }
     });
-    sidebar.addEventListener('mouseleave', function () {
+    sidebar.addEventListener('mouseleave', function() {
       if (sidebar.classList.contains('sidebar-hover') && userDropdown.classList.contains('hidden')) {
         sidebar.classList.toggle('sidebar-hover');
       }
     });
-    userButton.addEventListener('focusout', function () {
+    userButton.addEventListener('focusout', function() {
       if (!userDropdown.classList.contains('hidden')) {
         sidebar.classList.toggle('sidebar-hover');
       }

@@ -1,8 +1,8 @@
 <?php
 // Ensure db.php is available for database connection
 require_once __DIR__ . "/../config/db.php";
-
-class Barang
+// typoin biar gak tabrakan
+class Barng
 {
     public static function create()
     {
@@ -242,7 +242,7 @@ class Barang
         if (!is_dir($uploadDir)) {
             // Attempt to create the directory if it doesn't exist
             if (!mkdir($uploadDir, 0775, true)) {
-                 return [
+                return [
                     'success' => false,
                     'message' => 'Upload directory does not exist and could not be created: ' . $uploadDir . ' Please check parent directory permissions.'
                 ];

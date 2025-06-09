@@ -194,7 +194,7 @@ switch ($comp) {
         require_once __DIR__ . "/../pages/old/search_barang.php";
         break;
 
-    case 'GET:login':         
+    case 'GET:login':
         require_once __DIR__ . "/../pages/login.php";
         break;
 
@@ -243,7 +243,7 @@ switch ($comp) {
         }
 
         if ($login_successful) {
-             $_SESSION['error_message'] = '';
+            $_SESSION['error_message'] = '';
             Helper::route("admin"); // Arahkan ke halaman 'home' (dashboard)
         } else {
             $_SESSION['error_message'] = $error_message;
@@ -331,15 +331,19 @@ switch ($comp) {
             Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/barang.php";
         break;
     case 'POST:barang/create':
         if (!isset($_SESSION['admin_id'])) {
             Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/barang_logic.php";
         Barang::create();
+        break;
+
+    case 'GET:sasa':
+        var_dump($_GET);
         break;
 
     case 'POST:barang/update':

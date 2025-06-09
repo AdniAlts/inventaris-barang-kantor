@@ -1,0 +1,59 @@
+<?php
+require_once __DIR__ . '/../../config/db.php';
+
+class Barang
+{
+
+    public static function read()
+    {
+        $mysqli = (new db())->conn;
+
+        $query = "SELECT k.id_kategori, k.nama AS kategori_nama, j.id_jenis, j.nama AS jenis_nama, j.stok, b.kode_barang, b.status AS barang_status, b.gambar_url, s.nama AS state_nama FROM kategori k LEFT JOIN jenis j ON k.id_kategori = j.kategori_id LEFT JOIN barang b ON j.id_jenis = b.jenis_id LEFT JOIN state s ON b.state_id = s.id_state ORDER BY k.nama, j.nama, b.kode_barang";
+        $result = $mysqli->query($query);
+        $categories = [];
+
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $kategoriId = $row['id_kategori'];
+
+                if (!isset($categories[$kategoriId])) {
+                    $categories[$kategoriId] = [
+                        'id' => $kategoriId,
+                        'nama' => $row['kategori_nama'],
+                        'jenis_items' => []
+                    ];
+                }
+
+                $jenisId = $row['id_jenis'];
+
+                if ($jenisId && !isset($categories[$kategoriId]['jenis_items'][$jenisId])) {
+                    $categories[$kategoriId]['jenis_items'][$jenisId] = [
+                        'id' => $jenisId,
+                        'nama' => $row['jenis_nama'],
+                        'stok' => $row['stok'],
+                        'barang_items' => []
+                    ];
+                }
+
+                // Add barang if exists
+                if ($row['kode_barang']) {
+                    $categories[$kategoriId]['jenis_items'][$jenisId]['barang_items'][] = [
+                        'kode' => $row['kode_barang'],
+                        'status' => $row['barang_status'],
+                        'gambar_url' => $row['gambar_url'],
+                        'state' => $row['state_nama']
+                    ];
+                }
+            }
+        }
+
+        // var_dump($categories[1]['nama']);
+
+        $result->free();
+        return $categories;
+    }
+}
+
+
+
+// Barang::read();
