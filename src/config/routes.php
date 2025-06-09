@@ -193,18 +193,21 @@ switch ($comp) {
             $id = $_GET['id_peminjaman'];
 
             // Cek apakah ID peminjaman valid dan masih dipinjam
-            $stmt = $db->conn->prepare("SELECT total_pinjam FROM peminjaman WHERE id_peminjaman = ? AND status = 'dipinjam'");
+            $stmt = $db->conn->prepare("SELECT total_pinjam, deskripsi FROM peminjaman WHERE id_peminjaman = ? AND status = 'dipinjam'");
             $stmt->bind_param("s", $id);
             $stmt->execute();
             $result = $stmt->get_result();
+
+            // Ambil deskripsi
+            $row = $result->fetch_assoc();
+            $total_pinjam = $row['total_pinjam'];
+            $deskripsi = $row['deskripsi'];
+            $total_pinjam = $row['total_pinjam'];
 
             if ($result->num_rows === 0) {
                 $err = "ID Peminjaman ($id) yang Anda masukkan tidak ditemukan atau sudah dikembalikan.";
                 Helper::route("/pengembalian", ["error" => $err]);
             }
-
-            $row = $result->fetch_assoc();
-            $total_pinjam = $row['total_pinjam'];
 
             // Ambil detail barang
             $stmt2 = $db->conn->prepare("
@@ -235,7 +238,7 @@ switch ($comp) {
     case 'POST:loan':
         require_once __DIR__ . "/../pages/old/loan.php";
         break;
-    
+
 
     case 'GET:login':
         $status = UserHandler::login_verify();

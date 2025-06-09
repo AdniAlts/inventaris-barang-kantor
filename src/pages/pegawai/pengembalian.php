@@ -170,6 +170,10 @@ require_once __DIR__ . '/../../config/helper.php';
       <div class="h-auto mb-4 rounded bg-gray-50">
         <div class="text">
           <h3 class="text-xl font-semibold text-black-700 m-3 pt-4">Daftar Barang yang Akan Dipinjam</h3>
+          <?php if (isset($_GET['id_peminjaman'])): ?>
+            <h4 class="text-lg font-medium text-black-700 m-3">Peminjaman #<?php echo $_GET['id_peminjaman']; ?></h4>
+            <h6 class="text-sm font-normal text-black-700 m-3"><?php echo $deskripsi; ?></h6>
+          <?php endif; ?>
         </div>
         <div class="table w-full p-3">
           <table class="w-full text-sm text-left text-gray-500">
