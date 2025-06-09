@@ -85,9 +85,17 @@ if ($action === 'delete_state' && isset($_POST['id_state'])) {
   exit;
 }
 
-// READ
+// READ - tambah logic sorting
+$sort = $_GET['sort'] ?? 'id_asc';
+$orderBy = "id_state ASC"; // default sort
+
+if ($sort === 'id_desc') $orderBy = "id_state DESC";
+if ($sort === 'az') $orderBy = "nama ASC";
+if ($sort === 'za') $orderBy = "nama DESC";
+
+// Query dengan ORDER BY
 $state = [];
-$result = $conn->query("SELECT id_state, nama FROM state ORDER BY id_state ASC");
+$result = $conn->query("SELECT id_state, nama FROM state ORDER BY $orderBy");
 while ($row = $result->fetch_assoc()) {
   $state[] = $row;
 }
@@ -105,7 +113,6 @@ $db->close();
 </head>
 
 <body>
-  <!-- Sidebar (copy dari dashboard, aktifkan menu Kondisi) -->
   <aside id="sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform duration-500 bg-gray-50"
     aria-label="Sidebar">
     <div class="h-full grid content-between px-3 py-4 overflow-y-auto overflow-x-hidden">
@@ -249,42 +256,143 @@ $db->close();
     </div>
   </aside>
   <div id="mainContent" class="min-h-screen flex flex-col transition-all duration-300 sm:ml-64 main-content">
-    <header class="bg-white shadow px-6 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-gray-800">Manajemen Kondisi</h1>
-      <button data-modal-target="modalTambah" data-modal-toggle="modalTambah"
-        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold shadow">
-        + Tambah Kondisi
-      </button>
-    </header>
-    <main class="flex-1 p-6">
-      <?php if ($message): ?>
-        <div class="mb-4 p-4 rounded-lg <?= $message_type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' ?>">
-          <?= htmlspecialchars($message) ?>
+    <!-- Header-->
+    <header class="bg-gradient-to-r from-blue-700 to-cyan-600 shadow-md px-6 py-8 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path d="M0 0L100 0L100 100L0 100Z" fill="url(#pattern)" />
+        </svg>
+        <defs>
+          <pattern id="pattern" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+            <path d="M0 10L10 0" stroke="white" stroke-width="0.5" />
+          </pattern>
+        </defs>
+      </div>
+
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative z-10">
+        <div>
+          <h1 class="text-2xl font-bold text-white mb-1">Manajemen Kondisi</h1>
+          <p class="text-blue-100 text-sm">Total: <?= count($state) ?> kondisi</p>
         </div>
-      <?php endif; ?>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <?php foreach ($state as $s): ?>
-          <div class="bg-white rounded-xl shadow p-6 flex flex-col justify-between">
-            <div>
-              <div class="text-sm text-gray-400 mb-1">ID: <?= $s['id_state'] ?></div>
-              <div class="text-xl font-semibold text-gray-800 mb-2"><?= htmlspecialchars($s['nama']) ?></div>
-            </div>
-            <div class="flex gap-2 mt-4">
-              <button
-                class="edit-btn bg-yellow-100 text-yellow-700 px-3 py-1 rounded hover:bg-yellow-200 font-semibold"
-                data-id="<?= $s['id_state'] ?>"
-                data-nama="<?= htmlspecialchars($s['nama']) ?>"
-                data-modal-target="modalEdit"
-                data-modal-toggle="modalEdit">Edit</button>
-              <button
-                type="button"
-                class="bg-red-100 text-red-700 px-3 py-1 rounded hover:bg-red-200 font-semibold"
-                onclick="showDeleteModal(<?= $s['id_state'] ?>)">
-                Hapus
-              </button>
-            </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <form method="GET" action="<?= Helper::basePath(); ?>kondisi" class="flex gap-2">
+            <select name="sort"
+              class="appearance-none bg-white/10 backdrop-blur border border-white/20 text-white 
+      py-2 px-3 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/50 
+      focus:border-transparent text-sm no-arrow">
+              <option value="id_asc" <?= ($_GET['sort'] ?? '') === 'id_asc' ? 'selected' : '' ?>>ID Terkecil</option>
+              <option value="id_desc" <?= ($_GET['sort'] ?? '') === 'id_desc' ? 'selected' : '' ?>>ID Terbesar</option>
+              <option value="az" <?= ($_GET['sort'] ?? '') === 'az' ? 'selected' : '' ?>>A-Z</option>
+              <option value="za" <?= ($_GET['sort'] ?? '') === 'za' ? 'selected' : '' ?>>Z-A</option>
+            </select>
+          </form>
+          <script>
+            document.querySelector('select[name="sort"]').addEventListener('change', function() {
+              this.form.submit();
+            });
+          </script>
+
+          <!-- Tombol Tambah -->
+          <button data-modal-target="modalTambah" data-modal-toggle="modalTambah"
+            class="p-2 bg-blue-700 text-white rounded-lg hover:bg-green-600 
+            transition-all duration-300 group shadow-lg shadow-blue-500/20">
+            <svg class="w-5 h-5 transform group-hover:rotate-90 transition-transform duration-300"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+          </button>
+        </div>
+    </header>
+
+    <main class="flex-1 p-6 bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/30">
+      <div class="absolute inset-0 opacity-[0.015]">
+        <svg class="w-full h-full">
+          <defs>
+            <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1" fill="currentColor"/>
+            </pattern>
+            <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+              <path d="M0 .5h32M.5 0v32" fill="none" stroke="currentColor" stroke-opacity="0.1"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)"/>
+          <rect width="100%" height="100%" fill="url(#dots)"/>
+        </svg>
+      </div>
+
+      <!-- Card table -->
+      <div class="relative bg-white/60 backdrop-blur-sm rounded-xl shadow-sm overflow-hidden border border-white/80">
+        <?php if ($message): ?>
+          <div class="mb-4 p-4 rounded-lg <?= $message_type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' ?>">
+            <?= htmlspecialchars($message) ?>
           </div>
-        <?php endforeach; ?>
+        <?php endif; ?>
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200">
+          <table class="w-full">
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-200">
+                <th class="px-6 py-3.5 text-xs font-semibold text-gray-700 uppercase tracking-wider text-left">
+                  <div class="flex items-center gap-2">
+                    ID
+                    <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                    </svg>
+                  </div>
+                </th>
+                <th class="px-6 py-3.5 text-xs font-semibold text-gray-700 uppercase tracking-wider text-left">
+                  <div class="flex items-center gap-2">
+                    Nama Kondisi
+                    <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                    </svg>
+                  </div>
+                </th>
+                <th class="px-6 py-3.5 text-xs font-semibold text-gray-700 uppercase tracking-wider text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-white">
+              <?php foreach ($state as $s): ?>
+                <tr class="group hover:bg-gray-50/50 transition-colors cursor-default">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                      <span class="px-2 py-1 text-xs font-medium bg-blue-50 text-blue-600 rounded-md">
+                        <?= $s['id_state'] ?>
+                      </span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900 font-medium"><?= htmlspecialchars($s['nama']) ?></div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-right">
+                    <div class="flex items-center justify-end gap-2">
+                      <button class="edit-btn p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-blue-600 
+                        transition-all duration-150"
+                        data-id="<?= $s['id_state'] ?>"
+                        data-nama="<?= htmlspecialchars($s['nama']) ?>"
+                        data-modal-target="modalEdit"
+                        data-modal-toggle="modalEdit">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"
+                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
+                      </button>
+                      <button type="button"
+                        class="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-red-600 
+                        transition-all duration-150"
+                        onclick="showDeleteModal(<?= $s['id_state'] ?>)">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
       </div>
     </main>
   </div>
@@ -292,17 +400,34 @@ $db->close();
   <!-- Modal Tambah -->
   <div id="modalTambah" tabindex="-1" class="hidden fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto h-modal h-full bg-black/40">
     <div class="relative w-full max-w-md mx-auto mt-24">
-      <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-lg font-bold mb-4">Tambah Kondisi</h3>
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <!-- Header dengan gradient -->
+        <div class="bg-gradient-to-r from-blue-700 to-blue-600 -m-6 mb-6 p-6 rounded-t-xl">
+          <h3 class="text-lg font-bold text-white">Tambah Kondisi</h3>
+        </div>
+
         <form method="POST" action="<?= Helper::basePath(); ?>kondisi">
           <input type="hidden" name="action" value="add_state">
-          <div class="mb-4">
-            <label class="block mb-1 font-medium text-gray-700">Nama Kondisi</label>
-            <input type="text" name="nama_state" class="w-full border rounded px-3 py-2" required>
+          <div class="mb-6">
+            <label class="block mb-2 text-sm font-semibold text-gray-700">Nama Kondisi</label>
+            <input type="text" name="nama_state"
+              class="w-full px-4 py-2.5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg 
+              focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              required
+              placeholder="Masukkan nama kondisi">
           </div>
           <div class="flex justify-end gap-2">
-            <button type="button" data-modal-hide="modalTambah" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">Batal</button>
-            <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Simpan</button>
+            <button type="button" data-modal-hide="modalTambah"
+              class="px-4 py-2.5 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-700 font-medium 
+              border border-gray-200 transition-all duration-300">
+              Batal
+            </button>
+            <button type="submit"
+              class="px-4 py-2.5 rounded-lg bg-gradient-to-r from-green-500 to-green-600 
+              hover:from-green-600 hover:to-green-700 text-white font-medium 
+              transition-all duration-300 shadow-md hover:shadow-lg">
+              Simpan
+            </button>
           </div>
         </form>
       </div>
@@ -312,18 +437,34 @@ $db->close();
   <!-- Modal Edit -->
   <div id="modalEdit" tabindex="-1" class="hidden fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto h-modal h-full bg-black/40">
     <div class="relative w-full max-w-md mx-auto mt-24">
-      <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-lg font-bold mb-4">Edit Kondisi</h3>
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <!-- Header dengan gradient -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-700 -m-6 mb-6 p-6 rounded-t-xl">
+          <h3 class="text-lg font-bold text-white">Edit Kondisi</h3>
+        </div>
+
         <form method="POST" action="<?= Helper::basePath(); ?>kondisi">
           <input type="hidden" name="action" value="edit_state">
           <input type="hidden" name="id_state" id="edit_id_state">
-          <div class="mb-4">
-            <label class="block mb-1 font-medium text-gray-700">Nama Kondisi</label>
-            <input type="text" name="nama_state" id="edit_nama_state" class="w-full border rounded px-3 py-2" required>
+          <div class="mb-6">
+            <label class="block mb-2 text-sm font-semibold text-gray-700">Nama Kondisi</label>
+            <input type="text" name="nama_state" id="edit_nama_state"
+              class="w-full px-4 py-2.5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg 
+              focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              required>
           </div>
           <div class="flex justify-end gap-2">
-            <button type="button" data-modal-hide="modalEdit" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">Batal</button>
-            <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Simpan</button>
+            <button type="button" data-modal-hide="modalEdit"
+              class="px-4 py-2.5 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-700 font-medium 
+              border border-gray-200 transition-all duration-300">
+              Batal
+            </button>
+            <button type="submit"
+              class="px-4 py-2.5 rounded-lg bg-gradient-to-r from-green-500 to-green-600 
+              hover:from-green-600 hover:to-green-700 text-white font-medium 
+              transition-all duration-300 shadow-md hover:shadow-lg">
+              Simpan
+            </button>
           </div>
         </form>
       </div>
