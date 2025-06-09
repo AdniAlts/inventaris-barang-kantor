@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../config/helper.php';
+$db = new db;
 ?>
 <!DOCTYPE html>
 <html>
@@ -9,6 +10,7 @@ require_once __DIR__ . '/../../config/helper.php';
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Inventaris Barang Kantor</title>
   <link rel="stylesheet" href="<?= Helper::basePath(); ?>src/output.css">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
@@ -136,14 +138,14 @@ require_once __DIR__ . '/../../config/helper.php';
       <p>Ini bisa jadi saran untuk membantu pembuatan dashboard pegawai:</p>
       <ol style="list-style: decimal;">
         <li>TOLONG BANGET AMBIL DATANYA DARI DATABASE AJA, JANGAN BIKIN DUMMY SENDIRI!!!<br>
-            Kalau memang gatau caranya, ada modul pembelajaran koneksi database dari bu Dian sendiri, atau ada yang namanya 'searching di Google dan YouTube'.<br>
-            Tolong lah, pake AI nya di minimalisir, dan kalau memang mendesak banget. Mumpung waktu libur kita masih banyak, jadi masih bisa meluangkan waktu untuk BELAJAR.<br>
-            Sama mohon TANGGUNG JAWABnya terhadap bagian tugasnya sendiri, jangan mentang-mentang lagi ada kegiatan jadinya ngga bisa meluangkan waktu untuk ngerjain.</li>
+          Kalau memang gatau caranya, ada modul pembelajaran koneksi database dari bu Dian sendiri, atau ada yang namanya 'searching di Google dan YouTube'.<br>
+          Tolong lah, pake AI nya di minimalisir, dan kalau memang mendesak banget. Mumpung waktu libur kita masih banyak, jadi masih bisa meluangkan waktu untuk BELAJAR.<br>
+          Sama mohon TANGGUNG JAWABnya terhadap bagian tugasnya sendiri, jangan mentang-mentang lagi ada kegiatan jadinya ngga bisa meluangkan waktu untuk ngerjain.</li>
         <li>Karena ini mode pegawai, boleh ditambahkan list 4 atau 5 peminjaman terakhir pegawai yang sedang ada, bisa langsung mengembalikan pinjaman dengan tombol.<br>
-            List nya berupa kotak yang isinya sedikit preview jenis barang dan jumlah yang dipinjam. Untuk detail selengkapnya bisa diarahkan ke halaman peminjaman.<br>
-            Susunan kotaknya horizontal bersampingan antara satu dengan yang lain.<br>
-            Detail kotaknya bisa ada id peminjaman, list jenis barang yang dipinjam sama jumlah nya, dan tombol untuk melihat detail peminjaman yang mengarah ke halaman peminjaman dengan id peminjaman itu selected.<br>
-            Untuk sumber-sumber data peminjamannya bisa ambil DARI DATABASE.</li>
+          List nya berupa kotak yang isinya sedikit preview jenis barang dan jumlah yang dipinjam. Untuk detail selengkapnya bisa diarahkan ke halaman peminjaman.<br>
+          Susunan kotaknya horizontal bersampingan antara satu dengan yang lain.<br>
+          Detail kotaknya bisa ada id peminjaman, list jenis barang yang dipinjam sama jumlah nya, dan tombol untuk melihat detail peminjaman yang mengarah ke halaman peminjaman dengan id peminjaman itu selected.<br>
+          Untuk sumber-sumber data peminjamannya bisa ambil DARI DATABASE.</li>
         <li>Kalau mau melakukan pinjaman bisa bikin tombol yang ngarah ke halaman peminjaman barang.</li>
         <li>Bisa tambahin list jumlah jenis barang yang lagi "tersedia" dan "tidak rusak" agar bisa dipinjam. Informasi nya di ambil DARI DATABASE.</li>
       </ol>
@@ -151,6 +153,84 @@ require_once __DIR__ . '/../../config/helper.php';
       <p>Kalau sudah selesai mengimplementasi bagian halaman ini. Bisa menghapus elemen div yang isinya teks ini.</p>
       <p>Dan kalau ada pertanyaan, jangan sungkan tanya di grup. Teman-teman kalian PASTI dan HARUSNYA bisa bantu.</p>
     </div>
+
+    <div class="my-5">
+      <h1 class="text-3xl font-bold text-black-400">Barang Terakhir Dipinjam</h1>
+    </div>
+
+    <div class="grid grid-cols-5 gap-4">
+      <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-50">
+        <a href="#">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black">ID Peminjam</h5>
+        </a>
+        <p class="mb font-normal text-gray-700 dark:text-black">Deskirpsi</p>
+        <p class="mb font-normal text-gray-700 dark:text-black">Tanggal Peminjaman</p>
+        <p class="mb-3 font-normal text-gray-700 dark:text-black">Jumlah Barang Yang Dipinjam</p>
+        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-50 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Read more
+          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+          </svg>
+        </a>
+      </div>
+      <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-50">
+        <a href="#">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black">ID Peminjam</h5>
+        </a>
+        <p class="mb font-normal text-gray-700 dark:text-black">Deskirpsi</p>
+        <p class="mb font-normal text-gray-700 dark:text-black">Tanggal Peminjaman</p>
+        <p class="mb-3 font-normal text-gray-700 dark:text-black">Jumlah Barang Yang Dipinjam</p>
+        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Read more
+          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+          </svg>
+        </a>
+      </div>
+      <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-50">
+        <a href="#">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black">ID Peminjam</h5>
+        </a>
+        <p class="mb font-normal text-gray-700 dark:text-black">Deskirpsi</p>
+        <p class="mb font-normal text-gray-700 dark:text-black">Tanggal Peminjaman</p>
+        <p class="mb-3 font-normal text-gray-700 dark:text-black">Jumlah Barang Yang Dipinjam</p>
+        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Read more
+          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+          </svg>
+        </a>
+      </div>
+      <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-50">
+        <a href="#">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black">ID Peminjam</h5>
+        </a>
+        <p class="mb font-normal text-gray-700 dark:text-black">Deskirpsi</p>
+        <p class="mb font-normal text-gray-700 dark:text-black">Tanggal Peminjaman</p>
+        <p class="mb-3 font-normal text-gray-700 dark:text-black">Jumlah Barang Yang Dipinjam</p>
+        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Read more
+          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+          </svg>
+        </a>
+      </div>
+      <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-50">
+        <a href="#">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black">ID Peminjam</h5>
+        </a>
+        <p class="mb font-normal text-gray-700 dark:text-black">Deskirpsi</p>
+        <p class="mb font-normal text-gray-700 dark:text-black">Tanggal Peminjaman</p>
+        <p class="mb-3 font-normal text-gray-700 dark:text-black">Jumlah Barang Yang Dipinjam</p>
+        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Read more
+          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg">
       <div class="grid grid-cols-3 gap-4 mb-4">
         <div class="flex items-center justify-center h-24 rounded bg-gray-50">
@@ -277,26 +357,26 @@ require_once __DIR__ . '/../../config/helper.php';
       </div>
     </div>
   </main>
-  
+
   <script src="<?= Helper::basePath(); ?>node_modules/flowbite/dist/flowbite.min.js"></script>
   <script>
     const sidebar = document.getElementById('sidebar');
     const userButton = document.getElementById('dropdownUserNameButton');
     const userDropdown = document.getElementById('dropdownUserName');
-    document.getElementById('toggleSidebarBtn').addEventListener('click', function () {
+    document.getElementById('toggleSidebarBtn').addEventListener('click', function() {
       sidebar.classList.toggle('sidebar-collapsed');
     });
-    sidebar.addEventListener('mouseenter', function () {
+    sidebar.addEventListener('mouseenter', function() {
       if (sidebar.classList.contains('sidebar-collapsed') && userDropdown.classList.contains('hidden')) {
         sidebar.classList.toggle('sidebar-hover');
       }
     });
-    sidebar.addEventListener('mouseleave', function () {
+    sidebar.addEventListener('mouseleave', function() {
       if (sidebar.classList.contains('sidebar-hover') && userDropdown.classList.contains('hidden')) {
         sidebar.classList.toggle('sidebar-hover');
       }
     });
-    userButton.addEventListener('focusout', function () {
+    userButton.addEventListener('focusout', function() {
       if (!userDropdown.classList.contains('hidden')) {
         sidebar.classList.toggle('sidebar-hover');
       }

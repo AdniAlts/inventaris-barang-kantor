@@ -9,6 +9,8 @@ require_once __DIR__ . '/../../config/helper.php';
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Inventaris Barang Kantor</title>
   <link rel="stylesheet" href="<?= Helper::basePath(); ?>src/output.css">
+  <style>
+  </style>
 </head>
 
 <body>
@@ -170,6 +172,123 @@ require_once __DIR__ . '/../../config/helper.php';
       <p>Dan kalau ada pertanyaan, jangan sungkan tanya di grup. Teman-teman kalian PASTI dan HARUSNYA bisa bantu.</p>
     </div>
 
+    <div class="my-5">
+      <h1 class="text-3xl font-bold text-black-400">Dashboard</h1>
+    </div>
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-900 dark:text-black">
+        <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-50 text-black">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              Kategori Barang
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Jenis Barang
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Kondisi Barang
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Barang tersedia
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+              Barang 1
+            </th>
+            <td class="px-6 py-4">
+              Jenis Barang
+            </td>
+            <td class="px-6 py-4">
+              Kondisi Barang
+            </td>
+            <td class="px-6 py-4">
+              Actions
+            </td>
+            <td class="px-6 py-4">
+              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Kembalikan</button>
+            </td>
+          </tr>
+          <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+              Barang 2
+            </th>
+            <td class="px-6 py-4">
+              Jenis Barang
+            </td>
+            <td class="px-6 py-4">
+              Kondisi Barang
+            </td>
+            <td class="px-6 py-4">
+              Actions
+            </td>
+            <td class="px-6 py-4">
+              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Kembalikan</button>
+            </td>
+          </tr>
+          <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+              Barang 3
+            </th>
+            <td class="px-6 py-4">
+              Jenis Barang
+            </td>
+            <td class="px-6 py-4">
+              Kondisi Barang
+            </td>
+            <td class="px-6 py-4">
+              Actions
+            </td>
+            <td class="px-6 py-4">
+              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Kembalikan</button>
+            </td>
+          </tr>
+          <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+              Barang 4
+            </th>
+            <td class="px-6 py-4">
+              Jenis Barang
+            </td>
+            <td class="px-6 py-4">
+              Kondisi Barang
+            </td>
+            <td class="px-6 py-4">
+              Actions
+            </td>
+            <td class="px-6 py-4">
+              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Kembalikan</button>
+            </td>
+          </tr>
+          <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+              Barang 5
+            </th>
+            <td class="px-6 py-4">
+              Jenis Barang
+            </td>
+            <td class="px-6 py-4">
+              Kondisi Barang
+            </td>
+            <td class="px-6 py-4">
+              Actions
+            </td>
+            <td class="px-6 py-4">
+              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Kembalikan</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- nyoba -->
+
     <!-- Tampilan 5 barang pertama -->
 
     <!-- Tampilan 5 barang pertama -->
@@ -177,241 +296,7 @@ require_once __DIR__ . '/../../config/helper.php';
     <!-- Tampilan 5 barang pertama -->
 
     <!-- Tampilan 5 barang pertama -->
-    <div class="flex flex-wrap justify-center gap-6">
-      <a href="#" class="group relative block overflow-hidden">
-        <button
-          class="absolute end-4 top-4 z-10 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75">
-          <span class="sr-only">Wishlist</span>
 
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-4">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-          </svg>
-        </button>
-
-        <img
-          src="https://images.unsplash.com/photo-1599481238640-4c1288750d7a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2664&q=80"
-          alt=""
-          class="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72" />
-        <div class="relative border border-gray-100 bg-white p-6">
-          <span class="bg-yellow-400 px-3 py-1.5 text-xs font-medium whitespace-nowrap"> New </span>
-          <h3 class="mt-4 text-lg font-medium text-gray-900">Robot Toy</h3>
-          <p class="mt-1.5 text-sm text-gray-700">$14.99</p>
-          <form class="mt-4">
-            <button
-              class="block w-full rounded-sm bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105">
-              Add to Cart
-            </button>
-          </form>
-        </div>
-      </a>
-    </div>
-
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-      <a href="#">
-        <img class="rounded-t-lg" src="https://via.placeholder.com/400x200" alt="Card Image 2" />
-      </a>
-      <div class="p-5">
-        <a href="#">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Another exciting tech development</h5>
-        </a>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Exploring the latest breakthroughs and trends in the tech industry.</p>
-        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          Read more
-          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-          </svg>
-        </a>
-      </div>
-    </div>
-
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-      <a href="#">
-        <img class="rounded-t-lg" src="https://via.placeholder.com/400x200" alt="Card Image 3" />
-      </a>
-      <div class="p-5">
-        <a href="#">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">The future of AI and machine learning</h5>
-        </a>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Discover how AI is shaping our world and what's next in the field.</p>
-        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          Read more
-          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-          </svg>
-        </a>
-      </div>
-    </div>
-
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-      <a href="#">
-        <img class="rounded-t-lg" src="https://via.placeholder.com/400x200" alt="Card Image 4" />
-      </a>
-      <div class="p-5">
-        <a href="#">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Innovations in renewable energy</h5>
-        </a>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Learn about the latest advancements in clean energy solutions.</p>
-        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          Read more
-          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-          </svg>
-        </a>
-      </div>
-    </div>
-
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-      <a href="#">
-        <img class="rounded-t-lg" src="https://via.placeholder.com/400x200" alt="Card Image 5" />
-      </a>
-      <div class="p-5">
-        <a href="#">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Cybersecurity threats and solutions</h5>
-        </a>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Understand the evolving landscape of cyber threats and how to protect yourself.</p>
-        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          Read more
-          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-          </svg>
-        </a>
-      </div>
-    </div>
-    </div>
-    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg">
-      <div class="grid grid-cols-3 gap-4 mb-4">
-        <div class="flex items-center justify-center h-24 rounded bg-gray-50">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center h-24 rounded bg-gray-50">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center h-24 rounded bg-gray-50">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-      </div>
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50">
-        <p class="text-2xl text-gray-400">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M9 1v16M1 9h16" />
-          </svg>
-        </p>
-      </div>
-      <div class="grid grid-cols-2 gap-4 mb-4">
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-      </div>
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50">
-        <p class="text-2xl text-gray-400">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M9 1v16M1 9h16" />
-          </svg>
-        </p>
-      </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-      </div>
-    </div>
   </main>
 
   <script src="<?= Helper::basePath(); ?>node_modules/flowbite/dist/flowbite.min.js"></script>
