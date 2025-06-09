@@ -305,10 +305,7 @@ class Search {
 
   public static function getAllTypes(mysqli $connDB) {
     $types = [];
-    $query = "SELECT j.id_jenis, j.nama, j.stok, k.nama as nama_kategori
-              FROM jenis j
-              JOIN kategori k on j.kategori_id = k.id_kategori
-              ORDER BY j.id_jenis ASC";
+    $query = "SELECT DISTINCT j.id_jenis, j.nama , j.stok_tersedia FROM jenis j JOIN barang b ON j.id_jenis = b.jenis_id WHERE b.status = 'tersedia' AND b.state_id = 1 AND j.stok > 0";
     
     $sql = $connDB->prepare($query);
     if (!$sql) {

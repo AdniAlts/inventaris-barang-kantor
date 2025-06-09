@@ -57,17 +57,27 @@ foreach ($barangs as $item) {
             INSERT INTO peminjaman_detail (peminjaman_id, barang_kode) 
             VALUES (?, ?)
         ");
-        $stmtInsert->bind_param("is", $id_peminjaman, $kode_barang);
+        $stmtInsert->bind_param("ss", $id_peminjaman, $kode_barang);
         $stmtInsert->execute();
 
         // Update status barang menjadi 'dipinjam'
         $db->conn->query("UPDATE barang SET status = 'dipinjam' WHERE kode_barang = '$kode_barang'");
+
+        // Update stok_tersedia pada jenis
+        $stmtJenis = $db->conn->prepare("
+        UPDATE jenis j
+        JOIN barang b ON b.jenis_id = j.id_jenis
+        SET j.stok_tersedia = j.stok_tersedia - 1
+        WHERE b.kode_barang = ?
+        ");
+        $stmtJenis->bind_param("s", $kode_barang);
+        $stmtJenis->execute();
     }
 }
 
 setcookie('peminjaman', 'y', time() + (-3600 * 24));
 Helper::route("/peminjaman", [
-    "success" => "Barang berhasil dipinjam"
+    "success" => "Barang berhasil dipinjam, ID Peminjaman Anda adalah $id_peminjaman"
 ]);
 
 function generateIdPeminjaman($conn)
