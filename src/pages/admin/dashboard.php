@@ -252,13 +252,6 @@ if ($resultStats && $resultStats->num_rows > 0) {
                       class="text-blue-600 hover:text-blue-800 text-sm font-medium">
                       Lihat Detail
                     </a>
-                    <a href="<?= Helper::basePath(); ?>admin/pengembalian?id=<?= $peminjaman['id_peminjaman'] ?>"
-                      class="inline-flex items-center px-3 py-1.5 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors">
-                      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"></path>
-                      </svg>
-                      Proses Pengembalian
-                    </a>
                   </div>
                 </div>
               </div>
