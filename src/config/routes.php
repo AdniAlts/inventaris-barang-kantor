@@ -233,8 +233,6 @@ switch ($comp) {
         break;
 
     case 'GET:login':
-        require_once __DIR__ . "/../pages/login.php";
-    case 'GET:login':
         UserHandler::login_verify();
         break;
 
@@ -253,37 +251,6 @@ switch ($comp) {
         if ($status) {
             Helper::route("dashboard");
         } else {
-            $db = new db(); // Membuat objek database
-
-            $stmt = $db->conn->prepare("SELECT id_admin, username, password FROM admin WHERE username = ?");
-            $stmt->bind_param("s", $username);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            if ($result->num_rows === 1) {
-                $admin = $result->fetch_assoc();
-                if ($password === $admin['password']) { // INGAT: HARUSNYA PAKAI password_verify()
-                    $_SESSION['admin_id'] = $admin['id_admin'];
-                    $_SESSION['username'] = $admin['username'];
-                    $login_successful = true;
-                } else {
-                    $error_message = "Username atau password salah.";
-                }
-            } else {
-                $error_message = "Username atau password salah.";
-            }
-
-            $stmt->close();
-            $db->close();
-        }
-
-        if ($login_successful) {
-            $_SESSION['error_message'] = '';
-            Helper::route("admin"); // Arahkan ke halaman 'home' (dashboard)
-        } else {
-            $_SESSION['error_message'] = $error_message;
-            Helper::route("login");
-            // Helper::route("login"); ['error' => urlencode($error_message)]); // Arahkan kembali ke login dengan error
             require_once __DIR__ . "/../pages/login.php";
         }
         break; // Penting: Jangan lupa break!
