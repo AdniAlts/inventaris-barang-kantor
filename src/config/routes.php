@@ -1,12 +1,10 @@
 <?php
-require_once "db.php";
-require_once "helper.php";
 
 // PENTING: Path ini HARUS BENAR relatif terhadap lokasi file routes.php
 // Berdasarkan struktur folder yang Anda tunjukkan (routes.php, helper.php, db.php di src/config/)
 require_once __DIR__ . "/helper.php";
-require_once __DIR__ . "/db.php";
 require_once __DIR__ . "/../modules/barang.php";
+require_once __DIR__ . "/../config/user_handler.php";
 
 /**
  * P BACA, PENTING
@@ -104,10 +102,7 @@ $comp = preg_replace('/\?.*$/', '', $comp);
 
 $comp = preg_replace('/\?.*$/', '', $comp);
 
-// Mulai sesi PHP jika belum dimulai
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+session_start();
 
 
 switch ($comp) {
@@ -188,10 +183,6 @@ switch ($comp) {
         require_once __DIR__ . "/../pages/pegawai/peminjaman.php";
         break;
 
-    case 'POST:loan':
-        require_once __DIR__ . "/../pages/old/loan.php";
-        break;
-
     case 'GET:pengembalian':
         $db = new db();
 
@@ -243,28 +234,24 @@ switch ($comp) {
 
     case 'GET:login':
         require_once __DIR__ . "/../pages/login.php";
+    case 'GET:login':
+        UserHandler::login_verify();
         break;
 
-    case 'GET:admin':
-        if (!isset($_SESSION['admin_id'])) {
-            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
-            Helper::route("login");
-            exit;
+    case 'GET:dashboard':
+        // This route's only job is to figure out where the user should go.
+        $status = UserHandler::login_verify();
+        if ($status === 'admin') {
+            require_once __DIR__ . "/../pages/admin/dashboard.php";
+        } elseif ($status === 'pegawai') {
+            require_once __DIR__ . "/../pages/pegawai/dashboard.php";
         }
-        require_once __DIR__ . "/../pages/admin/dashboard.php";
         break;
-
-
 
     case 'POST:login': // LOGIKA PROSES LOGIN ADA DI SINI (metode POST)
-        $username = $_POST['username'] ?? '';
-        $password = $_POST['password'] ?? '';
-
-        $login_successful = false;
-        $error_message = "";
-
-        if (empty($username) || empty($password)) {
-            $error_message = "Username dan password harus diisi.";
+        $status = UserHandler::login($_POST['username'], $_POST['password']);
+        if ($status) {
+            Helper::route("dashboard");
         } else {
             $db = new db(); // Membuat objek database
 
@@ -297,97 +284,50 @@ switch ($comp) {
             $_SESSION['error_message'] = $error_message;
             Helper::route("login");
             // Helper::route("login"); ['error' => urlencode($error_message)]); // Arahkan kembali ke login dengan error
+            require_once __DIR__ . "/../pages/login.php";
         }
         break; // Penting: Jangan lupa break!
 
     case 'GET:logout':
-        $_SESSION = array();
-
-        // Hancurkan sesi
-        if (ini_get("session.use_cookies")) {
-            $params = session_get_cookie_params();
-            setcookie(
-                session_name(),
-                '',
-                time() - 42000,
-                $params["path"],
-                $params["domain"],
-                $params["secure"],
-                $params["httponly"]
-            );
-        }
-        session_destroy();
-
-        // Arahin ke halaman login
-        Helper::route("login");
+        UserHandler::logout();
         break;
-
+    
+    case 'GET:admin':
+        UserHandler::switch("admin");
+        break;
+    
     case 'GET:user':
-
-        require_once __DIR__ . "/../pages/pegawai/dashboard.php";
-        break;
-
-    case 'GET:kategori':
-        if (!isset($_SESSION['admin_id'])) {
-            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
-            Helper::route("login");
-            exit;
-        }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        UserHandler::switch("pegawai");
         break;
 
     case 'POST:kategori':
-        if (!isset($_SESSION['admin_id'])) {
-            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
-            Helper::route("login");
-            exit;
+    case 'GET:kategori':
+        if (UserHandler::verify()) {
+            require_once __DIR__ . "/../pages/admin/kategori.php";
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
         break;
 
-    case 'GET:jenis':
-        if (!isset($_SESSION['admin_id'])) {
-            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
-            Helper::route("login");
-            exit;
-        }
-        require_once __DIR__ . "/../pages/admin/jenis.php";
-        break;
     case 'POST:jenis':
-        if (!isset($_SESSION['admin_id'])) {
-            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
-            Helper::route("login");
-            exit;
+    case 'GET:jenis':
+        if (UserHandler::verify()) {
+            require_once __DIR__ . "/../pages/admin/jenis.php";
         }
-        require_once __DIR__ . "/../pages/admin/jenis.php";
-        break;
-
-    case 'GET:kondisi':
-        if (!isset($_SESSION['admin_id'])) {
-            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
-            Helper::route("login");
-            exit;
-        }
-        require_once __DIR__ . "/../pages/admin/kondisi.php";
         break;
 
     case 'POST:kondisi':
-        if (!isset($_SESSION['admin_id'])) {
-            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
-            Helper::route("login");
-            exit;
+    case 'GET:kondisi':
+        if (UserHandler::verify()) {
+            require_once __DIR__ . "/../pages/admin/kondisi.php";
         }
-        require_once __DIR__ . "/../pages/admin/kondisi.php";
         break;
 
+    case 'POST:barang':
     case 'GET:barang':
-        if (!isset($_SESSION['admin_id'])) {
-            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
-            Helper::route("login");
-            exit;
+        if (UserHandler::verify()) {
+            require_once __DIR__ . "/../pages/admin/barang.php";
         }
-        require_once __DIR__ . "/../pages/admin/barang.php";
         break;
+
     case 'POST:barang/create':
         if (!isset($_SESSION['admin_id'])) {
             $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
