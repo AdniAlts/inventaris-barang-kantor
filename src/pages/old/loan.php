@@ -84,7 +84,8 @@ function generateIdPeminjaman($conn)
 {
     require_once "../config/db.php";
     $db = new db();
-    $tanggal = date('dmY'); // Contoh: 25052025
+    date_default_timezone_set('Asia/Jakarta');
+    $tanggal = date('dmY');
 
     // Cari jumlah peminjaman yang sudah ada hari ini
     $stmt = $db->conn->prepare("SELECT COUNT(*) as jumlah FROM peminjaman WHERE DATE(tgl_peminjaman) = CURDATE()");
