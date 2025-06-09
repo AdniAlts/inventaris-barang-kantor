@@ -1,6 +1,6 @@
 <div id="create-barang-modal" class="fixed inset-0 flex items-center justify-center hidden edit-modal-backdrop opacity-0 transition-opacity duration-500 ease-in-out">
     <div id="skibidi" class="relative bg-white p-8 rounded-lg shadow-md max-w-2xl w-full mx-4 my-8 overflow-y-auto max-h-[90vh] opacity-0 transition-opacity duration-500 ease-in-out">
-        <button id="close-create-barang-modal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-2xl font-bold focus:outline-none">&times;</button>
+        <button id="close-create-barang-modal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl font-bold focus:outline-none">&times;</button>
         <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-100" style="min-height: auto; padding: 0;">
             <div class="max-w-2xl w-full bg-white p-8 rounded-lg shadow-md">
                 <h1 class="text-2xl font-bold text-gray-800">Buat Barang</h1>

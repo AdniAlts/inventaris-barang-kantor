@@ -311,41 +311,22 @@ switch ($comp) {
             require_once __DIR__ . "/../pages/admin/barang.php";
         }
         break;
+    case 'GET:barang/create':
     case 'POST:barang/create':
-        if (!isset($_SESSION['admin_id'])) {
-            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
-            Helper::route("login");
-            exit;
-        }
         require_once __DIR__ . "/../pages/admin/barang_logic.php";
         Barang::create();
         break;
 
     case 'POST:barang/update':
-        if (!isset($_SESSION['admin_id'])) {
-            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
-            Helper::route("login");
-            exit;
-        }
         require_once __DIR__ . "/../pages/admin/barang_logic.php";
         Barang::update();
         break;
 
     case 'POST:barang/delete':
-        if (!isset($_SESSION['admin_id'])) {
-            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
-            Helper::route("login");
-            exit;
-        }
         require_once __DIR__ . "/../pages/admin/barang_logic.php";
         Barang::delete();
         break;
     case 'GET:barang/delete':
-        if (!isset($_SESSION['admin_id'])) {
-            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
-            Helper::route("login");
-            exit;
-        }
         require_once __DIR__ . "/../pages/admin/barang.php";
         // Barang::delete();
         break;

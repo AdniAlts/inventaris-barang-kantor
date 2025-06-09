@@ -1,8 +1,8 @@
 <div id="edit-barang-modal" class="fixed inset-0 flex items-center justify-center hidden edit-modal-backdrop opacity-0 transition-opacity duration-500 ease-in-out">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-8 w-11/12 max-w-lg mx-auto transform transition-all duration-300 scale-95 opacity-0 edit-modal-content">
+    <div class="bg-white rounded-lg shadow-2xl p-8 w-11/12 max-w-lg mx-auto transform transition-all duration-300 scale-95 opacity-0 edit-modal-content">
         <div class="flex justify-between items-center mb-6">
-            <h3 class="text-2xl font-bold text-gray-900 dark:text-white" id="edit-modal-title">Edit Barang: <span id="barang-codename-display"></span></h3>
-            <button type="button" id="close-edit-modal" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-700 dark:hover:text-white">
+            <h3 class="text-2xl font-bold text-gray-900" id="edit-modal-title">Edit Barang: <span id="barang-codename-display"></span></h3>
+            <button type="button" id="close-edit-modal" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                 </svg>
@@ -14,16 +14,16 @@
 
             <!-- Current Image Display -->
             <div class="flex flex-col items-center">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">Current Image:</label>
-                <img id="current-barang-image" src="" alt="Current Barang Image" class="rounded-lg w-24 h-24 object-cover border border-gray-300 dark:border-gray-600 mb-4">
-                <input type="file" id="image-upload-input" name="image" accept="image/png, image/jpeg" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG, JPG, JPEG, or GIF (Max 5MB).</p>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Current Image:</label>
+                <img id="current-barang-image" src="" alt="Current Barang Image" class="rounded-lg w-24 h-24 object-cover border border-gray-300 mb-4">
+                <input type="file" id="image-upload-input" name="image" accept="image/png, image/jpeg" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
+                <p class="mt-1 text-sm text-gray-500" id="file_input_help">PNG, JPG, JPEG, or GIF (Max 5MB).</p>
             </div>
 
             <!-- Condition Selector -->
             <div>
-                <label for="barang-condition" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">Condition:</label>
-                <select id="barang-condition" name="kualitas" class="block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <label for="barang-condition" class="block text-sm font-medium text-gray-700 mb-2">Condition:</label>
+                <select id="barang-condition" name="kualitas" class="block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                     <option value="1">Baik</option>
                     <option value="2">Patah</option>
                     <option value="3">Rusak</option>
@@ -34,8 +34,8 @@
 
             <!-- Status Selector -->
             <div>
-                <label for="barang-status" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">Status:</label>
-                <select id="barang-status" name="status" class="block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <label for="barang-status" class="block text-sm font-medium text-gray-700 mb-2">Status:</label>
+                <select id="barang-status" name="status" class="block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                     <option value="dipinjam">dipinjam</option>
                     <option value="tersedia">tersedia</option>
                 </select>
@@ -43,8 +43,8 @@
 
             <!-- Action Buttons -->
             <div class="flex justify-end space-x-4 pt-4">
-                <button type="submit" class="px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors duration-200">Save Changes</button>
-                <button type="button" id="cancel-edit-barang" class="px-5 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700 transition-colors duration-200">Cancel</button>
+                <button type="submit" class="px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 transition-colors duration-200">Save Changes</button>
+                <button type="button" id="cancel-edit-barang" class="px-5 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 transition-colors duration-200">Cancel</button>
             </div>
         </form>
     </div>

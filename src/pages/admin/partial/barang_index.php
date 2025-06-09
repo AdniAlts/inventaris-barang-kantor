@@ -13,15 +13,15 @@
 </style>
 
 <div id="main-content-area" class="p-4">
-    <div class="p-4 rounded-lg dark:border-gray-700 min-h-screen">
-        <h2 class="text-3xl font-extrabold mb-6 text-gray-900 dark:text-white">Barang Inventory</h2>
-        <button id="create-barang-btn" type="button" class="mb-6 inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+    <div class="p-4 rounded-lg min-h-screen">
+        <h2 class="text-3xl font-extrabold mb-6 text-gray-900">Barang Inventory</h2>
+        <button id="create-barang-btn" type="button" class="mb-6 inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
             <svg class="me-2 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
             </svg>
             Add New Barang
         </button>
-        <button id="excel" type="button" class="ml-4 mb-6 inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <button id="excel" type="button" class="ml-4 mb-6 inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-blue-300">
             <svg class="me-2 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
             </svg>
@@ -29,7 +29,7 @@
         </button>
 
         <!-- Kategori Tabs (Dynamic from $arr) -->
-        <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+        <div class="mb-4 border-b border-gray-200">
             <ul class="flex flex-wrap -mb-px text-base font-medium text-center" id="kategori-tabs" data-tabs-toggle="#kategori-tab-content" role="tablist">
                 <?php
                 $arr = Barang::read();
@@ -38,7 +38,7 @@
                     $kategori_id = strtolower(str_replace(' ', '-', $category['nama']));
                 ?>
                     <li class="me-2" role="presentation">
-                        <button class="inline-block p-4 border-b-2 rounded-t-lg <?php echo $first_category ? 'active:border-blue-600 active:text-blue-600 dark:active:border-blue-500 dark:active:text-blue-500' : ''; ?> hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                        <button class="inline-block p-4 border-b-2 rounded-t-lg <?php echo $first_category ? 'active:border-blue-600 active:text-blue-600' : ''; ?> hover:text-gray-600 hover:border-gray-300"
                             id="<?php echo $kategori_id; ?>-kategori-tab"
                             data-tabs-target="#<?php echo $kategori_id; ?>-kategori"
                             type="button"
@@ -65,16 +65,16 @@
             ?>
 
                 <!-- Kategori Content -->
-                <div class="<?php echo $first_category ? '' : 'hidden'; ?> p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md"
+                <div class="<?php echo $first_category ? '' : 'hidden'; ?> p-4 rounded-lg bg-white shadow-md"
                     id="<?php echo $kategori_id; ?>-kategori"
                     role="tabpanel"
                     aria-labelledby="<?php echo $kategori_id; ?>-kategori-tab">
-                    <h3 class="text-2xl font-semibold mb-5 text-gray-900 dark:text-white"><?php echo htmlspecialchars($category['nama']); ?> Items</h3>
+                    <h3 class="text-2xl font-semibold mb-5 text-gray-900"><?php echo htmlspecialchars($category['nama']); ?> Items</h3>
 
                     <?php if ($has_multiple_jenis): ?>
                         <div class="mb-6">
-                            <label for="<?php echo $kategori_id; ?>-jenis-select" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">Select Jenis:</label>
-                            <select id="<?php echo $kategori_id; ?>-jenis-select" class="block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <label for="<?php echo $kategori_id; ?>-jenis-select" class="block text-sm font-medium text-gray-700 mb-2">Select Jenis:</label>
+                            <select id="<?php echo $kategori_id; ?>-jenis-select" class="block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                                 <option value="" disabled>Choose a Jenis</option>
                                 <?php
                                 $first_jenis = true;
@@ -91,37 +91,37 @@
                             </select>
                         </div>
 
-                        <div id="<?php echo $kategori_id; ?>-jenis-content-wrapper" class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <div id="<?php echo $kategori_id; ?>-jenis-content-wrapper" class="bg-gray-50 p-4 rounded-lg">
                             <?php
                             $first_jenis = true;
                             foreach ($category['jenis_items'] as $jenis):
                                 $jenis_id = strtolower(str_replace(' ', '-', $jenis['nama']));
                             ?>
                                 <div class="<?php echo $first_jenis ? '' : 'hidden'; ?>" id="<?php echo $jenis_id; ?>-jenis" role="tabpanel">
-                                    <h4 class="text-xl font-medium mb-2 text-gray-900 dark:text-white">Jenis: <?php echo htmlspecialchars($jenis['nama']); ?></h4>
-                                    <p class="text-lg text-gray-700 dark:text-gray-200 mb-6">Stock: <?php echo $jenis['stok']; ?> units available</p>
+                                    <h4 class="text-xl font-medium mb-2 text-gray-900">Jenis: <?php echo htmlspecialchars($jenis['nama']); ?></h4>
+                                    <p class="text-lg text-gray-700 mb-6">Stock: <?php echo $jenis['stok']; ?> units available</p>
 
-                                    <h5 class="text-lg font-medium mb-4 text-gray-900 dark:text-white">Individual Barang Units:</h5>
+                                    <h5 class="text-lg font-medium mb-4 text-gray-900">Individual Barang Units:</h5>
                                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                                         <?php foreach ($jenis['barang_items'] as $barang):
                                             $image_url = $barang['gambar_url'] ? Helper::basePath() . "src/" . $barang['gambar_url'] : 'https://placehold.co/150x100/a0c4ff/2c3e50?text=' . urlencode($jenis['nama']);
                                             $status_display = $barang['status'] == 'tersedia' ? 'Idle' : ucfirst($barang['status']);
                                         ?>
                                             <!-- Barang Unit -->
-                                            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-3 flex items-center gap-3">
+                                            <div class="bg-white rounded-lg shadow-md p-3 flex items-center gap-3">
                                                 <img src="<?php echo $image_url; ?>" alt="<?php echo htmlspecialchars($jenis['nama']); ?> unit" class="barang-image rounded-full w-10 h-10 object-cover flex-shrink-0 cursor-pointer">
-                                                <p class="font-semibold text-gray-900 dark:text-white flex-grow"><?php echo htmlspecialchars($barang['kode']); ?></p>
+                                                <p class="font-semibold text-gray-900 flex-grow"><?php echo htmlspecialchars($barang['kode']); ?></p>
                                                 <div class="text-right flex-shrink-0">
-                                                    <p class="text-xs text-gray-600 dark:text-gray-400">Condition: <?php echo htmlspecialchars($barang['state']); ?></p>
-                                                    <p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Status: <?php echo $status_display; ?></p>
+                                                    <p class="text-xs text-gray-600">Condition: <?php echo htmlspecialchars($barang['state']); ?></p>
+                                                    <p class="text-xs text-gray-600 mb-2">Status: <?php echo $status_display; ?></p>
                                                     <div class="flex space-x-2">
-                                                        <button class="edit-barang-btn px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-900 transition-colors duration-200"
+                                                        <button class="edit-barang-btn px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-colors duration-200"
                                                             data-barang-id="<?php echo $barang['kode']; ?>"
                                                             data-barang-codename="<?php echo htmlspecialchars($barang['kode']); ?>"
                                                             data-barang-image="<?php echo $image_url; ?>"
                                                             data-barang-condition="<?php echo htmlspecialchars($barang['state']); ?>"
                                                             data-barang-status="<?php echo $status_display; ?>">Edit</button>
-                                                        <button class="delete-barang-btn px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded-full hover:bg-red-700 focus:ring-4 focus:ring-red-300 dark:bg-red-700 dark:hover:bg-red-800 dark:focus:ring-red-900 transition-colors duration-200"
+                                                        <button class="delete-barang-btn px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded-full hover:bg-red-700 focus:ring-4 focus:ring-red-300 transition-colors duration-200"
                                                             data-barang-id="<?php echo $barang['kode']; ?>"
                                                             data-barang-codename="<?php echo htmlspecialchars($barang['kode']); ?>"
                                                             data-barang-image="<?php echo $image_url; ?>"
@@ -144,30 +144,30 @@
                         <?php
                         $jenis = reset($category['jenis_items']); // Get the first (and only) jenis
                         ?>
-                        <h4 class="text-xl font-medium mb-2 text-gray-900 dark:text-white">Jenis: <?php echo htmlspecialchars($jenis['nama']); ?></h4>
-                        <p class="text-lg text-gray-700 dark:text-gray-200 mb-6">Stock: <?php echo $jenis['stok']; ?> units available</p>
+                        <h4 class="text-xl font-medium mb-2 text-gray-900">Jenis: <?php echo htmlspecialchars($jenis['nama']); ?></h4>
+                        <p class="text-lg text-gray-700 mb-6">Stock: <?php echo $jenis['stok']; ?> units available</p>
 
-                        <h5 class="text-lg font-medium mb-4 text-gray-900 dark:text-white">Individual Barang Units:</h5>
+                        <h5 class="text-lg font-medium mb-4 text-gray-900">Individual Barang Units:</h5>
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                             <?php foreach ($jenis['barang_items'] as $barang):
-                                $image_url = $barang['gambar_url'] ? $barang['gambar_url'] : 'https://placehold.co/150x100/a0c4ff/2c3e50?text=' . urlencode($jenis['nama']);
+                                $image_url = $barang['gambar_url'] ? Helper::basePath() . "src/" . $barang['gambar_url'] : 'https://placehold.co/150x100/a0c4ff/2c3e50?text=' . urlencode($jenis['nama']);
                                 $status_display = $barang['status'] == 'tersedia' ? 'Idle' : ucfirst($barang['status']);
                             ?>
                                 <!-- Barang Unit -->
-                                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-3 flex items-center gap-3">
+                                <div class="bg-white rounded-lg shadow-md p-3 flex items-center gap-3">
                                     <img src="<?php echo $image_url; ?>" alt="<?php echo htmlspecialchars($jenis['nama']); ?> unit" class="barang-image rounded-full w-10 h-10 object-cover flex-shrink-0 cursor-pointer">
-                                    <p class="font-semibold text-gray-900 dark:text-white flex-grow"><?php echo htmlspecialchars($barang['kode']); ?></p>
+                                    <p class="font-semibold text-gray-900 flex-grow"><?php echo htmlspecialchars($barang['kode']); ?></p>
                                     <div class="text-right flex-shrink-0">
-                                        <p class="text-xs text-gray-600 dark:text-gray-400">Condition: <?php echo htmlspecialchars($barang['state']); ?></p>
-                                        <p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Status: <?php echo $status_display; ?></p>
+                                        <p class="text-xs text-gray-600">Condition: <?php echo htmlspecialchars($barang['state']); ?></p>
+                                        <p class="text-xs text-gray-600 mb-2">Status: <?php echo $status_display; ?></p>
                                         <div class="flex space-x-2">
-                                            <button class="edit-barang-btn px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-900 transition-colors duration-200"
+                                            <button class="edit-barang-btn px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-colors duration-200"
                                                 data-barang-id="<?php echo $barang['kode']; ?>"
                                                 data-barang-codename="<?php echo htmlspecialchars($barang['kode']); ?>"
                                                 data-barang-image="<?php echo $image_url; ?>"
                                                 data-barang-condition="<?php echo htmlspecialchars($barang['state']); ?>"
                                                 data-barang-status="<?php echo $status_display; ?>">Edit</button>
-                                            <button class="delete-barang-btn px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded-full hover:bg-red-700 focus:ring-4 focus:ring-red-300 dark:bg-red-700 dark:hover:bg-red-800 dark:focus:ring-red-900 transition-colors duration-200"
+                                            <button class="delete-barang-btn px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded-full hover:bg-red-700 focus:ring-4 focus:ring-red-300 transition-colors duration-200"
                                                 data-barang-id="<?php echo $barang['kode']; ?>"
                                                 data-barang-codename="<?php echo htmlspecialchars($barang['kode']); ?>"
                                                 data-barang-image="<?php echo $image_url; ?>"
