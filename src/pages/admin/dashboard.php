@@ -104,21 +104,21 @@ if ($resultStats && $resultStats->num_rows > 0) {
     <!-- Tombol Aksi Cepat -->
     <div class="mb-8">
       <div class="flex flex-wrap gap-4">
-        <a href="<?= Helper::basePath(); ?>admin/barang"
+        <a href="<?= Helper::basePath(); ?>barang"
           class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
           </svg>
           Tambah Barang
         </a>
-        <a href="<?= Helper::basePath(); ?>admin/peminjaman"
+        <a href="<?= Helper::basePath(); ?>jenis"
           class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V9a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
           </svg>
-          Kelola Peminjaman
+          Kelola Jenis
         </a>
-        <a href="<?= Helper::basePath(); ?>admin/kategori"
+        <a href="<?= Helper::basePath(); ?>kategori"
           class="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
