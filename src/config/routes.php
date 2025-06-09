@@ -232,6 +232,11 @@ switch ($comp) {
         require_once __DIR__ . "/../pages/old/search_barang.php";
         break;
 
+    case 'POST:loan':
+        require_once __DIR__ . "/../pages/old/loan.php";
+        break;
+    
+
     case 'GET:login':
         $status = UserHandler::login_verify();
         if (!$status) {
