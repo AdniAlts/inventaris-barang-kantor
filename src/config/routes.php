@@ -117,7 +117,6 @@ switch ($comp) {
 
     case 'GET:peminjaman':
         $db = new db();
-        $querys = $db->conn->query("SELECT DISTINCT j.nama, j.stok FROM jenis j JOIN barang b ON j.id_jenis = b.jenis_id WHERE b.status = 'tersedia' AND b.state_id = 1 AND j.stok > 0");
 
         if (isset($_GET['reset'])) {
             setcookie('peminjaman', '', time() + (-3600 * 24));
@@ -126,39 +125,65 @@ switch ($comp) {
         }
 
         if (isset($_GET['barang']) && isset($_GET['jumlah'])) {
-            // $id = $_GET['id_jenis'];
             $barang = $_GET['barang'];
-            $jumlah = $_GET['jumlah'];
+            $jumlahBaru = (int)$_GET['jumlah'];
 
             // Ambil data cookie yang sudah ada
             $dataPeminjaman = isset($_COOKIE['peminjaman']) ? json_decode($_COOKIE['peminjaman'], true) : [];
 
-            // Cek apakah jumlah > stok
-            $query = $db->conn->query("SELECT stok FROM jenis WHERE nama = '$barang'");
-            $row = $query->fetch_assoc();
-            $stok = $row['stok'];
-            if ($jumlah > $stok) {
-                $err = "Jumlah $barang yang Anda masukkan = $jumlah melebihi jumlah stok = $stok";
-
-                Helper::route("/peminjaman", [
-                    "error" => $err
-                ]);
+            // Hitung total jumlah peminjaman barang yang sama
+            $jumlahSebelumnya = 0;
+            foreach ($dataPeminjaman as $item) {
+                if ($item['barang'] === $barang) {
+                    $jumlahSebelumnya += (int)$item['jumlah'];
+                }
             }
 
-            // Tambahkan data baru
-            $dataPeminjaman[] = [
-                // 'id' => $id,
-                'barang' => $barang,
-                'jumlah' => $jumlah
-            ];
+            $jumlahTotal = $jumlahSebelumnya + $jumlahBaru;
 
-            // Simpan kembali ke cookie (serialize array ke JSON)
-            setcookie('peminjaman', json_encode($dataPeminjaman), time() + (3600 * 24)); // berlaku 1 hari
+            // Ambil stok_tersedia dari database
+            $stmt = $db->conn->prepare("SELECT stok_tersedia FROM jenis WHERE nama = ?");
+            $stmt->bind_param("s", $barang);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $stokRow = $result->fetch_assoc();
 
-            // Redirect
+            if (!$stokRow) {
+                $err = "Barang '$barang' tidak ditemukan dalam database.";
+                Helper::route("/peminjaman", ["error" => $err]);
+            }
+
+            $stokTersedia = (int)$stokRow['stok_tersedia'];
+
+            // Jika jumlah total melebihi stok
+            if ($jumlahTotal > $stokTersedia) {
+                $err = "Jumlah total $barang ($jumlahTotal) melebihi stok tersedia ($stokTersedia).";
+                Helper::route("/peminjaman", ["error" => $err]);
+            }
+
+            // Tambahkan atau update cookie
+            $found = false;
+            foreach ($dataPeminjaman as &$item) {
+                if ($item['barang'] === $barang) {
+                    $item['jumlah'] += $jumlahBaru;
+                    $found = true;
+                    break;
+                }
+            }
+            unset($item);
+
+            if (!$found) {
+                $dataPeminjaman[] = [
+                    'barang' => $barang,
+                    'jumlah' => $jumlahBaru
+                ];
+            }
+
+            setcookie('peminjaman', json_encode($dataPeminjaman), time() + (3600 * 24)); // 1 hari
             header("Location: " . strtok($_SERVER["REQUEST_URI"], '?'));
             exit;
         }
+
         // $error = $_GET['error'];
         require_once __DIR__ . "/../pages/pegawai/peminjaman.php";
         break;
@@ -170,16 +195,38 @@ switch ($comp) {
     case 'GET:pengembalian':
         $db = new db();
 
+        // Ambil semua ID peminjaman yang masih aktif (status = 'dipinjam')
         $querys = $db->conn->query("SELECT id_peminjaman FROM peminjaman WHERE status = 'dipinjam'");
 
         if (isset($_GET['id_peminjaman'])) {
             $id = $_GET['id_peminjaman'];
 
-            $query = $db->conn->query("SELECT total_pinjam FROM peminjaman WHERE id_peminjaman = '$id'");
-            $row = $query->fetch_assoc();
+            // Cek apakah ID peminjaman valid dan masih dipinjam
+            $stmt = $db->conn->prepare("SELECT total_pinjam FROM peminjaman WHERE id_peminjaman = ? AND status = 'dipinjam'");
+            $stmt->bind_param("s", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows === 0) {
+                $err = "ID Peminjaman ($id) yang Anda masukkan tidak ditemukan atau sudah dikembalikan.";
+                Helper::route("/pengembalian", ["error" => $err]);
+            }
+
+            $row = $result->fetch_assoc();
             $total_pinjam = $row['total_pinjam'];
 
-            $querys2 = $db->conn->query("SELECT j.nama, d.barang_kode FROM peminjaman p JOIN peminjaman_detail d ON p.id_peminjaman = d.peminjaman_id JOIN barang b ON d.barang_kode = b.kode_barang JOIN jenis j ON j.id_jenis = b.jenis_id WHERE p.id_peminjaman = '$id'");
+            // Ambil detail barang
+            $stmt2 = $db->conn->prepare("
+            SELECT j.nama, d.barang_kode
+            FROM peminjaman p
+            JOIN peminjaman_detail d ON p.id_peminjaman = d.peminjaman_id
+            JOIN barang b ON d.barang_kode = b.kode_barang
+            JOIN jenis j ON j.id_jenis = b.jenis_id
+            WHERE p.id_peminjaman = ?
+        ");
+            $stmt2->bind_param("s", $id);
+            $stmt2->execute();
+            $querys2 = $stmt2->get_result();
         }
 
         require_once __DIR__ . "/../pages/pegawai/pengembalian.php";
@@ -200,7 +247,8 @@ switch ($comp) {
 
     case 'GET:admin':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/dashboard.php";
@@ -281,7 +329,8 @@ switch ($comp) {
 
     case 'GET:kategori':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/kategori.php";
@@ -289,7 +338,8 @@ switch ($comp) {
 
     case 'POST:kategori':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/kategori.php";
@@ -297,45 +347,51 @@ switch ($comp) {
 
     case 'GET:jenis':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/jenis.php";
         break;
     case 'POST:jenis':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/jenis.php";
         break;
 
     case 'GET:kondisi':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/kondisi.php";
         break;
 
     case 'POST:kondisi':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/kondisi.php";
         break;
 
     case 'GET:barang':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/barang.php";
         break;
     case 'POST:barang/create':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
         require_once __DIR__ . "/../pages/admin/barang_logic.php";
@@ -348,26 +404,29 @@ switch ($comp) {
 
     case 'POST:barang/update':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/barang.php";
         Barang::update();
         break;
 
     case 'POST:barang/delete':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/barang.php";
         break;
     case 'GET:barang/delete':
         if (!isset($_SESSION['admin_id'])) {
-            Helper::route("login", ['error' => urlencode("Silakan login terlebih dahulu.")]);
+            $_SESSION['error_message'] = "Silakan login terlebih dahulu.";
+            Helper::route("login");
             exit;
         }
-        require_once __DIR__ . "/../pages/admin/kategori.php";
+        require_once __DIR__ . "/../pages/admin/barang.php";
         Barang::delete();
         break;
 

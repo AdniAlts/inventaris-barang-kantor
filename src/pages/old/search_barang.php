@@ -1,6 +1,7 @@
 <?php
 session_start();
-require "../modules/search.php";
+require_once __DIR__ . "/../../modules/search.php";
+require_once __DIR__ . "/../../config/db.php";
 
 $db = new db();
 $connDB = $db->conn;
@@ -11,7 +12,7 @@ register_shutdown_function(function() use ($db) {
 });
 
 // Fetch all items for client-side processing
-$allItems = Search::getAllItemsForClientSide($connDB);
+$allItems = Search::getAllItems($connDB);
 
 // Prepare filter definitions (this part remains largely the same)
 $categories = GetNames::category($connDB);

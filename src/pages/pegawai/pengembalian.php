@@ -132,170 +132,121 @@ require_once __DIR__ . '/../../config/helper.php';
   </aside>
 
   <main class="p-4 sm:ml-64 main-content transition-margin duration-300">
-    <div>
-      <p>TOLONG BACA AKU!!!</p>
-      <p>Ini bisa jadi saran untuk membantu pembuatan pengembalian:</p>
-      <ol style="list-style: decimal;">
-        <li>TOLONG BANGET AMBIL DATANYA DARI DATABASE AJA, JANGAN BIKIN DUMMY SENDIRI!!!<br>
-            Kalau memang gatau caranya, ada modul pembelajaran koneksi database dari bu Dian sendiri, atau ada yang namanya 'searching di Google dan YouTube'.<br>
-            Tolong lah, pake AI nya di minimalisir, dan kalau memang mendesak banget. Mumpung waktu libur kita masih banyak, jadi masih bisa meluangkan waktu untuk BELAJAR.<br>
-            Sama mohon TANGGUNG JAWABnya terhadap bagian tugasnya sendiri, jangan mentang-mentang lagi ada kegiatan jadinya ngga bisa meluangkan waktu untuk ngerjain.</li>
-        <li>Boleh pake referensi halaman yang mirip sebelumnya, linknya bisa buka <a href="<?= Helper::basePath(); ?>src/pages/old/barang_user.php" style="text-decoration: underline;">di sini</a>.</li>
-        <li>Ada tampilan kotak-kotak daftar peminjaman sesuai id peminjaman yang kaya di halaman peminjaman.</li>
-        <li>Nanti kalau mau lihat keseluruhan barang yang dipinjam secara detail bisa pakai modal yang menampilkan tabel barang apa aja yang dipinjam.</li>
-        <li>Sorting tabel ascending atau descending berdasarkan kolom tabel yang dipilih.</li>
-        <li>Kalau mau pake poin 4 dan 5 mending pake JavaScript aja. Ambil data dari database nya tetep pake PHP.</li>
-      </ol>
-      <br>
-      <p>Kalau sudah selesai mengimplementasi bagian halaman ini. Bisa menghapus elemen div yang isinya teks ini.</p>
-      <p>Dan kalau ada pertanyaan, jangan sungkan tanya di grup. Teman-teman kalian PASTI dan HARUSNYA bisa bantu.</p>
+    <div class="my-5">
+      <h1 class="text-3xl font-bold text-black-400">
+        Pengembalian
+      </h1>
     </div>
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg">
-      <div class="grid grid-cols-3 gap-4 mb-4">
-        <div class="flex items-center justify-center h-24 rounded bg-gray-50">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
+      <!-- Alert Messages -->
+      <?php if (isset($_GET['error'])): ?>
+        <div id="alert-error" class="p-4 mb-4 text-sm rounded-lg alert-error" role="alert">
+          <span class="font-medium">Error!</span>
+          <?php echo $_GET['error']; ?>
         </div>
-        <div class="flex items-center justify-center h-24 rounded bg-gray-50">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
+      <?php endif; ?>
+      <?php if (isset($_GET['success'])): ?>
+        <div id="alert-success" class="p-4 mb-4 text-sm rounded-lg alert-success" role="alert">
+          <span class="font-medium">Success!</span>
+          <?php echo $_GET['success']; ?>
         </div>
-        <div class="flex items-center justify-center h-24 rounded bg-gray-50">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
+      <?php endif; ?>
+
+      <!-- START PILIH ID PEMINJAMAN -->
+      <div class="h-auto mb-4 rounded bg-gray-50">
+        <div class="text">
+          <h3 class="text-xl font-semibold text-black-700 m-3 pt-4">Tambah Barang untuk Dipinjam</h3>
         </div>
+        <form action="" method="get" class="w-full p-3">
+          <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+          <div class="relative w-full">
+            <input name="id_peminjaman" type="search" id="default-search" class="block w-full p-3 ps-10 text-md font-semibold text-gray-900 border border-gray-300 rounded-lg bg-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Search ID Peminjaman..." required />
+            <button type="submit" class="text-white mt-3 block end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+          </div>
+        </form>
       </div>
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50">
-        <p class="text-2xl text-gray-400">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M9 1v16M1 9h16" />
-          </svg>
-        </p>
+      <!-- END PILIH ID PEMINJAMAN -->
+      <!-- START BAGIAN TABLE BARANG DIPINJAM -->
+      <div class="h-auto mb-4 rounded bg-gray-50">
+        <div class="text">
+          <h3 class="text-xl font-semibold text-black-700 m-3 pt-4">Daftar Barang yang Akan Dipinjam</h3>
+        </div>
+        <div class="table w-full p-3">
+          <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-blue-100">
+              <tr>
+                <th scope="col" class="px-6 py-3">Kode Barang</th>
+                <th scope="col" class="px-6 py-3">Nama</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              if (isset($id)) {
+                foreach ($querys2 as $query2) {
+                  echo "<tr class='bg-white border-b hover:bg-blue-50'>
+                        <td class='px-6 py-4 font-medium text-gray-900'>{$query2['barang_kode']}</td>
+                        <td class='px-6 py-4'>{$query2['nama']}</td>
+                      </tr>";
+                }
+              } else {
+                echo "<tr>
+                      <td colspan='2' class='px-6 py-4 text-center text-gray-500'>Pilih ID peminjaman untuk melihat daftar barang</td>
+                    </tr>";
+              }
+              ?>
+            </tbody>
+            <tfoot class="text-xs text-gray-700 uppercase bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3">Total Jumlah</th>
+                <th scope="col" class="px-6 py-3">
+                  <?php
+                  if (isset($total_pinjam)) {
+                    echo $total_pinjam;
+                  } else {
+                    echo "-";
+                  }
+                  ?>
+                </th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- Submit Pengembalian -->
+        <?php if (isset($id)): ?>
+          <form action="/inventaris-barang-kantor/return" method="post">
+            <?php
+            foreach ($querys2 as $index => $query2) {
+              echo "<input type='hidden' name='barang[$index][barang_kode]' value='{$query2['barang_kode']}'>";
+            }
+            echo "<input type='hidden' name='id_peminjaman' value='{$id}'>";
+            ?>
+            <button type="submit" class="px-6 py-2 ms-3 mb-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">Submit Pengembalian</button>
+          </form>
+        <?php endif; ?>
       </div>
-      <div class="grid grid-cols-2 gap-4 mb-4">
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-      </div>
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50">
-        <p class="text-2xl text-gray-400">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M9 1v16M1 9h16" />
-          </svg>
-        </p>
-      </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28">
-          <p class="text-2xl text-gray-400">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
-      </div>
+      <!-- END BAGIAN TABLE BARANG DIPINJAM -->
     </div>
   </main>
-  
+
   <script src="<?= Helper::basePath(); ?>node_modules/flowbite/dist/flowbite.min.js"></script>
   <script>
     const sidebar = document.getElementById('sidebar');
     const userButton = document.getElementById('dropdownUserNameButton');
     const userDropdown = document.getElementById('dropdownUserName');
-    document.getElementById('toggleSidebarBtn').addEventListener('click', function () {
+    document.getElementById('toggleSidebarBtn').addEventListener('click', function() {
       sidebar.classList.toggle('sidebar-collapsed');
     });
-    sidebar.addEventListener('mouseenter', function () {
+    sidebar.addEventListener('mouseenter', function() {
       if (sidebar.classList.contains('sidebar-collapsed') && userDropdown.classList.contains('hidden')) {
         sidebar.classList.toggle('sidebar-hover');
       }
     });
-    sidebar.addEventListener('mouseleave', function () {
+    sidebar.addEventListener('mouseleave', function() {
       if (sidebar.classList.contains('sidebar-hover') && userDropdown.classList.contains('hidden')) {
         sidebar.classList.toggle('sidebar-hover');
       }
     });
-    userButton.addEventListener('focusout', function () {
+    userButton.addEventListener('focusout', function() {
       if (!userDropdown.classList.contains('hidden')) {
         sidebar.classList.toggle('sidebar-hover');
       }
