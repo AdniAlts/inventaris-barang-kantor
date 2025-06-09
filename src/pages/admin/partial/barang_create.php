@@ -65,9 +65,11 @@
                                 <label for="kualitas" class="block text-sm font-medium text-gray-700">Kualitas</label>
                                 <select name="kualitas" id="kualitas" class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
                                     <option value="">Select</option>
-                                    <option value="Baik">Baik</option>
-                                    <option value="Sedang">Sedang</option>
-                                    <option value="Buruk">Buruk</option>
+                                    <option value="1">Baik</option>
+                                    <option value="2">Patah</option>
+                                    <option value="3">Rusak</option>
+                                    <option value="4">Aus</option>
+                                    <option value="5">Retak</option>
                                 </select>
                             </div>
                         </div>
@@ -215,13 +217,13 @@ foreach ($arr as $kategori) {
             kategoriInput.classList.remove('error-border');
         });
 
-        // jenisInput.addEventListener('blur', () => {
-        //     const selectedJenis = jenisInput.value;
-        //     const kategori = kategoriInput.value;
-        //     if (kategori && jenisOptions[kategori] && !jenisOptions[kategori].includes(selectedJenis)) {
-        //         jenisInput.value = '';
-        //     }
-        // });
+        jenisInput.addEventListener('blur', () => {
+            const selectedJenis = jenisInput.value;
+            const kategori = kategoriInput.value;
+            if (kategori && jenisOptions[kategori] && !jenisOptions[kategori].includes(selectedJenis)) {
+                jenisInput.value = '';
+            }
+        });
 
         function populateReviewStep() {
             document.getElementById('review-kategori').textContent = kategoriInput.value;

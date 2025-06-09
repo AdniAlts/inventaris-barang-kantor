@@ -47,7 +47,7 @@ class Barang
             }
         }
 
-        // var_dump($categories[1]['nama']);
+        // var_dump($categories['nama']);
 
         $result->free();
         return $categories;
@@ -55,25 +55,49 @@ class Barang
 
     public static function create()
     {
-        $kategori = $_GET['kategori'];
-        $jenis = $_GET['jenis'];
-        $kualitas = $_GET['kualitas'];
-        $jumlah = $_GET['jumlah'];
-
         $conn = (new db())->conn;
-        $query = "SELECT COUNT(*) AS count FROM jenis WHERE nama = '$jenis'";
-        $result = mysqli_query($conn, $query);
 
-        if ($result) {
-            $row = mysqli_fetch_assoc($result);
-            if ($row['count'] > 0) {
-                die("ada");
-            } else {
-                die("no");
-            }
-        } else {
-            echo "Error: " . mysqli_error($conn);
+        $kategori = mysqli_real_escape_string($conn, $_GET['kategori']);
+        $jenis = mysqli_real_escape_string($conn, $_GET['jenis']);
+        $kualitas = mysqli_real_escape_string($conn, $_GET['kualitas']);
+        $jumlah = (int)$_GET['jumlah'];
+
+        $query = "SELECT id_jenis FROM jenis WHERE nama = '$jenis'";
+        $result = $conn->query($query);
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        $jenis_id = $rows[0]["id_jenis"];
+
+        $query2 = "SELECT kode_barang FROM barang WHERE jenis_id = '$jenis_id' ORDER BY created_at DESC LIMIT 1";
+        $result2 = $conn->query($query2);
+        $rows2 = $result2->fetch_all(MYSQLI_ASSOC);
+
+        $lastNum = 0;
+        if (!empty($rows2)) {
+            $kodeNum = $rows2[0]['kode_barang'];
+            $part = explode('_', $kodeNum);
+            $lastNum = (int)$part[1];
         }
+
+        for ($i = 1; $i <= $jumlah; $i++) {
+            $num = str_pad($lastNum + $i, 4, '0', STR_PAD_LEFT);
+            $newKode = $jenis_id . '_' . $num;
+            $status = 'tersedia';
+            $f = null;
+
+            $stmt = $conn->prepare("INSERT INTO barang (kode_barang, status, state_id, gambar_url, jenis_id) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssiss", $newKode, $status, $kualitas, $f, $jenis_id);
+            $s = $stmt->execute();
+
+            if (!$s) {
+                die($stmt->error);
+            }
+        }
+
+        $conn->query("UPDATE jenis SET stok = stok + $jumlah, stok_tersedia = stok_tersedia + $jumlah WHERE id_jenis = '$jenis_id'");
+
+        $conn->close();
+
+        Helper::route("barang");
     }
 }
 

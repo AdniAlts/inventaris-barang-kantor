@@ -122,5 +122,7 @@ ALTER TABLE peminjaman_detail
 ALTER TABLE jenis
   ADD CONSTRAINT jenis_ibfk_1 FOREIGN KEY (kategori_id) REFERENCES kategori (id_kategori);
 
+ALTER TABLE barang ADD created_at DATETIME DEFAULT CURRENT_TIMESTAMP;
+
 COMMIT;
 
