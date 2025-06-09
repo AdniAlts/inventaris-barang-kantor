@@ -73,14 +73,25 @@ class excel
             $spreadsheet->setActiveSheetIndex(0);
 
             $writer = new Xlsx($spreadsheet);
-            $filename = "laporan-peminjaman_" . date('d-m-Y_H-i') . ".xlsx";
-            $uploadDir = __DIR__ . '/../storages/excel/';
+            date_default_timezone_set('Asia/Jakarta');
+            $filename = "laporan-peminjaman_" . date('Y-m-d_H-i') . ".xlsx";
+            $filename = preg_replace('/[^A-Za-z0-9_\-\.]/', '_', $filename); // Safe filename
 
-            $writer->save($uploadDir . $filename);
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
+
+            header('Cache-Control: max-age=0');
+
+            if (ob_get_length()) ob_end_clean();
+            $writer->save('php://output');
 
             $mysqli->conn->close();
+            exit;
         } catch (Exception $e) {
+            http_response_code(500);
             echo "Error: " . $e->getMessage();
         }
     }
 }
+
+// excel::generate();

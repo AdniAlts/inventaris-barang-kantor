@@ -99,6 +99,77 @@ class Barang
 
         Helper::route("barang");
     }
+
+    public static function update()
+    {
+        // die(var_dump($_POST));
+        header('Content-Type: application/json');
+
+        $conn = (new db())->conn;
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        if (!isset($_POST['kode_barang'], $_POST['status'], $_POST['kualitas'])) {
+            die("Missing required fields");
+        }
+
+        $kode_barang = $_POST['kode_barang'];
+        $status = $_POST['status'];
+        $state_id = $_POST['kualitas'];
+
+        $gambar_url = null;
+
+        if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+            $file = $_FILES['image'];
+            $originalName = $file['name'];
+            $extension = pathinfo($originalName, PATHINFO_EXTENSION);
+            $randomName = bin2hex(random_bytes(16)) . '.' . $extension;
+
+            $allowed_ext = ['jpg', 'jpeg', 'png'];
+            if (!in_array(strtolower($extension), $allowed_ext)) {
+                die("Invalid file type");
+            }
+
+            $dir = __DIR__ . '/../../storages/gambar/';
+            $destination = $dir . $randomName;
+            $relativePath = 'storages/gambar/' . $randomName;
+
+            if (!move_uploaded_file($file['tmp_name'], $destination)) {
+                die("Failed to upload file");
+            }
+
+            $gambar_url = $relativePath;
+        }
+
+        $stmt = $conn->prepare("UPDATE barang SET status = ?, state_id = ?, gambar_url = ? WHERE kode_barang = ?");
+        $stmt->bind_param("siss", $status, $state_id, $gambar_url, $kode_barang);
+
+        if ($stmt->execute()) {
+            echo json_encode(["success" => true]);
+        } else {
+            echo json_encode(["error" => $stmt->error]);
+        }
+
+        $stmt->close();
+        $conn->close();
+        Helper::route("barang");
+    }
+
+    public static function delete()
+    {
+        // die(var_dump($_POST));
+        $db = (new db())->conn;
+        $idDel = $db->real_escape_string($_POST['elmo']);
+
+
+        $sql = "DELETE FROM barang WHERE kode_barang = '$idDel'";
+        if (!$db->query($sql)) {
+            die("error: " . $db->error);
+        }
+
+        Helper::route('barang');
+    }
 }
 
 

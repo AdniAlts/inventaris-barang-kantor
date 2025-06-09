@@ -23,7 +23,11 @@
 
         <!-- Action Buttons -->
         <div class="flex justify-end space-x-4 pt-4">
-            <button type="button" id="confirm-delete-barang" class="px-5 py-2.5 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 transition-colors duration-200">Yes, I'm sure</button>
+            <form method="POST" action="<?php echo Helper::basePath() . 'barang/delete'  ?>">
+                <input type="hidden" id="elmo-s-world" name="elmo">
+
+                <button type="submit" id="confirm-delete-barang" class="px-5 py-2.5 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 transition-colors duration-200">Yes, I'm sure</button>
+            </form>
             <button type="button" id="cancel-delete-barang" class="px-5 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700 transition-colors duration-200">Cancel</button>
         </div>
     </div>
@@ -34,7 +38,6 @@
         const deleteBarangModal = document.getElementById('delete-barang-modal');
         const closeDeleteModalBtn = document.getElementById('close-delete-modal');
         const cancelDeleteModalBtn = document.getElementById('cancel-delete-barang');
-        const confirmDeleteBarangBtn = document.getElementById('confirm-delete-barang');
 
         const deleteItemImage = document.getElementById('delete-item-image');
         const deleteItemCodename = document.getElementById('delete-item-codename');
@@ -64,6 +67,8 @@
             const mainContentArea = document.getElementById('main-content-area');
             mainContentArea.classList.add('blur-background');
             const data = event.detail;
+
+            document.getElementById('elmo-s-world').value = data.id;
 
             currentBarangIdToDelete = data.id;
             deleteItemImage.src = data.image;
@@ -109,16 +114,5 @@
             }
         });
 
-        // Handle Confirm Delete (dummy function)
-        confirmDeleteBarangBtn.addEventListener('click', () => {
-            if (currentBarangIdToDelete) {
-                console.log(`Confirming deletion for Barang ID: ${currentBarangIdToDelete}`);
-                // In a real application, you would send this ID to your backend to perform the deletion
-                // After successful deletion, you might also want to remove the item from the display
-            } else {
-                console.log('No item ID found for deletion.');
-            }
-            closeDeleteModal(); // Close modal after confirmation
-        });
     });
 </script>
