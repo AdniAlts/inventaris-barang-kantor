@@ -174,45 +174,65 @@ $allPeminjaman = GetFromDB::peminjaman($connDB);
         <p class="mb font-normal text-gray-700 dark:text-black">Deskirpsi</p>
         <p class="mb font-normal text-gray-700 dark:text-black">Tanggal Peminjaman</p>
         <p class="mb-3 font-normal text-gray-700 dark:text-black">Jumlah Barang Yang Dipinjam</p>
-        <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-150 dark:border-black">
+        <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-150 dark:border-black">
+          <!-- Tabel dalam -->
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left rtl:text-right text-gray-900 dark:text-black">
               <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-50 text-black">
                 <tr>
-                  <th scope="col" class="px-6 py-3">
-                    Barang Yang Dipinjam
+                  <th scope="col" class="px-3 py-3">
+                    Kategori Barang
+                  </th>
+                  <th scope="col" class="px-3 py-3">
+                    Jenis Barang
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 1
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 2
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 3
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 4
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 5
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <!-- Akhir Tabel -->
         </div>
       </div>
       <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-50">
@@ -222,45 +242,65 @@ $allPeminjaman = GetFromDB::peminjaman($connDB);
         <p class="mb font-normal text-gray-700 dark:text-black">Deskirpsi</p>
         <p class="mb font-normal text-gray-700 dark:text-black">Tanggal Peminjaman</p>
         <p class="mb-3 font-normal text-gray-700 dark:text-black">Jumlah Barang Yang Dipinjam</p>
-        <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-150 dark:border-black">
+        <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-150 dark:border-black">
+          <!-- Tabel dalam -->
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left rtl:text-right text-gray-900 dark:text-black">
               <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-50 text-black">
                 <tr>
-                  <th scope="col" class="px-6 py-3">
-                    Barang Yang Dipinjam
+                  <th scope="col" class="px-3 py-3">
+                    Kategori Barang
+                  </th>
+                  <th scope="col" class="px-3 py-3">
+                    Jenis Barang
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 1
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 2
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 3
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 4
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 5
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <!-- Akhir Tabel -->
         </div>
       </div>
       <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-50">
@@ -270,45 +310,65 @@ $allPeminjaman = GetFromDB::peminjaman($connDB);
         <p class="mb font-normal text-gray-700 dark:text-black">Deskirpsi</p>
         <p class="mb font-normal text-gray-700 dark:text-black">Tanggal Peminjaman</p>
         <p class="mb-3 font-normal text-gray-700 dark:text-black">Jumlah Barang Yang Dipinjam</p>
-        <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-150 dark:border-black">
+        <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-150 dark:border-black">
+          <!-- Tabel dalam -->
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left rtl:text-right text-gray-900 dark:text-black">
               <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-50 text-black">
                 <tr>
-                  <th scope="col" class="px-6 py-3">
-                    Barang Yang Dipinjam
+                  <th scope="col" class="px-3 py-3">
+                    Kategori Barang
+                  </th>
+                  <th scope="col" class="px-3 py-3">
+                    Jenis Barang
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 1
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 2
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 3
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 4
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 5
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <!-- Akhir Tabel -->
         </div>
       </div>
       <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-50">
@@ -318,45 +378,65 @@ $allPeminjaman = GetFromDB::peminjaman($connDB);
         <p class="mb font-normal text-gray-700 dark:text-black">Deskirpsi</p>
         <p class="mb font-normal text-gray-700 dark:text-black">Tanggal Peminjaman</p>
         <p class="mb-3 font-normal text-gray-700 dark:text-black">Jumlah Barang Yang Dipinjam</p>
-        <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-150 dark:border-black">
+        <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-150 dark:border-black">
+          <!-- Tabel dalam -->
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left rtl:text-right text-gray-900 dark:text-black">
               <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-50 text-black">
                 <tr>
-                  <th scope="col" class="px-6 py-3">
-                    Barang Yang Dipinjam
+                  <th scope="col" class="px-3 py-3">
+                    Kategori Barang
+                  </th>
+                  <th scope="col" class="px-3 py-3">
+                    Jenis Barang
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 1
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 2
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 3
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 4
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 5
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <!-- Akhir Tabel -->
         </div>
       </div>
       <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-50">
@@ -366,45 +446,65 @@ $allPeminjaman = GetFromDB::peminjaman($connDB);
         <p class="mb font-normal text-gray-700 dark:text-black">Deskirpsi</p>
         <p class="mb font-normal text-gray-700 dark:text-black">Tanggal Peminjaman</p>
         <p class="mb-3 font-normal text-gray-700 dark:text-black">Jumlah Barang Yang Dipinjam</p>
-        <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-150 dark:border-black">
+        <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-150 dark:border-black">
+          <!-- Tabel dalam -->
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left rtl:text-right text-gray-900 dark:text-black">
               <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-50 text-black">
                 <tr>
-                  <th scope="col" class="px-6 py-3">
-                    Barang Yang Dipinjam
+                  <th scope="col" class="px-3 py-3">
+                    Kategori Barang
+                  </th>
+                  <th scope="col" class="px-3 py-3">
+                    Jenis Barang
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 1
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 2
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 3
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 4
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
                 <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
+                  <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
                     Barang 5
                   </th>
+                  <td class="px-3 py-4">
+                    Jenis Barang
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <!-- Akhir Tabel -->
         </div>
       </div>
     </div>
