@@ -192,9 +192,6 @@ require_once __DIR__ . '/../../config/helper.php';
             <th scope="col" class="px-6 py-3">
               Barang tersedia
             </th>
-            <th scope="col" class="px-6 py-3">
-              Actions
-            </th>
           </tr>
         </thead>
         <tbody>
@@ -209,10 +206,7 @@ require_once __DIR__ . '/../../config/helper.php';
               Kondisi Barang
             </td>
             <td class="px-6 py-4">
-              Actions
-            </td>
-            <td class="px-6 py-4">
-              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Kembalikan</button>
+              2
             </td>
           </tr>
           <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
@@ -226,10 +220,7 @@ require_once __DIR__ . '/../../config/helper.php';
               Kondisi Barang
             </td>
             <td class="px-6 py-4">
-              Actions
-            </td>
-            <td class="px-6 py-4">
-              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Kembalikan</button>
+              3
             </td>
           </tr>
           <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
@@ -243,10 +234,7 @@ require_once __DIR__ . '/../../config/helper.php';
               Kondisi Barang
             </td>
             <td class="px-6 py-4">
-              Actions
-            </td>
-            <td class="px-6 py-4">
-              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Kembalikan</button>
+              1
             </td>
           </tr>
           <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
@@ -260,10 +248,7 @@ require_once __DIR__ . '/../../config/helper.php';
               Kondisi Barang
             </td>
             <td class="px-6 py-4">
-              Actions
-            </td>
-            <td class="px-6 py-4">
-              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Kembalikan</button>
+              5
             </td>
           </tr>
           <tr class="bg-white dark:bg-gray-50 hover:bg-gray-100">
@@ -277,10 +262,7 @@ require_once __DIR__ . '/../../config/helper.php';
               Kondisi Barang
             </td>
             <td class="px-6 py-4">
-              Actions
-            </td>
-            <td class="px-6 py-4">
-              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Kembalikan</button>
+              4
             </td>
           </tr>
         </tbody>
