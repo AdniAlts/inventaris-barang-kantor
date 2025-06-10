@@ -1,4 +1,6 @@
 <?php
+
+use Dom\HTMLElement;
 require_once __DIR__ . "/../../config/helper.php";
 require_once __DIR__ . "/../../modules/search.php";
 require_once __DIR__ . "/../../config/db.php";
@@ -187,7 +189,9 @@ foreach ($categories as $category)
         <form id="modal-form" method="GET" action="" class="p-4 md:p-5">
           <div class="mb-4">
             <div class="mb-2">
-              <img id="modal-image" class="w-full h-48 object-cover" src="https://www.shutterstock.com/image-vector/fill-image-preview-icon-simple-260nw-2338969281.jpg" alt="Image">
+              <div class="flex w-full h-48 justify-center overflow-y-hidden">
+                <img id="modal-image" class="h-[inherit]" src="https://www.shutterstock.com/image-vector/fill-image-preview-icon-simple-260nw-2338969281.jpg" alt="Image">
+              </div>
               <p class="mt-2">Stok tersedia: <span id="modal-stok" class="font-medium">N/A</span></p>
             </div>
             <div class="col-span-2">
@@ -259,17 +263,18 @@ foreach ($categories as $category)
       }
 
       typesToRender.forEach(item => {
+        let gambar = (item.gambar_url != null) ? "<?php echo Helper::basePath() . "src/"; ?>" + item.gambar_url : "https://www.shutterstock.com/image-vector/fill-image-preview-icon-simple-260nw-2338969281.jpg";
         const typeDiv = document.createElement('div');
         typeDiv.className = 'max-w-sm rounded overflow-hidden shadow-lg bg-white mt-1 mx-1.5';
         typeDiv.innerHTML = `
-          <img class="w-full h-24 object-cover" src="https://www.shutterstock.com/image-vector/fill-image-preview-icon-simple-260nw-2338969281.jpg" alt="${item.nama}">
+          <img class="w-full h-24 object-cover" src="${gambar}" alt="${item.nama}">
           <div class="p-2">
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">${item.nama || 'N/A'}</p>
             <button 
                 data-id-jenis="${item.id_jenis}"
                 data-nama="${item.nama}"
                 data-stok="${item.stok_tersedia}"
-                data-gambar="https://www.shutterstock.com/image-vector/fill-image-preview-icon-simple-260nw-2338969281.jpg"
+                data-gambar="${gambar}"
                 class="open-modal-btn block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
                 type="button">
               Tambah

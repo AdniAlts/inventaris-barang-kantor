@@ -316,8 +316,11 @@ class Search {
     if ($sql->execute()) {
       $result = $sql->get_result();
       if ($result) {
+        $i = 0;
         while ($row = $result->fetch_assoc()) {
           $types[] = $row;
+          $types[$i]['gambar_url'] = self::getImageForType($connDB, $row['id_jenis']);
+          $i++;
         }
         $result->free();
       } else {
@@ -326,6 +329,35 @@ class Search {
     }
     $sql->close();
     return $types;
+  }
+
+  private static function getImageForType(mysqli $connDB, $id_jenis) {
+    $gambar = null;
+    $query = "SELECT gambar_url FROM barang WHERE jenis_id = ?";
+
+    $sql = $connDB->prepare($query);
+    if (!$sql) {
+      error_log(message: "Persiapan query gagal untuk getImageForType. Error: " . $connDB->error . ". Query: " . $query);
+      return [];
+    }
+    $sql->bind_param("s", $id_jenis);
+
+    if ($sql->execute()) {
+      $result = $sql->get_result();
+      if ($result) {
+        while ($row = $result->fetch_assoc()) {
+          if (!empty($row['gambar_url'])) {
+            $gambar = $row['gambar_url'];
+            break;
+          }
+        }
+        $result->free();
+      } else {
+        error_log("Gagal mengambil data untuk getImageForType. Error: " . $sql->error);
+      }
+    }
+    $sql->close();
+    return $gambar;
   }
 }
 ?>
