@@ -98,7 +98,7 @@ CREATE TABLE peminjaman_detail (
 -- --------------------------------------------------------
 
 CREATE TABLE user (
-  id INT(11) NOT NULL,
+  id INT AUTO_INCREMENT NOT NULL,
   username VARCHAR(100) NOT NULL,
   name VARCHAR(200) NOT NULL,
   email VARCHAR(100) NOT NULL,
