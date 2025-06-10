@@ -211,7 +211,7 @@ foreach ($categories as $category)
     </div>
   </div>
 
-  <script src="<?= Helper::basePath(); ?>node_modules/flowbite/dist/flowbite.min.js"></script>
+  <script src="<?= Helper::basePath(); ?>src/flowbite.min.js"></script>
   <script>
     // Dropdown category event handler
     // options with default values

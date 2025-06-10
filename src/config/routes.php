@@ -91,7 +91,6 @@ require_once __DIR__ . "/../config/user_handler.php";
 // Pastikan URL di browser Anda sesuai dengan port ini.
 $loc = "/" . Helper::getEnv("APP_NAME");
 
-
 $request = $_SERVER['REQUEST_URI'];
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -103,7 +102,6 @@ $comp = preg_replace('/\?.*$/', '', $comp);
 $comp = preg_replace('/\?.*$/', '', $comp);
 
 session_start();
-
 
 switch ($comp) {
     case 'GET:home':
@@ -297,7 +295,6 @@ switch ($comp) {
         UserHandler::dashboard_verify();
         break;
 
-
     case 'GET:admin':
         UserHandler::switch("admin");
         break;
@@ -335,6 +332,7 @@ switch ($comp) {
         UserHandler::page_verify('admin');
         require_once __DIR__ . "/../pages/admin/barang.php";
         break;
+        
     case 'GET:barang/create':
     case 'POST:barang/create':
         require_once __DIR__ . "/../pages/admin/barang_logic.php";

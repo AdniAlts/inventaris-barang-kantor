@@ -218,7 +218,7 @@ $peminjamanTerakhir = array_slice($allPeminjaman, 0, 5);
     </div>
   </main>
 
-  <script src="<?= Helper::basePath(); ?>node_modules/flowbite/dist/flowbite.min.js"></script>
+  <script src="<?= Helper::basePath(); ?>src/flowbite.min.js"></script>
   <script>
     
   </script>

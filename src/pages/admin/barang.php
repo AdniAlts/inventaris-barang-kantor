@@ -38,7 +38,7 @@ require_once __DIR__ . "/barang_logic.php";
     <?php require_once "partial/barang_delete.php" ?>
   </main>
 
-  <script src="<?= Helper::basePath(); ?>node_modules/flowbite/dist/flowbite.min.js"></script>
+  <script src="<?= Helper::basePath(); ?>src/flowbite.min.js"></script>
   <script>
     
   </script>

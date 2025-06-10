@@ -409,7 +409,7 @@ if ($resultStats && $resultStats->num_rows > 0) {
 
   </main>
 
-  <script src="<?= Helper::basePath(); ?>node_modules/flowbite/dist/flowbite.min.js"></script>
+  <script src="<?= Helper::basePath(); ?>src/flowbite.min.js"></script>
   <script>
     
   </script>

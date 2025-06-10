@@ -115,7 +115,7 @@ require_once __DIR__ . '/../../config/helper.php';
     </div>
   </main>
 
-  <script src="<?= Helper::basePath(); ?>node_modules/flowbite/dist/flowbite.min.js"></script>
+  <script src="<?= Helper::basePath(); ?>src/flowbite.min.js"></script>
   <script>
     
   </script>

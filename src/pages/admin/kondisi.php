@@ -356,7 +356,7 @@ $db->close();
   </div>
 
   <!-- Flowbite JS (untuk modal) -->
-  <script src="<?= Helper::basePath(); ?>node_modules/flowbite/dist/flowbite.min.js"></script>
+  <script src="<?= Helper::basePath(); ?>src/flowbite.min.js"></script>
   <script>
     // Modal Edit
     document.querySelectorAll('.edit-btn').forEach(btn => {

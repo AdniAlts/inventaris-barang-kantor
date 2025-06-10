@@ -125,7 +125,7 @@ $target_role = $_GET['role'] ?? null;
         </form>
     </div>
 
-    <script src="<?= Helper::basePath(); ?>node_modules/flowbite/dist/flowbite.min.js"></script>
+    <script src="<?= Helper::basePath(); ?>src/flowbite.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
