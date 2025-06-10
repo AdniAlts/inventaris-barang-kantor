@@ -111,6 +111,7 @@ switch ($comp) {
         break;
 
     case 'GET:peminjaman':
+        UserHandler::page_verify('pegawai');
         $db = new db();
 
         if (isset($_GET['reset'])) {
@@ -184,6 +185,7 @@ switch ($comp) {
         break;
 
     case 'GET:pengembalian':
+        UserHandler::page_verify('pegawai');
         $db = new db();
 
         // Ambil semua ID peminjaman yang masih aktif (status = 'dipinjam')
@@ -239,23 +241,24 @@ switch ($comp) {
         require_once __DIR__ . "/../pages/old/loan.php";
         break;
 
-
     case 'GET:login':
         $status = UserHandler::login_verify();
         if (!$status) {
             require_once __DIR__ . "/../pages/login.php";
         }
         break;
-
-    case 'GET:dashboard':
-        // This route's only job is to figure out where the user should go.
-        UserHandler::dashboard_verify();
-        break;
-
+    
     case 'POST:login': // LOGIKA PROSES LOGIN ADA DI SINI (metode POST)
         $status = UserHandler::login($_POST['username'], $_POST['password']);
         if ($status) {
-            Helper::route("dashboard");
+            if (!empty($_SESSION['redirect_url'])) {
+                $redirect_url = $_SESSION['redirect_url'];
+                unset($_SESSION['redirect_url']);
+                header("Location: " . $redirect_url);
+                exit;
+            } else {
+                Helper::route("dashboard");
+            }
         } else {
             if (!empty($_SESSION['login_errmsg'])) {
                 Helper::route("login");
@@ -265,51 +268,72 @@ switch ($comp) {
         }
         break; // Penting: Jangan lupa break!
 
+    case 'GET:register':
+        $status = UserHandler::login_verify();
+        if (!$status) {
+            require_once __DIR__ . "/../pages/register.php";
+        }
+        break;
+
+    case 'POST:register':
+        $status = UserHandler::register($_POST['name'], $_POST['username'], $_POST['email'], $_POST['password'], $_POST['role']);
+        if ($status) {
+            Helper::route("login");
+        } else {
+            if (!empty($_SESSION['register_errmsg'])) {
+                Helper::route("register");
+            } else {
+                require_once __DIR__ . "/../pages/register.php";
+            }
+        }
+        break;
+        
     case 'GET:logout':
         UserHandler::logout();
         break;
+
+    case 'GET:dashboard':
+        // This route's only job is to figure out where the user should go.
+        UserHandler::dashboard_verify();
+        break;
+
 
     case 'GET:admin':
         UserHandler::switch("admin");
         break;
 
-    case 'GET:user':
+    case 'GET:pegawai':
         UserHandler::switch("pegawai");
         break;
 
     case 'POST:kategori':
     case 'GET:kategori':
-        if (UserHandler::page_verify()) {
-            require_once __DIR__ . "/../pages/admin/kategori.php";
-        }
+        UserHandler::page_verify('admin');
+        require_once __DIR__ . "/../pages/admin/kategori.php";
         break;
 
     case 'POST:jenis':
     case 'GET:jenis':
-        if (UserHandler::page_verify()) {
-            require_once __DIR__ . "/../pages/admin/jenis.php";
-        }
+        UserHandler::page_verify('admin');
+        require_once __DIR__ . "/../pages/admin/jenis.php";
         break;
 
     case 'POST:kondisi':
     case 'GET:kondisi':
-        if (UserHandler::page_verify()) {
-            require_once __DIR__ . "/../pages/admin/kondisi.php";
-        }
+        UserHandler::page_verify('admin');
+        require_once __DIR__ . "/../pages/admin/kondisi.php";
         break;
 
     case 'POST:excel':
-        if (UserHandler::page_verify()) {
-            require_once __DIR__ . "/../config/excel.php";
-            excel::generate();
-        }
+        UserHandler::page_verify('admin');
+        require_once __DIR__ . "/../config/excel.php";
+        excel::generate();
         break;
 
     case 'POST:barang':
     case 'GET:barang':
-        if (UserHandler::page_verify()) {
-            require_once __DIR__ . "/../pages/admin/barang.php";
-        }
+        UserHandler::page_verify('admin');
+        require_once __DIR__ . "/../pages/admin/barang.php";
         break;
     case 'GET:barang/create':
     case 'POST:barang/create':

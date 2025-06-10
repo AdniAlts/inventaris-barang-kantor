@@ -22,7 +22,7 @@ require_once __DIR__ . '/../config/helper.php';
         </button>
       </div>
       <ul class="pt-4 mt-4 space-y-2 font-semibold border-t-2 border-gray-200">
-        <?php if ($_SESSION['user']['role'] === "Admin"): ?>
+        <?php if (isset($_SESSION['user']) && strtolower($_SESSION['user']['role']) === "admin"): ?>
         <li>
           <?php if (Helper::currentPath() == '/dashboard'): ?>
             <a class="flex items-center p-2 secondary-color rounded-lg bg-indigo-100 boxring ring-indigo-300 group pointer-btn">
@@ -130,7 +130,7 @@ require_once __DIR__ . '/../config/helper.php';
             </a>
           <?php endif; ?>
         </li>
-        <?php elseif ($_SESSION['user']['role'] === "Pegawai"): ?>
+        <?php elseif (isset($_SESSION['user']) && strtolower($_SESSION['user']['role']) === "pegawai"): ?>
         <li>
           <?php if (Helper::currentPath() == '/dashboard'): ?>
             <a class="flex items-center p-2 secondary-color rounded-lg bg-indigo-100 boxring ring-indigo-300 group pointer-btn">
@@ -212,17 +212,10 @@ require_once __DIR__ . '/../config/helper.php';
               d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
               clip-rule="evenodd" />
           </svg>
-          <?php if ($_SESSION['user']['role'] === "Admin"): ?>
-            <div class="text-left ms-4 sidebar-user-details">
-              <div class="font-semibold leading-none text-gray-950 mb-1">Admin</div>
-              <div class="text-sm text-gray-700">[username dari db]</div>
-            </div>
-          <?php else: ?>
-            <div class="text-left ms-4 sidebar-user-details">
-              <div class="font-semibold leading-none text-gray-950 mb-1">Pegawai</div>
-              <div class="text-sm text-gray-700">Klik untuk ganti mode</div>
-            </div>
-          <?php endif; ?>
+          <div class="text-left ms-4 sidebar-user-details">
+            <div class="font-semibold leading-none text-gray-950 mb-1"><?= htmlspecialchars($_SESSION['user']['role']) ?></div>
+            <div class="text-sm text-gray-700"><?= htmlspecialchars($_SESSION['user']['username']) ?></div>
+          </div>
         </div>
         <svg class="w-5 h-5 text-gray-500 dropdown-arrow" fill="currentColor" viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg">
@@ -233,36 +226,26 @@ require_once __DIR__ . '/../config/helper.php';
       </button>
       <div id="dropdownUserName" class="z-10 w-60 bg-white rounded shadow-sm hidden"
         data-popper-placement="top">
-        <!-- Perlu pengecekan user saat ini sama ambil data dari database -->
-        <?php if ($_SESSION['user']['role'] === "Pegawai"): ?>
-          <a href="<?= Helper::basePath(); ?>admin" class="flex items-center hover:bg-gray-100 my-3 px-4 rounded">
-            <svg class="shrink-0 w-8 h-8 mr-3 text-gray-500 transition duration-75" aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="2 2 20 20">
-              <path fill-rule="evenodd"
-                d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
-                clip-rule="evenodd" />
-            </svg>
-            <div class="text-left">
-              <div class="font-semibold leading text-gray-950 mb-0.5">
-                Admin</div>
-              <div class="text-sm text-gray-700">[username dari db]</div>
+        <?php
+          $other_role = ($_SESSION['user']['role'] === 'Admin') ? 'pegawai' : 'admin';
+          $switch_link = Helper::basePath() . $other_role;
+        ?>
+        <a href="<?= $switch_link ?>" class="flex items-center hover:bg-gray-100 my-3 px-4 rounded">
+          <svg class="shrink-0 w-8 h-8 mr-3 text-gray-500 transition duration-75" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="2 2 20 20">
+            <path fill-rule="evenodd"
+              d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
+              clip-rule="evenodd" />
+          </svg>
+          <div class="text-left">
+            <div class="font-semibold leading text-gray-950 mb-0.5">
+              Ganti ke <?= htmlspecialchars(ucfirst($other_role)) ?>
             </div>
-          </a>
-        <?php else: ?>
-          <a href="<?= Helper::basePath(); ?>user" class="flex items-center hover:bg-gray-100 my-3 px-4 rounded">
-            <svg class="shrink-0 w-8 h-8 mr-3 text-gray-500 transition duration-75" aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="2 2 20 20">
-              <path fill-rule="evenodd"
-                d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
-                clip-rule="evenodd" />
-            </svg>
-            <div class="text-left">
-              <div class="font-semibold leading text-gray-950 mb-0.5">
-                Pegawai</div>
-              <div class="text-sm text-gray-700">Klik untuk ganti mode</div>
+            <div class="text-sm text-gray-700">
+              Klik untuk login
             </div>
-          </a>
-        <?php endif; ?>
+          </div>
+        </a>
       </div>
       <a href="<?= Helper::basePath(); ?>logout"
         class="flex items-center p-2 text-rose-500 rounded-lg  hover:bg-gray-100 group">
