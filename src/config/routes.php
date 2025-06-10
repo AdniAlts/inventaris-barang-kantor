@@ -89,7 +89,7 @@ require_once __DIR__ . "/../config/user_handler.php";
 // Jika Anda mengaksesnya di http://localhost:8080/inventaris-barang-kantor/, maka portnya 8080.
 // Error "Server at localhost Port 80" menunjukkan Apache berjalan di port 80.
 // Pastikan URL di browser Anda sesuai dengan port ini.
-$loc = "/inventaris-barang-kantor/";
+$loc = "/" . Helper::getEnv("APP_NAME");
 
 
 $request = $_SERVER['REQUEST_URI'];
