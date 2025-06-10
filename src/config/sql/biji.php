@@ -61,18 +61,18 @@ foreach ($data_pengguna as $pengguna) {
 
 // barang
 $data_barang = [
-    ['kode_barang' => 'AA_001', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AA'],
-    ['kode_barang' => 'AA_002', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AA'],
-    ['kode_barang' => 'AA_003', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AA'],
-    ['kode_barang' => 'AB_001', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AB'],
-    ['kode_barang' => 'AB_002', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AB'],
-    ['kode_barang' => 'AB_003', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AB'],
-    ['kode_barang' => 'AC_001', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AC'],
-    ['kode_barang' => 'AC_002', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AC'],
-    ['kode_barang' => 'AC_003', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AC'],
-    ['kode_barang' => 'AD_001', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AD'],
-    ['kode_barang' => 'AD_002', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AD'],
-    ['kode_barang' => 'AE_001', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AE'],
+    ['kode_barang' => 'AA_0001', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AA'],
+    ['kode_barang' => 'AA_0002', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AA'],
+    ['kode_barang' => 'AA_0003', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AA'],
+    ['kode_barang' => 'AB_0001', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AB'],
+    ['kode_barang' => 'AB_0002', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AB'],
+    ['kode_barang' => 'AB_0003', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AB'],
+    ['kode_barang' => 'AC_0001', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AC'],
+    ['kode_barang' => 'AC_0002', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AC'],
+    ['kode_barang' => 'AC_0003', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AC'],
+    ['kode_barang' => 'AD_0001', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AD'],
+    ['kode_barang' => 'AD_0002', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AD'],
+    ['kode_barang' => 'AE_0001', 'status' => 'tersedia', 'state_id' => 1, 'jenis_id' => 'AE'],
 ];
 foreach ($data_barang as $barang) {
     $db->conn->query("INSERT INTO barang (kode_barang, status, state_id, jenis_id) VALUES (
