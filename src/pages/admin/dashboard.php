@@ -190,7 +190,7 @@ if ($resultStats && $resultStats->num_rows > 0) {
     <div class="mb-8">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-900">Peminjaman Aktif</h2>
-        <a href="<?= Helper::basePath(); ?>admin/peminjaman" class="text-blue-600 hover:text-blue-800 font-medium">
+        <a href="<?= Helper::basePath(); ?>peminjaman" class="text-blue-600 hover:text-blue-800 font-medium">
           Lihat Semua →
         </a>
       </div>
@@ -259,7 +259,7 @@ if ($resultStats && $resultStats->num_rows > 0) {
       <div class="bg-white rounded-lg shadow-sm border">
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
           <h2 class="text-xl font-semibold text-gray-800">Kategori Barang</h2>
-          <a href="<?= Helper::basePath(); ?>admin/kategori" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Lihat Semua →</a>
+          <a href="<?= Helper::basePath(); ?>kategori" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Lihat Semua →</a>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-sm text-left text-gray-900">
@@ -291,7 +291,7 @@ if ($resultStats && $resultStats->num_rows > 0) {
       <div class="bg-white rounded-lg shadow-sm border">
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
           <h2 class="text-xl font-semibold text-gray-800">Jenis Barang</h2>
-          <a href="<?= Helper::basePath(); ?>admin/jenis" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Lihat Semua →</a>
+          <a href="<?= Helper::basePath(); ?>jenis" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Lihat Semua →</a>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-sm text-left text-gray-900">
@@ -334,7 +334,7 @@ if ($resultStats && $resultStats->num_rows > 0) {
       <div class="bg-white rounded-lg shadow-sm border">
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
           <h2 class="text-xl font-semibold text-gray-800">Kondisi Barang</h2>
-          <a href="<?= Helper::basePath(); ?>admin/kondisi" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Lihat Semua →</a>
+          <a href="<?= Helper::basePath(); ?>kondisi" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Lihat Semua →</a>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-sm text-left text-gray-900">
@@ -366,7 +366,7 @@ if ($resultStats && $resultStats->num_rows > 0) {
       <div class="bg-white rounded-lg shadow-sm border">
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
           <h2 class="text-xl font-semibold text-gray-800">Barang</h2>
-          <a href="<?= Helper::basePath(); ?>admin/barang" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Lihat Semua →</a>
+          <a href="<?= Helper::basePath(); ?>barang" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Lihat Semua →</a>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-sm text-left text-gray-900">

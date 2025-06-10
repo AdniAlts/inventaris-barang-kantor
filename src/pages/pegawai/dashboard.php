@@ -194,13 +194,13 @@ $peminjamanTerakhir = array_slice($allPeminjaman, 0, 5);
                 <!-- Actions -->
                 <div class="mt-4 pt-4 border-t">
                   <div class="flex justify-between items-center">
-                    <a href="<?= Helper::basePath(); ?>peminjaman?id_peminjaman=<?= $peminjaman_item['id_peminjaman']; ?>"
+                    <a href="<?= Helper::basePath(); ?>peminjaman"
                       class="text-blue-600 hover:text-blue-800 text-sm font-medium">
                       Lihat Detail
                     </a>
 
                     <?php if ($peminjaman_item['status'] == 'dipinjam'): ?>
-                      <a href="<?= Helper::basePath(); ?>pengembalian?id_peminjaman=<?= $peminjaman_item['id_peminjaman']; ?>"
+                      <a href="<?= Helper::basePath(); ?>pengembalian"
                         class="inline-flex items-center px-3 py-1.5 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"></path>
