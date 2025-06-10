@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /inventaris-barang-kantor/
+RewriteBase /
 
 # Skip existing files, dirs, links
 RewriteCond %{REQUEST_FILENAME} -f [OR]
