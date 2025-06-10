@@ -442,26 +442,6 @@ $db->close();
         document.getElementById('modalDelete').classList.add('hidden');
       });
     });
-
-    // Sidebar behaviour (collapse/expand)
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.getElementById('mainContent');
-    const toggleBtn = document.getElementById('toggleSidebarBtn');
-    toggleBtn.addEventListener('click', function() {
-      sidebar.classList.toggle('sidebar-collapsed');
-      mainContent.classList.toggle('sm:ml-64');
-      mainContent.classList.toggle('ml-0');
-    });
-    sidebar.addEventListener('mouseenter', function() {
-      if (sidebar.classList.contains('sidebar-collapsed')) {
-        sidebar.classList.add('sidebar-hover');
-      }
-    });
-    sidebar.addEventListener('mouseleave', function() {
-      if (sidebar.classList.contains('sidebar-hover')) {
-        sidebar.classList.remove('sidebar-hover');
-      }
-    });
   </script>
 </body>
 

@@ -214,28 +214,6 @@ foreach ($categories as $category)
 
   <script src="<?= Helper::basePath(); ?>node_modules/flowbite/dist/flowbite.min.js"></script>
   <script>
-    const sidebar = document.getElementById('sidebar');
-    const userButton = document.getElementById('dropdownUserNameButton');
-    const userDropdown = document.getElementById('dropdownUserName');
-    document.getElementById('toggleSidebarBtn').addEventListener('click', function() {
-      sidebar.classList.toggle('sidebar-collapsed');
-    });
-    sidebar.addEventListener('mouseenter', function() {
-      if (sidebar.classList.contains('sidebar-collapsed') && userDropdown.classList.contains('hidden')) {
-        sidebar.classList.toggle('sidebar-hover');
-      }
-    });
-    sidebar.addEventListener('mouseleave', function() {
-      if (sidebar.classList.contains('sidebar-hover') && userDropdown.classList.contains('hidden')) {
-        sidebar.classList.toggle('sidebar-hover');
-      }
-    });
-    userButton.addEventListener('focusout', function() {
-      if (!userDropdown.classList.contains('hidden')) {
-        sidebar.classList.toggle('sidebar-hover');
-      }
-    });
-
     // Dropdown category event handler
     // options with default values
     const options = {

@@ -399,43 +399,18 @@ $db->close();
         </div>
       </form>
     </div>
+  </div>
+</div>
 
   <!-- Flowbite JS (untuk modal) -->
   <script src="<?= Helper::basePath(); ?>node_modules/flowbite/dist/flowbite.min.js"></script>
   <script>
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.getElementById('mainContent');
-    const toggleBtn = document.getElementById('toggleSidebarBtn');
-    const userButton = document.getElementById('dropdownUserNameButton');
-    const userDropdown = document.getElementById('dropdownUserName');
-
-    toggleBtn.addEventListener('click', function() {
-      sidebar.classList.toggle('sidebar-collapsed');
-      mainContent.classList.toggle('sm:ml-64');
-      mainContent.classList.toggle('ml-0');
-    });
-
-    sidebar.addEventListener('mouseenter', function() {
-      if (sidebar.classList.contains('sidebar-collapsed')) {
-        sidebar.classList.add('sidebar-hover');
-      }
-    });
-    sidebar.addEventListener('mouseleave', function() {
-      if (sidebar.classList.contains('sidebar-hover')) {
-        sidebar.classList.remove('sidebar-hover');
-      }
-    });
-    userButton.addEventListener('focusout', function() {
-      if (!userDropdown.classList.contains('hidden')) {
-        sidebar.classList.remove('sidebar-hover');
-      }
-    });
     document.querySelectorAll('.edit-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.getElementById('edit_id_kategori').value = this.dataset.id;
-    document.getElementById('edit_nama_kategori').value = this.dataset.nama;
-  });
-});
+      btn.addEventListener('click', function() {
+        document.getElementById('edit_id_kategori').value = this.dataset.id;
+        document.getElementById('edit_nama_kategori').value = this.dataset.nama;
+      });
+    });
   </script>
 </body>
 
