@@ -1,4 +1,4 @@
-SET GLOBAL FOREIGN_KEY_CHECKS=0;
+
 
 DROP TABLE IF EXISTS
   admin,
@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS
   state,
   user;
 
-SET GLOBAL FOREIGN_KEY_CHECKS=1;
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -98,7 +98,7 @@ CREATE TABLE peminjaman_detail (
 -- --------------------------------------------------------
 
 CREATE TABLE user (
-  id INT AUTO_INCREMENT NOT NULL,
+  id INT(100) UNSIGNED AUTO_INCREMENT NOT NULL,
   username VARCHAR(100) NOT NULL,
   name VARCHAR(200) NOT NULL,
   email VARCHAR(100) NOT NULL,
