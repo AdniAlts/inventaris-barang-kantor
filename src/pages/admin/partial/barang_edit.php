@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . "/../../../modules/search.php";
+$db = (new db())->conn;
+$statesArr = Search::getAllStates($db);
+?>
 <div id="edit-barang-modal" class="fixed inset-0 flex items-center justify-center hidden edit-modal-backdrop opacity-0 transition-opacity duration-500 ease-in-out">
     <div class="bg-white rounded-lg shadow-2xl p-8 w-11/12 max-w-lg mx-auto transform transition-all duration-300 scale-95 opacity-0 edit-modal-content">
         <div class="flex justify-between items-center mb-6">
@@ -24,11 +29,10 @@
             <div>
                 <label for="barang-condition" class="block text-sm font-medium text-gray-700 mb-2">Condition:</label>
                 <select id="barang-condition" name="kualitas" class="block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
-                    <option value="1">Baik</option>
-                    <option value="2">Patah</option>
-                    <option value="3">Rusak</option>
-                    <option value="4">Aus</option>
-                    <option value="5">Retak</option>
+                <?php foreach ($statesArr as $key => $value) {
+                    echo "<option value='{$value['id_state']}'>{$value['nama']}</option>";
+                }
+                ?>
                 </select>
             </div>
 

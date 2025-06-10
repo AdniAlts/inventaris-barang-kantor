@@ -303,6 +303,31 @@ class Search {
     return $items;
   }
 
+  public static function getAllStates(mysqli $connDB) {
+    $states = [];
+    $query = "SELECT id_state, nama FROM state ORDER BY id_state ASC";
+
+    $sql = $connDB->prepare($query);
+    if (!$sql) {
+      error_log("Persiapan query gagal untuk getAllStates. Error: " . $connDB->error . ". Query: " . $query);
+      return [];
+    }
+
+    if ($sql->execute()) {
+      $result = $sql->get_result();
+      if ($result) {
+        while ($row = $result->fetch_assoc()) {
+          $states[] = $row;
+        }
+        $result->free();
+      } else {
+        error_log("Gagal mengambil data untuk getAllStates. Error: " . $sql->error);
+      }
+    }
+    $sql->close();
+    return $states;
+  }
+
   public static function getAllTypes(mysqli $connDB) {
     $types = [];
     $query = "SELECT DISTINCT j.id_jenis, j.nama, j.stok_tersedia, k.nama AS nama_kategori FROM jenis j JOIN barang b ON j.id_jenis = b.jenis_id JOIN kategori k ON k.id_kategori = j.kategori_id WHERE b.state_id = 1 AND j.stok > 0";

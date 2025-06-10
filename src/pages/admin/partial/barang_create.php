@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . "/../../../modules/search.php";
+$db = (new db())->conn;
+$statesArr = Search::getAllStates($db);
+?>
 <div id="create-barang-modal" class="fixed inset-0 flex items-center justify-center hidden edit-modal-backdrop opacity-0 transition-opacity duration-500 ease-in-out">
     <div id="skibidi" class="relative bg-white p-8 rounded-lg shadow-md max-w-2xl w-full mx-4 my-8 overflow-y-auto max-h-[90vh] opacity-0 transition-opacity duration-500 ease-in-out">
         <button id="close-create-barang-modal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl font-bold focus:outline-none">&times;</button>
@@ -62,14 +67,13 @@
                                 <input name="jumlah" type="number" id="jumlah" min="1" placeholder="e.g., 50" class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required />
                             </div>
                             <div>
-                                <label for="kualitas" class="block text-sm font-medium text-gray-700">Kualitas</label>
+                                <label for="kualitas" class="block text-sm font-medium text-gray-700">Kondisi</label>
                                 <select name="kualitas" id="kualitas" class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
                                     <option value="">Select</option>
-                                    <option value="1">Baik</option>
-                                    <option value="2">Patah</option>
-                                    <option value="3">Rusak</option>
-                                    <option value="4">Aus</option>
-                                    <option value="5">Retak</option>
+                                    <?php foreach ($statesArr as $key => $value) {
+                                        echo "<option value='{$value['id_state']}'>{$value['nama']}</option>";
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
@@ -85,7 +89,7 @@
                             <p><strong class="font-medium">Kategori:</strong> <span id="review-kategori"></span></p>
                             <p><strong class="font-medium">Jenis:</strong> <span id="review-jenis"></span></p>
                             <p><strong class="font-medium">Jumlah Barang:</strong> <span id="review-jumlah"></span></p>
-                            <p><strong class="font-medium">Kualitas:</strong> <span id="review-kualitas"></span></p>
+                            <p><strong class="font-medium">Kondisi:</strong> <span id="review-kualitas"></span></p>
                         </div>
                         <div class="flex justify-between mt-6">
                             <button type="button" onclick="goToStep(1)" class="px-5 py-2 border border-gray-300 rounded-md hover:bg-gray-100">Previous</button>
