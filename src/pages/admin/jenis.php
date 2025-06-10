@@ -17,7 +17,6 @@ unset($_SESSION['message'], $_SESSION['message_type']);
 if ($action === 'add_jenis' && $_SERVER['REQUEST_METHOD'] === 'POST') {
   $id_jenis = trim($_POST['id_jenis'] ?? '');
   $nama_jenis = trim($_POST['nama_jenis'] ?? '');
-  $stok = (int) ($_POST['stok'] ?? 0);
   $kategori_id = $_POST['kategori_id'] ?? '';
 
   if ($id_jenis && $nama_jenis && $kategori_id) {
@@ -31,8 +30,8 @@ if ($action === 'add_jenis' && $_SERVER['REQUEST_METHOD'] === 'POST') {
       $_SESSION['message'] = 'ID atau nama jenis sudah ada!';
       $_SESSION['message_type'] = 'error';
     } else {
-      $stmt = $conn->prepare("INSERT INTO jenis (id_jenis, nama, stok, kategori_id) VALUES (?, ?, ?, ?)");
-      $stmt->bind_param('ssii', $id_jenis, $nama_jenis, $stok, $kategori_id);
+      $stmt = $conn->prepare("INSERT INTO jenis (id_jenis, nama, kategori_id) VALUES (?, ?, ?)");
+      $stmt->bind_param('ssi', $id_jenis, $nama_jenis, $kategori_id);
       $stmt->execute();
       $stmt->close();
       $_SESSION['message'] = 'Jenis berhasil ditambahkan!';
@@ -50,7 +49,6 @@ if ($action === 'add_jenis' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 if ($action === 'edit_jenis' && $_SERVER['REQUEST_METHOD'] === 'POST') {
   $id_jenis = $_POST['id_jenis'] ?? '';
   $nama_jenis = trim($_POST['nama_jenis'] ?? '');
-  $stok = (int) ($_POST['stok'] ?? 0);
   $kategori_id = $_POST['kategori_id'] ?? '';
 
   if ($id_jenis && $nama_jenis && $kategori_id) {
@@ -64,8 +62,8 @@ if ($action === 'edit_jenis' && $_SERVER['REQUEST_METHOD'] === 'POST') {
       $_SESSION['message'] = 'Nama jenis sudah ada!';
       $_SESSION['message_type'] = 'error';
     } else {
-      $stmt = $conn->prepare("UPDATE jenis SET nama = ?, stok = ?, kategori_id = ? WHERE id_jenis = ?");
-      $stmt->bind_param('siis', $nama_jenis, $stok, $kategori_id, $id_jenis);
+      $stmt = $conn->prepare("UPDATE jenis SET nama = ?, kategori_id = ? WHERE id_jenis = ?");
+      $stmt->bind_param('sis', $nama_jenis, $kategori_id, $id_jenis);
       $stmt->execute();
       $stmt->close();
       $_SESSION['message'] = 'Jenis berhasil diupdate!';
@@ -102,7 +100,7 @@ if ($sort === 'id_asc') $orderBy = "CAST(SUBSTRING(j.id_jenis, 4) AS UNSIGNED) A
 if ($sort === 'id_desc') $orderBy = "CAST(SUBSTRING(j.id_jenis, 4) AS UNSIGNED) DESC, LEFT(j.id_jenis, 3) DESC";
 
 $jenis = [];
-$result = $conn->query("SELECT j.id_jenis, j.nama, j.stok, k.nama AS kategori_nama, j.kategori_id 
+$result = $conn->query("SELECT j.id_jenis, j.nama, j.stok, j.stok_tersedia, k.nama AS kategori_nama, j.kategori_id 
                         FROM jenis j LEFT JOIN kategori k ON j.kategori_id = k.id_kategori 
                         ORDER BY $orderBy");
 while ($row = $result->fetch_assoc()) {
@@ -134,25 +132,25 @@ $db->close();
       background-image: none !important;
       padding-right: 1rem;
     }
+
     select {
-      background-color: transparent;     
+      background-color: transparent;
       border: 1px solid rgba(255, 255, 255, 0.3);
-      color: white;                      
-      border-radius: 0.5rem;             
-      padding: 0.5rem 1rem;              
+      color: white;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
       outline: none;
     }
 
     select:focus {
-      border-color: white;               
-      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4); 
+      border-color: white;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4);
     }
 
     select option {
-      background-color: rgba(0, 0, 0, 0.5); 
+      background-color: rgba(0, 0, 0, 0.5);
       color: white;
     }
-    
   </style>
 </head>
 
@@ -265,6 +263,9 @@ $db->close();
                 <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-1 rounded-lg">
                   Stok: <?= htmlspecialchars($j['stok']) ?>
                 </span>
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-1 rounded-lg">
+                  Stok Tersedia: <?= htmlspecialchars($j['stok_tersedia']) ?>
+                </span>
                 <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded-lg">
                   Kategori: <?= htmlspecialchars($j['kategori_nama'] ?? '-') ?>
                 </span>
@@ -301,13 +302,6 @@ $db->close();
                 class="w-full px-4 py-2.5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg 
                 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                 required>
-            </div>
-            <div>
-              <label class="block mb-2 text-sm font-semibold text-gray-700">Stok</label>
-              <input type="number" name="stok"
-                class="w-full px-4 py-2.5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg 
-                focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                min="0" value="0">
             </div>
             <div>
               <label class="block mb-2 text-sm font-semibold text-gray-700">Kategori</label>
@@ -360,13 +354,6 @@ $db->close();
                 class="w-full px-4 py-2.5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg 
                 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                 required>
-            </div>
-            <div>
-              <label class="block mb-2 text-sm font-semibold text-gray-700">Stok</label>
-              <input type="number" name="stok" id="edit_stok"
-                class="w-full px-4 py-2.5 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg 
-                focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                min="0">
             </div>
             <div>
               <label class="block mb-2 text-sm font-semibold text-gray-700">Kategori</label>
