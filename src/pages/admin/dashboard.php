@@ -88,7 +88,6 @@ if ($resultStats && $resultStats->num_rows > 0) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Inventaris Barang Kantor</title>
   <link rel="stylesheet" href="<?= Helper::basePath(); ?>src/output.css">
-  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>

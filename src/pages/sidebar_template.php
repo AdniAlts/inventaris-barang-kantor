@@ -24,7 +24,7 @@ require_once __DIR__ . '/../config/helper.php';
       <ul class="pt-4 mt-4 space-y-2 font-semibold border-t-2 border-gray-200">
         <?php if ($_SESSION['user']['role'] === "Admin"): ?>
         <li>
-          <?php if (Helper::currentPath() == 'dashboard'): ?>
+          <?php if (Helper::currentPath() == '/dashboard'): ?>
             <a class="flex items-center p-2 secondary-color rounded-lg bg-indigo-100 boxring ring-indigo-300 group pointer-btn">
               <svg class="shrink-0 w-5 h-5 primary-color transition duration-75 group-hover:primary-color"
                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
@@ -45,7 +45,7 @@ require_once __DIR__ . '/../config/helper.php';
           <?php endif; ?>
         </li>
         <li>
-          <?php if (Helper::currentPath() == 'kategori'): ?>
+          <?php if (Helper::currentPath() == '/kategori'): ?>
             <a class="flex items-center p-2 secondary-color rounded-lg bg-indigo-100 boxring ring-indigo-300 group pointer-btn">
               <svg class="shrink-0 w-5 h-5 primary-color transition duration-75 group-hover:primary-color"
                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="3 3 18 18">
@@ -66,7 +66,7 @@ require_once __DIR__ . '/../config/helper.php';
           <?php endif; ?>
         </li>
         <li>
-          <?php if (Helper::currentPath() == 'jenis'): ?>
+          <?php if (Helper::currentPath() == '/jenis'): ?>
             <a class="flex items-center p-2 secondary-color rounded-lg bg-indigo-100 boxring ring-indigo-300 group pointer-btn">
               <svg class="shrink-0 w-5 h-5 primary-color transition duration-75 group-hover:primary-color"
                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="3 3 18 18">
@@ -87,7 +87,7 @@ require_once __DIR__ . '/../config/helper.php';
           <?php endif; ?>
         </li>
         <li>
-          <?php if (Helper::currentPath() == 'kondisi'): ?>
+          <?php if (Helper::currentPath() == '/kondisi'): ?>
             <a class="flex items-center p-2 secondary-color rounded-lg bg-indigo-100 boxring ring-indigo-300 group pointer-btn">
               <svg class="shrink-0 w-5 h-5 primary-color transition duration-75 group-hover:primary-color"
                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="2 2 20 20">
@@ -109,7 +109,7 @@ require_once __DIR__ . '/../config/helper.php';
           <?php endif; ?>
         </li>
         <li>
-          <?php if (Helper::currentPath() == 'barang'): ?>
+          <?php if (Helper::currentPath() == '/barang'): ?>
             <a class="flex items-center p-2 secondary-color rounded-lg bg-indigo-100 boxring ring-indigo-300 group pointer-btn">
               <svg class="shrink-0 w-5 h-5 primary-color transition duration-75 group-hover:primary-color"
                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="3 3 18 18">
@@ -132,7 +132,7 @@ require_once __DIR__ . '/../config/helper.php';
         </li>
         <?php elseif ($_SESSION['user']['role'] === "Pegawai"): ?>
         <li>
-          <?php if (Helper::currentPath() == 'dashboard'): ?>
+          <?php if (Helper::currentPath() == '/dashboard'): ?>
             <a class="flex items-center p-2 secondary-color rounded-lg bg-indigo-100 boxring ring-indigo-300 group pointer-btn">
               <svg class="shrink-0 w-5 h-5 primary-color transition duration-75 group-hover:primary-color"
                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
@@ -153,7 +153,7 @@ require_once __DIR__ . '/../config/helper.php';
           <?php endif; ?>
         </li>
         <li>
-          <?php if (Helper::currentPath() == 'peminjaman'): ?>
+          <?php if (Helper::currentPath() == '/peminjaman'): ?>
             <a class="flex items-center p-2 secondary-color rounded-lg bg-indigo-100 boxring ring-indigo-300 group pointer-btn">
               <svg class="shrink-0 w-5 h-5 primary-color transition duration-75 group-hover:primary-color"
                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="3 3 18 18">
@@ -174,7 +174,7 @@ require_once __DIR__ . '/../config/helper.php';
           <?php endif; ?>
         </li>
         <li>
-          <?php if (Helper::currentPath() == 'pengembalian'): ?>
+          <?php if (Helper::currentPath() == '/pengembalian'): ?>
             <a class="flex items-center p-2 secondary-color rounded-lg bg-indigo-100 boxring ring-indigo-300 group pointer-btn">
               <svg class="shrink-0 w-5 h-5 primary-color transition duration-75 group-hover:primary-color"
                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="2 2 20 20">
