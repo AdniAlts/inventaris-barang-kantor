@@ -85,11 +85,6 @@ foreach ($categories as $category)
         </div>
         <div id="types-render" class="grid grid-cols-4 gap-2 my-5 px-2">
         </div>
-        <div class="flex items-center justify-center">
-          <button type="submit" class="text-sm font-medium mb-4">
-            Lihat lebih banyak
-          </button>
-        </div>
       </div>
       <!-- END BAGIAN AKHIR BARANG -->
       <!-- START BAGIAN TABLE BARANG DIPILIH -->
