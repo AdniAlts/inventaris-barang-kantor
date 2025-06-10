@@ -107,7 +107,7 @@ session_start();
 
 switch ($comp) {
     case 'GET:home':
-        require_once __DIR__ . "/../pages/old/landing.php";
+        Helper::route("dashboard");
         break;
 
     case 'GET:peminjaman':
