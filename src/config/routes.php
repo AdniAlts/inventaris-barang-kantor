@@ -94,7 +94,7 @@ $loc = "/" . Helper::getEnv("APP_NAME");
 $request = $_SERVER['REQUEST_URI'];
 $method = $_SERVER['REQUEST_METHOD'];
 
-$request = str_replace($loc, "", $request);
+$request = ltrim($request, '/');
 
 $comp = "$method:$request";
 $comp = preg_replace('/\?.*$/', '', $comp);
