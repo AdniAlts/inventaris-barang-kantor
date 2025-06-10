@@ -144,7 +144,7 @@ foreach ($categories as $category)
       <!-- START BAGIAN DESKRIPSI DAN SUMBIT -->
       <div class="h-auto mb-4 rounded bg-gray-50">
         <div class="desk p-3">
-          <form action="/inventaris-barang-kantor/loan" method="POST" class="w-full">
+          <form action="<?= Helper::basePath(); ?>loan" method="POST" class="w-full">
             <div class="mt-4">
               <label for="deskripsi" class="block text-sm font-medium text-gray-700 mb-2">Deskripsi:</label>
               <textarea type="number" name="deskripsi" id="deskripsi" required

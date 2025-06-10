@@ -100,7 +100,7 @@ require_once __DIR__ . '/../../config/helper.php';
         </div>
         <!-- Submit Pengembalian -->
         <?php if (isset($id)): ?>
-          <form action="/inventaris-barang-kantor/return" method="post">
+          <form action="<?= Helper::basePath(); ?>return" method="post">
             <?php
             foreach ($querys2 as $index => $query2) {
               echo "<input type='hidden' name='barang[$index][barang_kode]' value='{$query2['barang_kode']}'>";
