@@ -26,6 +26,6 @@ foreach ($barangs as $index => $barang) {
     $db->conn->query("UPDATE jenis SET stok_tersedia = stok_tersedia + 1 WHERE id_jenis = '$jenis_id'");
 }
 
-Helper::route("/pengembalian", [
+Helper::route("pengembalian", [
     "success" => "Barang berhasil dikembalikan"
 ]);
