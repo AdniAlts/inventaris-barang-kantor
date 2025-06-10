@@ -1,5 +1,4 @@
 /vendor/
 node_modules/
-src/storages/
 .env
 src/output.css
