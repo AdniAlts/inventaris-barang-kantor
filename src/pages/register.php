@@ -116,8 +116,8 @@ if (!empty($_SESSION['register_errmsg'])) {
             <div>
                 <label for="role" class="text-sm text-gray-500">User sebagai</label>
                 <select id="role" name="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-3 p-2.5" required>
-                    <option value="Admin" selected>Admin</option>
-                    <option value="Pegawai">Pegawai</option>
+                    <option value="Pegawai" selected>Pegawai</option>
+                    <option value="Admin">Admin</option>
                 </select>
             </div>
 
