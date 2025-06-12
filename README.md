@@ -18,8 +18,8 @@ Sebuah aplikasi berbasis web untuk mengelola inventaris barang kantor. Proyek in
 
 - [Tailwind CSS](https://tailwindcss.com/) - Kerangka kerja CSS yang mengutamakan utilitas.
 - [Flowbite](https://flowbite.com/) - Pustaka komponen yang dibangun di atas Tailwind CSS.
-- [Composer](https://getcomposer.org/) - Manajer dependensi untuk PHP.
-- [NPM](https://www.npmjs.com/) - Manajer paket untuk JavaScript.
+- [Composer](https://getcomposer.org/) - Pengelola dependensi untuk PHP.
+- [NPM](https://www.npmjs.com/) - Pengelola paket untuk JavaScript.
 
 ## Struktur Folder
 
@@ -68,15 +68,15 @@ Sebuah aplikasi berbasis web untuk mengelola inventaris barang kantor. Proyek in
     ```
 
 5. **Siapkan Environment**
-   - Proyek ini menggunakan file `.env` untuk variabel lingkungan. Anda dapat menyalin file `.env-test` menjadi `.env` dan mengubahnya sesuai kebutuhan Anda. File ini akan berisi kredensial basis data dan konfigurasi lainnya.
+   - Proyek ini menggunakan file `.env` untuk environment variable.File `.env-test` dapat disalin dan di _rename_ menjadi `.env` dan mengubahnya sesuai kebutuhan. File ini akan berisi kredensial database dan konfigurasi lainnya.
 
 6. **Server Web**
-   - Arahkan server web Anda (misalnya Apache, Nginx) ke direktori publik proyek.
-   - Pastikan server web Anda dikonfigurasi untuk menangani file PHP.
-   - Untuk XAMPP, Anda dapat menempatkan folder ini di `htdocs` dan mengaksesnya melalui `http://localhost/inventaris-barang-kantor`.
+   - Arahkan server web (misalnya Apache, Nginx) ke direktori proyek.
+   - Pastikan server web telah dikonfigurasi untuk menangani file PHP.
+   - Untuk XAMPP, Folder proyek ini dapat diletakkan di `htdocs` dan mengaksesnya melalui `http://localhost/inventaris-barang-kantor`.
 
 7. **Database**
-   - Buat basis data baru dan impor tabel yang diperlukan. Skema SQL dapat ditemukan di `src/config/sql/akupergi.sql`
+   - Buat basis data baru dan impor tabel yang diperlukan. Skema SQL dapat ditemukan di `src/config/sql/akupergi.sql`. Serta perlu untuk menjalankan _seeder_ untuk menambahkan data _dummy_ dengan mengunjungi `http://localhost/inventaris-barang-kantor/src/config/sql/biji.php`.
 
 ## Anggota Kelompok
 
