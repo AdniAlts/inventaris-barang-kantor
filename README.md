@@ -67,7 +67,7 @@ Sebuah aplikasi berbasis web untuk mengelola inventaris barang kantor. Proyek in
     npm run build
     ```
 
-5. **Siapkan Lingkungan**
+5. **Siapkan Environment**
    - Proyek ini menggunakan file `.env` untuk variabel lingkungan. Anda dapat menyalin file `.env-test` menjadi `.env` dan mengubahnya sesuai kebutuhan Anda. File ini akan berisi kredensial basis data dan konfigurasi lainnya.
 
 6. **Server Web**
@@ -75,7 +75,7 @@ Sebuah aplikasi berbasis web untuk mengelola inventaris barang kantor. Proyek in
    - Pastikan server web Anda dikonfigurasi untuk menangani file PHP.
    - Untuk XAMPP, Anda dapat menempatkan folder ini di `htdocs` dan mengaksesnya melalui `http://localhost/inventaris-barang-kantor`.
 
-7. **Basis Data**
+7. **Database**
    - Buat basis data baru dan impor tabel yang diperlukan. Skema SQL dapat ditemukan di `src/config/sql/akupergi.sql`
 
 ## Anggota Kelompok
