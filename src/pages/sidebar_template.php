@@ -7,7 +7,7 @@ require_once __DIR__ . '/../config/helper.php';
     <div class="self-start">
       <div class="flex justify-between ps-1.25 mb-5">
         <a href="<?= Helper::basePath(); ?>home" class="flex items-center sidebar-logo">
-          <img src="<?= Helper::basePath(); ?>public/images/logo.png" class="h-7 sm:h-7" alt="InventaBox Logo" />
+          <img src="<?= Helper::basePath(); ?>src/images/logo.png" class="h-7 sm:h-7" alt="InventaBox Logo" />
           <span class="self-center ms-4 text-xl font-extrabold whitespace-nowrap">InventaBox</span>
         </a>
         <button id="toggleSidebarBtn" type="button"

@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../config/helper.php';
-require_once __DIR__ . "/barang_logic.php";
+require_once __DIR__ . "/../../modules/barang_logic.php";
 ?>
 <!DOCTYPE html>
 <html>

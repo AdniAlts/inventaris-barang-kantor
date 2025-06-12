@@ -227,16 +227,11 @@ switch ($comp) {
         break;
 
     case 'POST:return':
-        require_once __DIR__ . "/../pages/old/return.php";
-        break;
-
-    case 'POST:search':
-    case 'GET:search':
-        require_once __DIR__ . "/../pages/old/search_barang.php";
+        require_once __DIR__ . "/../modules/return.php";
         break;
 
     case 'POST:loan':
-        require_once __DIR__ . "/../pages/old/loan.php";
+        require_once __DIR__ . "/../modules/loan.php";
         break;
 
     case 'GET:login':
@@ -335,17 +330,17 @@ switch ($comp) {
         
     case 'GET:barang/create':
     case 'POST:barang/create':
-        require_once __DIR__ . "/../pages/admin/barang_logic.php";
+        require_once __DIR__ . "/../../modules/barang_logic.php";
         Barang::create();
         break;
 
     case 'POST:barang/update':
-        require_once __DIR__ . "/../pages/admin/barang_logic.php";
+        require_once __DIR__ . "/../../modules/barang_logic.php";
         Barang::update();
         break;
 
     case 'POST:barang/delete':
-        require_once __DIR__ . "/../pages/admin/barang_logic.php";
+        require_once __DIR__ . "/../../modules/barang_logic.php";
         Barang::delete();
         break;
     case 'GET:barang/delete':
